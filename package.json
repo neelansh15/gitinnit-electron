@@ -1,6 +1,9 @@
 {
   "name": "gitinnit-electron",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  }
 }
