@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron')
+const config = require('./config')
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -9,7 +10,12 @@ function createWindow () {
     }
   })
 
-  win.loadFile('index.html')
+  win.loadFile('index.html', {
+    query:{
+      "clientId": config.clientId,
+      "clientSecret": config.clientSecret
+    }
+  })
 }
 
 app.whenReady().then(createWindow)
