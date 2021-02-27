@@ -1,5 +1,12 @@
 const { app, BrowserWindow } = require("electron");
-const config = require("./config");
+console.log(typeof BrowserWindow);
+
+document.getElementById("select").addEventListener("click", () => {
+	let path_to_file = document.getElementById("file").files[0].path;
+	index = document.getElementById("file").files[0].path.lastIndexOf("\\");
+	path_to_file = path_to_file.slice(0, index);
+	console.log(path_to_file);
+});
 
 function createWindow() {
 	const win = new BrowserWindow({
@@ -10,12 +17,7 @@ function createWindow() {
 		},
 	});
 
-	win.loadFile("index.html", {
-		query: {
-			clientId: config.clientId,
-			clientSecret: config.clientSecret,
-		},
-	});
+	win.loadFile("./postModule.html");
 }
 
 app.whenReady().then(createWindow);
@@ -31,4 +33,3 @@ app.on("activate", () => {
 		createWindow();
 	}
 });
-module.exports(app);
