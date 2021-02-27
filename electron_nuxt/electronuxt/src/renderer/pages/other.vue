@@ -1,5 +1,6 @@
 <template>
   <div>
+    <mybutton />
     <div class="title">
       Information
     </div>
@@ -57,7 +58,9 @@
 </template>
 
 <script>
+import mybutton from '../components/mybutton.vue'
 export default {
+  components: { mybutton },
   data () {
     return {
       chrome: process.versions.chrome,
