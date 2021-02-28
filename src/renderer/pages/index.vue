@@ -24,7 +24,11 @@
           </ul>
         </div>
         <div class="accountLinks">
-          <h3>Account</h3>
+          <h3>
+            <nuxt-link to="/account">
+              Account
+            </nuxt-link>
+          </h3>
           <ul>
             <li>Sign out</li>
           </ul>
