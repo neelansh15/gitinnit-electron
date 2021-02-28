@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <v-app>
     <nuxt />
-  </div>
+  </v-app>
 </template>
 
 <script>
 export default {
-  components: {  }
+  components: {}
 }
 </script>
 

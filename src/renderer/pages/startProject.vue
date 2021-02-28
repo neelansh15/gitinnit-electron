@@ -1,132 +1,129 @@
 <template>
   <div id="container">
     <h1>Start a new project</h1>
-    <v-app>
-      <v-stepper v-model="e1">
-        <v-stepper-header>
-          <v-stepper-step :complete="e1 > 1" step="1">
-            Select folder
-          </v-stepper-step>
+    <v-stepper v-model="e1">
+      <v-stepper-header>
+        <v-stepper-step :complete="e1 > 1" step="1">
+          Select folder
+        </v-stepper-step>
 
-          <v-divider />
+        <v-divider />
 
-          <v-stepper-step :complete="e1 > 2" step="2">
-            Add description
-          </v-stepper-step>
+        <v-stepper-step :complete="e1 > 2" step="2">
+          Add description
+        </v-stepper-step>
 
-          <v-divider />
+        <v-divider />
 
-          <v-stepper-step step="3">
-            Confirm Project details
-          </v-stepper-step>
-        </v-stepper-header>
+        <v-stepper-step step="3">
+          Confirm Project details
+        </v-stepper-step>
+      </v-stepper-header>
 
-        <v-stepper-items>
-          <v-stepper-content step="1">
-            <div class="input">
-              <v-file-input
-                label="Select file to get path"
-                @change="handleFileChange"
-              >
-                Select Folder
-              </v-file-input>
-            </div>
-            <div class="path">
-              <h5>Folder:</h5>
-              <p>{{ folder }}</p>
-            </div>
-            <p>{{ message }}</p>
-
-            <v-btn :disabled="invalid" color="primary" @click="e1 = 2">
-              Continue
-            </v-btn>
-
-            <v-btn text>
-              Cancel
-            </v-btn>
-          </v-stepper-content>
-
-          <v-stepper-content step="2">
-            <v-form
-              ref="form"
-              v-model="valid"
+      <v-stepper-items>
+        <v-stepper-content step="1">
+          <div class="input">
+            <v-file-input
+              label="Select file to get path"
+              @change="handleFileChange"
             >
-              <v-text-field
-                v-model="name"
-                :counter="10"
-                :rules="nameRules"
-                label="Project name"
-                required
-              />
+              Select Folder
+            </v-file-input>
+          </div>
+          <div class="path">
+            <h5>Folder:</h5>
+            <p>{{ folder }}</p>
+          </div>
+          <p>{{ message }}</p>
 
-              <v-text-field
-                v-model="author"
-                :rules="nameRules"
-                label="Author"
-                required
-              />
-              <v-text-field
-                v-model="description"
-                :rules="descriptionRules"
-                label="Description"
-                required
-              />
+          <v-btn :disabled="invalid" color="primary" @click="e1 = 2">
+            Continue
+          </v-btn>
 
-              <v-text-field
-                v-model="genre"
-                label="Genre"
-              />
-              <v-select
-                v-model="daw"
-                :items="dawItems"
-                label="daw"
-                required
-              />
+          <v-btn text>
+            Cancel
+          </v-btn>
+        </v-stepper-content>
 
-              <p>Allow this app to handle my git requests and make changes in my folder</p>
-              <v-checkbox
-                v-model="checkbox"
-                :rules="[v => !!v || 'You must agree to continue!']"
-                label="Do you agree?"
-                required
-              />
+        <v-stepper-content step="2">
+          <v-form
+            ref="form"
+            v-model="valid"
+          >
+            <v-text-field
+              v-model="name"
+              :counter="10"
+              :rules="nameRules"
+              label="Project name"
+              required
+            />
 
-              <v-btn
-                :disabled="!valid"
-                color="primary"
-                class="mr-4"
-                @click="e1 = 3"
-              >
-                Validate
-              </v-btn>
-            </v-form>
+            <v-text-field
+              v-model="author"
+              :rules="nameRules"
+              label="Author"
+              required
+            />
+            <v-text-field
+              v-model="description"
+              :rules="descriptionRules"
+              label="Description"
+            />
 
-            <v-btn text>
-              Cancel
+            <v-text-field
+              v-model="genre"
+              label="Genre"
+            />
+            <v-select
+              v-model="daw"
+              :items="dawItems"
+              label="daw"
+              required
+            />
+
+            <p>Allow this app to handle my git requests and make changes in my folder</p>
+            <v-checkbox
+              v-model="checkbox"
+              :rules="[v => !!v || 'You must agree to continue!']"
+              label="Do you agree?"
+              required
+            />
+
+            <v-btn
+              :disabled="!valid"
+              color="primary"
+              class="mr-4"
+              @click="e1 = 3"
+            >
+              Validate
             </v-btn>
-          </v-stepper-content>
+          </v-form>
 
-          <v-stepper-content step="3">
-            <div>
-              <h1>Project: {{ name }}</h1>
-              <h2>Author: {{ author }}</h2>
-              <p>Description: {{ description }}</p>
-              <p>Genre: {{ genre }}</p>
-              <p>daw: {{ daw }}</p>
-              <p>Folder: {{ folder }}</p>
-            </div>
+          <v-btn text>
+            Cancel
+          </v-btn>
+        </v-stepper-content>
 
-            <v-btn color="primary" @click="e1 = 1">
-              Continue
-            </v-btn>
+        <v-stepper-content step="3">
+          <div>
+            <h1>Project: {{ name }}</h1>
+            <h2>Author: {{ author }}</h2>
+            <p>Description: {{ description }}</p>
+            <p>Genre: {{ genre }}</p>
+            <p>daw: {{ daw }}</p>
+            <p>Folder: {{ folder }}</p>
+          </div>
 
-            <v-btn text>
-              Cancel
-            </v-btn>
-          </v-stepper-content>
-        </v-stepper-items>
-      </v-stepper>
-    </v-app>
+          <v-btn color="primary" @click="e1 = 1">
+            Continue
+          </v-btn>
+
+          <v-btn text>
+            Cancel
+          </v-btn>
+        </v-stepper-content>
+      </v-stepper-items>
+    </v-stepper>
     <div>
       <nuxt-link to="/">
         Back
@@ -187,7 +184,6 @@ export default {
 
 <style>
 #container {
-  margin-top: 100px;
   width: 100vw;
   height: 90vh;
   display: flex;
