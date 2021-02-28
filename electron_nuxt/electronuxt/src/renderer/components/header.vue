@@ -1,3 +1,4 @@
+
 <template>
   <header class="main-header">
     <nav>
@@ -6,15 +7,15 @@
           to="/"
           exact
         >
-          System info
+          Home
         </nuxt-link>
       </div>
       <div>
         <nuxt-link
-          to="/other"
+          to="/push"
           exact
         >
-          Next page
+          Start Project
         </nuxt-link>
       </div>
     </nav>

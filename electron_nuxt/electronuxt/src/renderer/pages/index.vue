@@ -1,91 +1,111 @@
 <template>
-  <div class="e-nuxt-container">
-    <div class="e-nuxt-content">
-      <div class="e-nuxt-logo">
-        <img style="max-width: 100%;" src="~assets/electron-nuxt.png">
-      </div>
-      <div class="e-nuxt-system-info">
-        <system-information />
-      </div>
-    </div>
-    <div class="e-nuxt-links">
-      <div class="e-nuxt-button" @click="openURL('https://github.com/michalzaq12/electron-nuxt')">
-        Github
-      </div>
-      <div class="e-nuxt-button" @click="openURL('https://nuxtjs.org/guide')">
-        Nuxt.js
-      </div>
-      <div class="e-nuxt-button" @click="openURL('https://electronjs.org/docs')">
-        Electron.js
-      </div>
-    </div>
+  <div>
+    <!--Left div-->
+    <div class="row">
+      <div class="col s6">
+        <div class="userInfo">
+          <h3>img</h3>
+          <h3>Username</h3>
+        </div>
+        <div class="generalLinks">
+				<!--Vertical Nav-->
+					<h3>General</h3>
+					<ul>
+						<li>Home</li>
+						<li>Projects</li>
+						<li>
+							<button>
+								<nuxt-link
+                  to="/push"
+                  exact
+                >
+                  Start a project
+                </nuxt-link>
+							</button>
+						</li>
+						<li>Manage Samples</li>
+					</ul>
+        </div>
+        <div class="accountLinks">
+					<h3>Account</h3>
+					<ul>
+						<li>Sign out</li>
+					</ul>
+				</div>
+			</div>
+
+			<!--Right Div-->
+			<div class="col s6">
+				<!--Top buttons Div-->
+				<div>
+					<button>
+            <nuxt-link
+              to="/push"
+              exact
+            >
+              Retrive changes from repo
+            </nuxt-link>
+          </button>
+          <button>
+            <nuxt-link
+              to="/push"
+              exact
+            >
+              Apply changes to repo
+            </nuxt-link>
+          </button>
+				</div>
+				<!-- Recent Projects -->
+				<div>
+					<ul>
+						<!--li will be cards -->
+						<li>Project 1</li>
+						<li>Project 2</li>
+						<li>Project 3</li>
+					</ul>
+				</div>
+			</div>
+		</div>
   </div>
 </template>
 
 <script>
-import { remote } from 'electron'
-import SystemInformation from '@/components/SystemInformation.vue'
 
 export default {
-  components: {
-    SystemInformation
-  },
-  data () {
-    return {
-      externalContent: ''
-    }
-  },
-  methods: {
-    openURL (url) {
-      remote.shell.openExternal(url)
-    }
-  }
+
 }
 </script>
 
 <style>
-.e-nuxt-container {
-  min-height: calc(100vh - 50px);
-  background: linear-gradient(to right, #ece9e6, #ffffff);
-  font-family: Helvetica, sans-serif;
-}
-
-.e-nuxt-content {
+ul{
+  list-style: none;
+  height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
-  padding-top: 100px;
-  align-items: flex-start;
-  flex-wrap: wrap;
 }
-
-.e-nuxt-logo{
-  width: 400px;
-}
-
-.e-nuxt-system-info {
-  padding: 20px;
-  border-top: 1px solid #397c6d;
-  border-bottom: 1px solid #397c6d;
-}
-
-.e-nuxt-links {
-  padding: 100px 0;
+.col{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 90vh;
+  margin: 0 2rem 0 2rem;
 }
 
-.e-nuxt-button {
-  color: #364758;
-  padding: 5px 20px;
-  border: 1px solid #397c6d;
-  margin: 0 20px;
-  border-radius: 15px;
-  font-size: 1rem;
+.generalLinks{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
-.e-nuxt-button:hover{
-  cursor: pointer;
-  color: white;
-  background-color: #397c6d;
+.userInfo{
+  display: flex;
+
 }
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
 </style>
