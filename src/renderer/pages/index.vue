@@ -20,6 +20,7 @@
         <!-- Recent Projects -->
         <div>
           <ul>
+            <li><Pull /></li>
             <!--li will be cards -->
             <li>Project 1</li>
             <li>Project 2</li>
@@ -32,7 +33,13 @@
 </template>
 
 <script>
-export default {}
+import Pull from '@/components/pull.vue'
+export default {
+  components:{
+    Pull
+  }
+}
+
 </script>
 
 <style>
