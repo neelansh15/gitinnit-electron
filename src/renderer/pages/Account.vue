@@ -9,7 +9,7 @@
 import { config } from "../oauth-config";
 import electronOauth2 from "electron-oauth2";
 
-// const GitHubConfig = {
+// const GitHubConfigOLD = {
 //   client_id: config.clientId,
 //   client_secret: config.clientSecret,
 //   scope: 'read:user',
@@ -49,10 +49,12 @@ export default {
 
       myApiOauth.getAccessToken(options).then((token) => {
         // use your token.access_token
-        console.log("Token: " + token);
+        console.log("Token: ");
+        console.log(token);
         myApiOauth.refreshToken(token.refresh_token).then((newToken) => {
           //use your new token
-          console.log("Refresh Token (Important): " + newToken);
+          console.log("Refresh Token (Important): ");
+          console.log(newToken);
         });
       });
 
