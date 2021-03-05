@@ -1,7 +1,8 @@
 <template>
   <div>
     <h1>Account</h1>
-    <button @click="login">Login</button>
+    <v-btn @click="newWindow">New Window (Testing)</v-btn>
+    <v-btn @click="login">Login</v-btn>
   </div>
 </template>
 
@@ -29,7 +30,7 @@ const GitHubConfig = {
 
 const options = {
   scope: "repo",
-  accessType: "",
+  // accessType: "",
 };
 
 const windowParams = {
@@ -42,22 +43,40 @@ const windowParams = {
 
 export default {
   methods: {
+    newWindow(){
+      //Test creating a new window
+      const electron = require('electron')
+      const BrowserWindow = electron.BrowserView || electron.remote.BrowserWindow
+      const mywindow = new BrowserWindow();
+      mywindow.loadURL("http://google.com")
+      mywindow.show()
+    },
     login() {
-
       console.log("Login test");
       const myApiOauth = electronOauth2(GitHubConfig, windowParams);
 
-      myApiOauth.getAccessToken(options).then((token) => {
-        // use your token.access_token
-        console.log("Token: ");
-        console.log(token);
-        myApiOauth.refreshToken(token.refresh_token).then((newToken) => {
-          //use your new token
-          console.log("Refresh Token (Important): ");
-          console.log(newToken);
+      myApiOauth
+        .getAccessToken(options)
+        .then((token) => {
+          // use your token.access_token
+          console.log("Token: ");
+          console.log(token);
+          myApiOauth
+            .refreshToken(token.refresh_token)
+            .then((newToken) => {
+              //use your new token
+              console.log("Refresh Token (Important): ");
+              console.log(newToken);
+            })
+            .catch((e) => {
+              console.log("Error while fetching REFRESH_TOKEN: ");
+              console.log(e);
+            });
+        })
+        .catch((e) => {
+          console.log("Error while fetching TOKEN: ");
+          console.log(e);
         });
-      });
-
     },
   },
 };
