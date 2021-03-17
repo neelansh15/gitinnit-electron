@@ -7,6 +7,7 @@ const git = simpleGit(path, { config: [githubPath] })
 
 const init = async () => {
   await git.init()
+  console.log('init')
   await git.add('test.txt')
 }
 const add = () => {

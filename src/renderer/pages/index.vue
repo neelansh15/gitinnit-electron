@@ -5,41 +5,24 @@
       <!--Top buttons Div-->
       <div>
         <button>
-          <nuxt-link to="/pull" exact>
+          <nuxt-link to="/details" exact>
             Retrive changes from repo
           </nuxt-link>
         </button>
         <button>
-          <nuxt-link to="/push" exact>
+          <nuxt-link to="/details" exact>
             Apply changes to repo
           </nuxt-link>
         </button>
       </div>
-
-      <!--Right Div-->
-      <div class="col s6">
-        <!--Top buttons Div-->
-        <div>
-          <button>
-            <nuxt-link to="/details" exact>
-              Retrive changes from repo
-            </nuxt-link>
-          </button>
-          <button>
-            <nuxt-link to="/details" exact>
-              Apply changes to repo
-            </nuxt-link>
-          </button>
-        </div>
-        <!-- Recent Projects -->
-        <div>
-          <ul>
-            <!--li will be cards -->
-            <li>Project 1</li>
-            <li>Project 2</li>
-            <li>Project 3</li>
-          </ul>
-        </div>
+      <!-- Recent Projects -->
+      <div>
+        <ul>
+          <!--li will be cards -->
+          <li>Project 1</li>
+          <li>Project 2</li>
+          <li>Project 3</li>
+        </ul>
       </div>
     </div>
   </div>
