@@ -25,11 +25,17 @@
         </ul>
       </div>
     </div>
-  </div>
+
 </template>
 
 <script>
-export default {}
+import Pull from '@/components/pull.vue'
+export default {
+  components:{
+    Pull
+  }
+}
+
 </script>
 
 <style>
