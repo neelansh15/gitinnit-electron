@@ -29,12 +29,6 @@
 </template>
 
 <script>
-import Pull from '@/components/pull.vue'
-export default {
-  components:{
-    Pull
-  }
-}
 
 </script>
 
