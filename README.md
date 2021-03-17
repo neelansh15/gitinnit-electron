@@ -1,25 +1,29 @@
-# electronuxt
+# Gitinnit?
 
-> An electron-nuxt project
-
-#### Build Setup
-
-``` bash
-# install dependencies
-yarn install
-
-# serve app with hot reload
-yarn run dev
-
-# build electron application for production
-yarn run build
-
-
-# lint all JS/Vue component files in `src/`
-yarn run lint
-
-```
-
----
-
-This project was generated with [electron-nuxt](https://github.com/michalzaq12/electron-nuxt) v1.6.0 using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://github.com/michalzaq12/electron-nuxt/blob/master/README.md).
+## ToDo
+ - Project config
+ - Create wrapper for simple-git (assets/ javascript file)
+ - Components
+    - pullpage.vue: **Parth**
+        - Use wrapper's simple-git module functions for git pull
+        - Vuetify layout
+    - pushpage.vue: **Vedant**
+        - Primary: Commit Changes, Secondary: Push commits
+ - Pages
+    - Intro *Tutorial*
+    - index.vue: Latest 3 projects
+    - startProject.vue: **Vedant**
+        - New project / Fetch from Github (clone): with *Tutorial* on how to add user to a repository
+        - Validation
+        - git init (through wrapper)
+    - Account.vue: **Neelansh**
+        - Github OAuth Login
+    - Timeline.vue: **Parth**
+        - Create new branch command: Local or Local+Remote
+    - details.vue: **Neelansh**, **Parth**
+        - Project details
+        - Timeline
+            - Set Default
+            - Create new Timeline (New branch)
+        - Amazon-type timeline
+            - Commit message, Go to this place in time
