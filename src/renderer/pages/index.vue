@@ -40,12 +40,12 @@
         <!--Top buttons Div-->
         <div>
           <button>
-            <nuxt-link to="/pull" exact>
+            <nuxt-link to="/details" exact>
               Retrive changes from repo
             </nuxt-link>
           </button>
           <button>
-            <nuxt-link to="/push" exact>
+            <nuxt-link to="/details" exact>
               Apply changes to repo
             </nuxt-link>
           </button>
