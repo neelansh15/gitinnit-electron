@@ -1,14 +1,12 @@
 <template>
   <v-app>
-    <!--Left div-->
-    <div class="row">
+    <!-- <div class="row">
       <div class="col s6">
         <div class="userInfo">
           <h3>img</h3>
           <h3>Username</h3>
         </div>
         <div class="generalLinks">
-          <!--Vertical Nav-->
           <h3>General</h3>
           <ul>
             <li>Home</li>
@@ -25,24 +23,66 @@
         </div>
         <div class="accountLinks">
           <h3>
-            <nuxt-link to="/account">
-              Account
-            </nuxt-link>
+            <nuxt-link to="/account"> Account </nuxt-link>
           </h3>
           <ul>
             <li>Sign out</li>
           </ul>
         </div>
       </div>
-    </div>
-    <nuxt />
+    </div> -->
+    <v-navigation-drawer permanent app>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title"> Gitinnit </v-list-item-title>
+          <v-list-item-subtitle> Welcome, John! </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider />
+
+      <v-list dense nav>
+        <v-list-item v-for="item in items" :key="item.title" link :to="item.to">
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+    <v-main>
+      <nuxt />
+    </v-main>
   </v-app>
 </template>
 
 <script>
 export default {
-  components: {}
-}
+  data() {
+    return {
+      items: [
+        {
+          title: "Dashboard",
+          icon: "mdi-view-dashboard",
+          to: "/",
+        },
+        {
+          title: "Start a project",
+          icon: "mdi-plus",
+          to: "/startproject",
+        },
+        {
+          title: "Account",
+          icon: "mdi-account",
+          to: "/account",
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style>
