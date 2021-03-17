@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "simple-git": "^2.36.0",
     "electron-oauth2": "^3.0.0"
   }
 }

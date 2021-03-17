@@ -114,8 +114,8 @@
             <p>Folder: {{ folder }}</p>
           </div>
 
-          <v-btn color="primary" @click="e1 = 1">
-            Continue
+          <v-btn color="primary" href="/details">
+            Confirm
           </v-btn>
 
           <v-btn text>
@@ -124,11 +124,6 @@
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
-    <div>
-      <nuxt-link to="/">
-        Back
-      </nuxt-link>
-    </div>
     <nuxt-link to="/" exact>
       Back
     </nuxt-link>
