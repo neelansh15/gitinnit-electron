@@ -1,6 +1,6 @@
 <template>
   <v-app>
-     <!--Left div-->
+    <!--Left div-->
     <div class="row">
       <div class="col s6">
         <div class="userInfo">
