@@ -1,32 +1,38 @@
 const simpleGit = require('simple-git')
 
 const path = 'C:\\Users\\vedant\\Desktop\\testFolder'
-const githubPath = 'https://github.com/devs4shah/Testing1'
+const githubPath = 'https://github.com/devs4shah/Testing1.git'
 
-const git = simpleGit(path, { config: [githubPath] })
+const git = simpleGit(path)
 
 const init = async () => {
-  await git.init()
-  console.log('init')
-  await git.add('test.txt')
+  try {
+    await git.init()
+      .then(console.log('init'))
+  } catch (e) {
+    console.log(e)
+  }
 }
-const add = () => {
-  console.log('add')
+const add = files => {
+  files.forEach(file => {
+    git.add(file)
+  })
 }
 const commit = () => {
-  console.log('commit')
+  git.commit('test')
 }
-const pull = () => {
-  console.log('pull')
+const pull = async () => {
+  await git.pull()
 }
-const push = () => {
-  console.log('push')
+const push = async () => {
+  await git.push('origin', 'main')
 }
 const config = () => {
   console.log('config')
 }
-const remote = () => {
-  console.log('remote')
+const remote = async () => {
+  await git.addRemote('origin', githubPath)
+    .then(console.log('wrapper remote'))
 }
 const branch = () => {
   console.log('branch')

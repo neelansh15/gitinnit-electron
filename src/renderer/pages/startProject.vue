@@ -179,7 +179,7 @@ export default {
 
 <style>
 #container {
-  width: 100vw;
+  width: 90vw;
   height: 90vh;
   display: flex;
   flex-direction: column;
