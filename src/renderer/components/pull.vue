@@ -1,16 +1,18 @@
 <template>
-    <div class="Pull">
-        <h1>Pull</h1>
+  <div class="Pull">
+    <h1>Pull</h1>
 
-        <v-btn class="pink while--text">Pull</v-btn>
-
-    </div>
-
+    <v-btn @click="GitPull" class="pink while--text">Git Pull</v-btn>
+  </div>
 </template>
 
 <script>
-
 export default {
-    
-}
+  methods: {
+    GitPull: () => {
+      console.log("Pull files");
+    },
+  },
+};
 </script>
+
