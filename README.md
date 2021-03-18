@@ -1,6 +1,7 @@
 # Gitinnit?
 
 ## ToDo
+ - Toggle Terminology switch
  - Project config
  - Create wrapper for simple-git (assets/ javascript file)
  - Components
@@ -16,6 +17,7 @@
         - New project / Fetch from Github (clone): with *Tutorial* on how to add user to a repository
         - Validation
         - git init (through wrapper)
+        - Generate config file
     - Account.vue: **Neelansh**
         - Github OAuth Login
     - Timeline.vue: **Parth**
