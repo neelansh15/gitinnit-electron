@@ -3,12 +3,12 @@
 ## ToDo
  - Toggle Terminology switch
  - Project config
- - Create wrapper for simple-git (assets/ javascript file)
+ - Create wrapper for simple-git (assets/ javascript file): **Vedant**
  - Components
-    - pullpage.vue: **Parth**
+    - pull.vue: **Parth**
         - Use wrapper's simple-git module functions for git pull
         - Vuetify layout
-    - pushpage.vue: **Vedant**
+    - push.vue: **Vedant**
         - Primary: Commit Changes, Secondary: Push commits
  - Pages
     - Intro *Tutorial*
