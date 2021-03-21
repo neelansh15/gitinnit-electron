@@ -64,6 +64,8 @@ const checkout = () => {
   console.log('checkout')
 }
 
+// Find the return type of git.log()
+
 const log = () => {
   git.log({ file: githubPath })
 }
