@@ -1,13 +1,6 @@
 <template>
   <div>
     <!--Right Div-->
-     <pull></pull>  
-     <br>
-
-        <timeline />
-    
-
-
     <div class="col s6">
       <!--Top buttons Div-->
       <div>
@@ -38,16 +31,8 @@
 
 <script>
 
-import pull from "@/components/pull.vue"
-import timeline from "@/components/timeline.vue"
-
 export default {
-  components : {
-    pull,timeline
-  }
 }
-
-
 
 </script>
 

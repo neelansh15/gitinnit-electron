@@ -65,7 +65,7 @@ const checkout = () => {
 }
 
 const log = () => {
-  console.log(git.log())
+  git.log({ file: githubPath })
 }
 
 export { init, add, addFiles, commit, remote, branch, checkout, pull, push, config, log }
