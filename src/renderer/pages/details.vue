@@ -18,6 +18,7 @@ export default {
   },
   methods: {
     push () {
+      git.log()
       console.log(this.directoryPath)
       const tfiles = []
       fs.readdir(this.directoryPath, function (err, files) {

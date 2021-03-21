@@ -64,4 +64,8 @@ const checkout = () => {
   console.log('checkout')
 }
 
-export { init, add, addFiles, commit, remote, branch, checkout, pull, push, config }
+const log = () => {
+  console.log(git.log())
+}
+
+export { init, add, addFiles, commit, remote, branch, checkout, pull, push, config, log }

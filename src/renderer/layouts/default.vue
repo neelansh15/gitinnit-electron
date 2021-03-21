@@ -49,11 +49,6 @@ export default {
           title: 'Account',
           icon: 'mdi-account',
           to: '/account'
-        },
-        {
-          title: 'test',
-          icon: 'mdi-account',
-          to: '/details'
         }
       ]
     }
