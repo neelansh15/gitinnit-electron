@@ -32,28 +32,33 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       items: [
         {
-          title: "Dashboard",
-          icon: "mdi-view-dashboard",
-          to: "/",
+          title: 'Dashboard',
+          icon: 'mdi-view-dashboard',
+          to: '/'
         },
         {
-          title: "Start a project",
-          icon: "mdi-plus",
-          to: "/startproject",
+          title: 'Start a project',
+          icon: 'mdi-plus',
+          to: '/startproject'
         },
         {
-          title: "Account",
-          icon: "mdi-account",
-          to: "/account",
+          title: 'Account',
+          icon: 'mdi-account',
+          to: '/account'
         },
-      ],
-    };
-  },
-};
+        {
+          title: 'test',
+          icon: 'mdi-account',
+          to: '/details'
+        }
+      ]
+    }
+  }
+}
 </script>
 
 <style>

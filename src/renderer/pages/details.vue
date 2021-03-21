@@ -1,35 +1,60 @@
 <template>
-  <h1>details</h1>
+  <div>
+    <h1>details</h1>
+    <v-btn @click="tp()">Push Files</v-btn>
+  </div>
 </template>
 
 <script>
 
 const fs = require('fs')
-
-const directoryPath = 'C:\\Users\\vedant\\Desktop\\testFolder'
-
 const git = require('../gitWrapper')
 
-git.init()
-console.log('init')
-git.remote()
-console.log('remote')
-
-fs.readdir(directoryPath, function (err, files) {
-  if (err) {
-    return console.log('Unable to scan directory: ' + err)
-  }
-  git.add(files)
-  console.log(files)
-})
-console.log('add')
-
-git.commit()
-console.log('commit')
-
-git.push()
-console.log('push')
-
 export default {
+  data () {
+    return {
+      directoryPath: 'C:\\Users\\vedant\\Desktop\\testFolder'
+    }
+  },
+  methods: {
+    tp () {
+      console.log(this.directoryPath)
+      const tfiles = []
+      fs.readdir(this.directoryPath, function (err, files) {
+        console.log('read')
+        if (err) {
+          return console.log('Unable to scan directory: ' + err)
+        }
+        files.forEach(file => {
+          console.log('adding to array')
+          tfiles.push(file)
+        })
+        console.log(tfiles)
+        git.init
+          .then(
+            function (args) {
+              console.log('init')
+              git.remote
+                .then(
+                  function (args) {
+                    console.log('remote')
+                    git.addFiles(tfiles)
+                  }
+                )
+            }
+          )
+          .then(
+            function (args) {
+              console.log('commit')
+              git.commit('added file')
+            }
+          )
+        git.pull()
+        console.log('git pull')
+        git.push()
+      }
+      )
+    }
+  }
 }
 </script>

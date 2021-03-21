@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--Right Div-->
-     <pull></pull>     
+    <pull />
     <div class="col s6">
       <!--Top buttons Div-->
       <div>
@@ -31,10 +31,10 @@
 
 <script>
 
-import pull from "@/components/pull.vue"
+import pull from '@/components/pull.vue'
 
 export default {
-  components : {
+  components: {
     pull
   }
 }
