@@ -1,7 +1,18 @@
 <template>
   <div>
     <!--Right Div-->
-     <pull></pull>     
+     <pull></pull>  
+     <br>
+
+          
+      <button>
+        <nuxt-link to = '/timeline'>
+          Timeline
+        </nuxt-link>
+      </button>
+    
+
+
     <div class="col s6">
       <!--Top buttons Div-->
       <div>
@@ -10,6 +21,7 @@
             Retrive changes from repo
           </nuxt-link>
         </button>
+        <br>
         <button>
           <nuxt-link to="/details" exact>
             Apply changes to repo
@@ -32,12 +44,15 @@
 <script>
 
 import pull from "@/components/pull.vue"
+import timeline from "@/components/timeline.vue"
 
 export default {
   components : {
-    pull
+    pull,timeline
   }
 }
+
+
 
 </script>
 
