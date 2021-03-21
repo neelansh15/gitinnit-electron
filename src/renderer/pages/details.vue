@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>details</h1>
-    <v-btn @click="tp()">Push Files</v-btn>
+    <v-btn @click="push()">Push Files</v-btn>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
     }
   },
   methods: {
-    tp () {
+    push () {
       console.log(this.directoryPath)
       const tfiles = []
       fs.readdir(this.directoryPath, function (err, files) {

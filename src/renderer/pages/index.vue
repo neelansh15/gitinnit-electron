@@ -4,12 +4,7 @@
      <pull></pull>  
      <br>
 
-          
-      <button>
-        <nuxt-link to = '/timeline'>
-          Timeline
-        </nuxt-link>
-      </button>
+        <timeline />
     
 
 
