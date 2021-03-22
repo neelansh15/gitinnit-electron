@@ -1,28 +1,46 @@
 <template>
-    <div>
-        <h1>Timeline</h1>
-        <v-btn @click="Commit()">Commit</v-btn>
-    </div>
+  <v-timeline>
+    <v-item v-for="launches in launches" :key="launches">
+      <v-timeline-item large>
+        <template v-slot:opposite>
+          <span>{{ launches.date }}</span>
+        </template>
+        <v-card class="elevation-2">
+          <v-card-title class="headline"
+            >code: {{ launches.code }}
+          </v-card-title>
+          <v-card-subtitle>Name : {{ launches.name }}</v-card-subtitle>
+          <v-card-text>
+            {{ launches.commit }}
+          </v-card-text>
+        </v-card>
+      </v-timeline-item>
+    </v-item>
+  </v-timeline>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-        name: 'neelansh15',
-        action: 'Merge',
-        date: '01/1/2021',
-        code: '098e45'
-    }
+      launches: [
+        {
+          name: "neelansh15",
+          commit: "New changes",
+          code: "#1234",
+          date: "01/12/2021",
+        },
+        {
+          name: "neelansh15",
+          commit: "New changes",
+          code: "#1234",
+          date: "01/12/2021",
+        },
+      ],
+    };
   },
-  methods:{
-      Commit(){
-          console.log(this.name)
-      }
-  }
-  }; 
-
+};
 </script>
 
-<style>
+<style >
 </style>
