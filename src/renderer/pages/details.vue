@@ -55,34 +55,17 @@ export default {
           return console.log('Unable to scan directory: ' + err)
         }
         files.forEach(file => {
-          console.log('adding to array')
-          tfiles.push(file)
-        })
-        console.log(tfiles)
-        git.init
-          .then(
-            function (args) {
-              console.log('init')
-              git.remote
-                .then(
-                  function (args) {
-                    console.log('remote')
-                    git.addFiles(tfiles)
-                  }
-                )
-            }
-          )
-          .then(
-            function (args) {
-              console.log('commit')
-              git.commit('added file')
-            }
-          )
-        git.pull()
-        console.log('git pull')
-        git.push()
-      }
-      )
+          console.log("adding to array");
+          tfiles.push(file);
+        });
+        console.log(tfiles);
+        git.addFiles(tfiles);
+        console.log("commit");
+        git.commit("added file");
+        git.pull();
+        console.log("git pull");
+        git.push();
+      });
     },
     log () {
       const git = require('../gitWrapper')

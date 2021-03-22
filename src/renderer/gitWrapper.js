@@ -2,22 +2,18 @@ const simpleGit = require("simple-git");
 
 let path;
 let githubPath;
+let git;
 
-const setPath = (inputPath, inputGithubPath) => {
+function setPath(inputPath, inputGithubPath) {
   path = inputPath;
+  console.log(path);
   githubPath = inputGithubPath;
+  git = simpleGit(path);
+}
+
+const init = () => {
+  git.init();
 };
-
-const git = simpleGit(path);
-
-const init = new Promise(function(resolve, reject) {
-  console.log("init wrapper");
-  if (git.init()) {
-    resolve("ok");
-  } else {
-    reject("No");
-  }
-});
 
 const remote = new Promise(function(resolve, reject) {
   console.log("remote wrapper");
