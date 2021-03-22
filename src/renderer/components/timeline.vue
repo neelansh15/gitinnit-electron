@@ -32,9 +32,9 @@ export default {
         },
         {
           name: "neelansh15",
-          commit: "New changes",
-          code: "#1234",
-          date: "01/12/2021",
+          commit: "Old changes",
+          code: "#5678",
+          date: "02/12/2021",
         },
       ],
     };
