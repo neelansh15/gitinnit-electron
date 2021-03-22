@@ -1,17 +1,17 @@
 <template>
   <v-timeline>
-    <v-item v-for="launches in launches" :key="launches">
+    <v-item v-for="launch in launches" :key="launch.code">
       <v-timeline-item large>
         <template v-slot:opposite>
-          <span>{{ launches.date }}</span>
+          <span>{{ launch.date }}</span>
         </template>
         <v-card class="elevation-2">
           <v-card-title class="headline"
-            >code: {{ launches.code }}
+            >code: {{ launch.code }}
           </v-card-title>
-          <v-card-subtitle>Name : {{ launches.name }}</v-card-subtitle>
+          <v-card-subtitle>Name : {{ launch.name }}</v-card-subtitle>
           <v-card-text>
-            {{ launches.commit }}
+            {{ launch.commit }}
           </v-card-text>
         </v-card>
       </v-timeline-item>
