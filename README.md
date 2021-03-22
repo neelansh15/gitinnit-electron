@@ -2,7 +2,7 @@
 
 ## ToDo
  - Toggle Terminology switch
- - Project config
+ - Global config (Read https://medium.com/cameron-nokes/how-to-store-user-data-in-electron-3ba6bf66bc1e)
  - Create wrapper for simple-git (assets/ javascript file): **Vedant**
  - Components
     - pull.vue: **Parth**
@@ -17,7 +17,7 @@
         - New project / Fetch from Github (clone): with *Tutorial* on how to add user to a repository
         - Validation
         - git init (through wrapper)
-        - Generate config file
+        - Generate project config file
     - Account.vue: **Neelansh**
         - Github OAuth Login
     - Timeline.vue: **Parth**

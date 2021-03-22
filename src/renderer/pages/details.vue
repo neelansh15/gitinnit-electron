@@ -23,7 +23,7 @@ import push from "@/components/push.vue"
 import timeline from "@/components/timeline.vue"
 
 const fs = require('fs')
-const git = require('../gitWrapper')
+
 
 export default {
   data () {
@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     push () {
+      const git = require('../gitWrapper')
       console.log(this.directoryPath)
       const tfiles = []
       fs.readdir(this.directoryPath, function (err, files) {
@@ -81,6 +82,8 @@ export default {
       )
     },
     log () {
+      const git = require('../gitWrapper')
+      git.log()
       console.log(git.log())
     }
   }
