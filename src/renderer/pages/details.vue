@@ -33,7 +33,9 @@
 
     <pull />
     <v-btn @click="log()">Log</v-btn>
-    <timeline />
+    <br>
+    <h1>Timeline</h1>
+    <timeline></timeline>
   </div>
 </template>
 
