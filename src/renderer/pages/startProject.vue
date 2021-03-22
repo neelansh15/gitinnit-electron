@@ -118,6 +118,7 @@ export default {
   data() {
     return {
       path: "none",
+      githubPath: "https://github.com/devs4shah/Testing1.git",
       folder: "none",
       message: "",
       e1: 1,
@@ -177,7 +178,11 @@ export default {
         console.assert("Written to config file. e => " + e);
       });
       alert("Created new project config file!");
-      window.location.href = "/details";
+
+      const git = require("../gitWrapper");
+      git.setPath(this.path, this.githubPath);
+      git.init();
+      this.$router.push("/details");
     }
   }
 };

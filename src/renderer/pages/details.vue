@@ -92,18 +92,9 @@ export default {
           tfiles.push(file);
         });
         console.log(tfiles);
-        git.init
-          .then(function(args) {
-            console.log("init");
-            git.remote.then(function(args) {
-              console.log("remote");
-              git.addFiles(tfiles);
-            });
-          })
-          .then(function(args) {
-            console.log("commit");
-            git.commit("added file");
-          });
+        git.addFiles(tfiles);
+        console.log("commit");
+        git.commit("added file");
         git.pull();
         console.log("git pull");
         git.push();
