@@ -13,13 +13,13 @@ import pull from "@/components/pull.vue"
 import timeline from "@/components/timeline.vue"
 
 const fs = require('fs')
-const git = require('../gitWrapper')
+
 
 
 export default {
   data () {
     return {
-      directoryPath: 'C:\\Users\\vedant\\Desktop\\testFolder'
+      directoryPath: 'E:\\Documents\\Programming\\TEST'
     }
   },
   components: {
@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     push () {
+      const git = require('../gitWrapper')
       console.log(this.directoryPath)
       const tfiles = []
       fs.readdir(this.directoryPath, function (err, files) {
@@ -65,6 +66,7 @@ export default {
       )
     },
     log () {
+      const git = require('../gitWrapper')
       git.log()
       console.log(git.log())
     }
