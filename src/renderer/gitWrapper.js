@@ -67,7 +67,7 @@ const checkout = () => {
 // Find the return type of git.log()
 
 const log = () => {
-  git.log({ file: githubPath })
+  git.log()
 }
 
 export { init, add, addFiles, commit, remote, branch, checkout, pull, push, config, log }

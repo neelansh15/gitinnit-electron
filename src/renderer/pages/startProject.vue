@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-    <v-btn to="details">Condi</v-btn>
+    <v-btn to="/details">Conditional</v-btn>
     <h1>Start a new project</h1>
     <v-stepper v-model="e1">
       <v-stepper-header>

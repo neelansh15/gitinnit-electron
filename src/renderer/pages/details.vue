@@ -1,8 +1,17 @@
 <template>
   <div>
     <h1>details</h1>
-    <v-btn @click="push()">Push Files</v-btn>
-         <pull></pull>  
+    <h2>Project Name:</h2>
+    <h2>Author Name:</h2>
+    <v-btn @click="push()">
+      <push
+        v-for="(file, index) in files.length"
+        :key="file.name"
+        :index="index"
+        :names-array="files.map(a => a.name)"
+      />
+    </v-btn>
+    <pull />
     <v-btn @click="log()">Log</v-btn>
     <timeline />
   </div>
@@ -10,20 +19,27 @@
 
 <script>
 import pull from "@/components/pull.vue"
+import push from "@/components/push.vue"
 import timeline from "@/components/timeline.vue"
 
 const fs = require('fs')
 const git = require('../gitWrapper')
 
-
 export default {
   data () {
     return {
-      directoryPath: 'C:\\Users\\vedant\\Desktop\\testFolder'
+      directoryPath: 'C:\\Users\\vedant\\Desktop\\testFolder',
+      files: [
+        {
+          name: 'Frozen Yogurt',
+          required: 1,
+          vMode1: ''
+        }
+      ]
     }
   },
   components: {
-    pull,timeline
+    pull, timeline, push
   },
   methods: {
     push () {
@@ -65,7 +81,6 @@ export default {
       )
     },
     log () {
-      git.log()
       console.log(git.log())
     }
   }
