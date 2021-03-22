@@ -1,8 +1,9 @@
 <template>
   <div>
-    <h1>details</h1>
-    <h2>Project Name:</h2>
-    <h2>Author Name:</h2>
+    <h1>Details</h1>
+    <h2>Project Name: {{ projectName }}</h2>
+    <h2>Author Name: {{ author }}</h2>
+    <v-btn @click="check">Check path</v-btn>
 
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on, attrs }">
@@ -24,6 +25,9 @@
         </v-list>
         <v-spacer></v-spacer>
         <v-btn @click="push">Push files</v-btn>
+        <v-card-actions>
+          <v-btn @click="dialog = false">Close</v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
 
@@ -37,14 +41,19 @@
 import pull from "@/components/pull.vue";
 import push from "@/components/push.vue";
 import timeline from "@/components/timeline.vue";
+import projects from "@/projects.json";
 
 const fs = require("fs");
 
 export default {
   data() {
     return {
-      directoryPath: "C:\\Users\\vedant\\Desktop\\testFolder",
-      files: []
+      directoryPath: projects.path,
+      githubPath: projects.githubPath,
+      projectName: projects.name,
+      author: projects.author,
+      files: [],
+      dialog: false
     };
   },
   components: {
@@ -65,9 +74,13 @@ export default {
       });
       console.log(this.files);
     },
+    check() {
+      console.log(this.directoryPath);
+    },
     push() {
       const git = require("../gitWrapper");
       console.log(this.directoryPath);
+      git.setPath(this.directoryPath, this.githubPath);
       const tfiles = [];
       fs.readdir(this.directoryPath, function(err, files) {
         console.log("read");
