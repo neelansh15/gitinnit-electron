@@ -73,7 +73,7 @@
             </p>
             <v-checkbox
               v-model="checkbox"
-              :rules="[(v) => !!v || 'You must agree to continue!']"
+              :rules="[v => !!v || 'You must agree to continue!']"
               label="Do you agree?"
               required
             />
@@ -128,7 +128,7 @@ export default {
         "Ableton Live",
         "Reason",
         "Logic Pro X",
-        "Cubase",
+        "Cubase"
       ],
       name: "",
       author: "",
@@ -138,14 +138,14 @@ export default {
       checkbox: false,
 
       nameRules: [
-        (v) => !!v || "Name is required",
-        (v) => (v && v.length < 30) || "Name must be less than 10 characters",
+        v => !!v || "Name is required",
+        v => (v && v.length < 30) || "Name must be less than 10 characters"
       ],
       descriptionRules: [
-        (v) => !!v || "Description is required",
-        (v) =>
-          (v && v.length < 50) || "Description must be less than 50 characters",
-      ],
+        v => !!v || "Description is required",
+        v =>
+          (v && v.length < 50) || "Description must be less than 50 characters"
+      ]
     };
   },
   methods: {
@@ -171,14 +171,15 @@ export default {
         description: this.description,
         genre: this.genre,
         daw: this.daw,
-        folder: this.folder,
+        folder: this.folder
       };
-      fs.writeFileSync(configPath, JSON.stringify(configData), function (e) {
+      fs.writeFileSync(configPath, JSON.stringify(configData), function(e) {
         console.assert("Written to config file. e => " + e);
       });
-      alert("Created new project config file!")
-    },
-  },
+      alert("Created new project config file!");
+      window.location.href = "/details";
+    }
+  }
 };
 </script>
 
