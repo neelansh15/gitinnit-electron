@@ -33,7 +33,7 @@
 
     <pull />
     <v-btn @click="log()">Log</v-btn>
-    <br>
+    <br />
     <h1>Timeline</h1>
     <timeline></timeline>
   </div>
