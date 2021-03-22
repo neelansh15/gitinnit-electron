@@ -1,17 +1,6 @@
 <template>
   <div>
-    <v-card
-      max-width="475"
-      class="mx-auto"
-    >
-      <v-list
-        subheader
-        two-line
-        flat
-      >
-        <v-list-item-group
-          multiple
-        >
+    
           <v-list-item>
             <template v-slot:default="{ active, }">
               <v-list-item-action>
