@@ -14,8 +14,18 @@
     </div>
 
     <div class="mt-5">
-      <v-btn depressed small>Fetch repos</v-btn>
+      <v-btn @click="fetchRepos" depressed small>Fetch repos</v-btn>
       <v-btn @click="logout" depressed small>Log out</v-btn>
+    </div>
+
+    <div v-if="repos.length > 0">
+      <v-list>
+        <v-list-item v-for="repo in repos" :key="repo.id">
+          <v-list-item-content>
+            {{ repo.full_name }}
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
     </div>
 
   </div>
@@ -32,14 +42,28 @@ export default {
   data: () => ({
     access_token: "",
     user: {},
+    repos:[]
   }),
   methods:{
+    fetchRepos(){
+       axios
+        .get(`https://api.github.com/user/repos`, {
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+            Authorization: "token " + this.access_token,
+          },
+        })
+        .then((res) => {
+          this.repos = res.data
+          console.log(res.data)
+        })
+    },
     logout(){
       //Not the best solution. Should revoke token from Github too
       this.$store.commit('setAccessToken', '')
       //also set empty in global config (WIP)
       this.$router.push('/') // MAYBE put /login after testing
-    } 
+    }
   },
   created() {
     //check if logged in.
