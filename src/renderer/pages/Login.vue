@@ -16,7 +16,13 @@
         >
       </v-card>
 
-      <v-alert class="mt-5" color="red lighten-2" v-if="error != '' && error != null" v-model="showError" dismissible>
+      <v-alert
+        class="mt-5"
+        color="red lighten-2"
+        v-if="error != '' && error != null"
+        v-model="showError"
+        dismissible
+      >
         {{ error }}
       </v-alert>
 
@@ -25,7 +31,7 @@
       </h1>
 
       <v-footer class="blue lighten-1" v-if="auth.user_code" app
-        >Click here after entering the code in the browser's auth page:
+        >Once you have entered the code in the browser's auth page,
         <v-btn @click="verifyLogin" class="blue lighten-1" depressed
           >Go forward</v-btn
         >
@@ -36,16 +42,21 @@
 </template>
 
 <script>
+const { remote } = require("electron");
+const { app } = remote;
+const qs = require("querystring");
+const fs = require("fs");
+
 import { shell } from "electron";
 import axios from "axios";
 import { config } from "../oauth-config";
-const qs = require("querystring");
+import pkg from "../../../package.json";
 
 export default {
   data: () => ({
     step1: true,
     showError: false,
-    error: '',
+    error: "",
     auth: {},
     final_token_obj: {}, //Store in Vuex store though
   }),
@@ -74,13 +85,37 @@ export default {
           const authResponse = qs.parse(res.data);
           if (authResponse?.error) {
             this.error = authResponse.error_description;
-            this.showError = true
+            this.showError = true;
           } else {
             this.final_token_obj = authResponse;
             console.log(authResponse);
 
-            this.$store.commit('setAccessToken', authResponse.access_token)
-            this.$router.push('/account')
+            //Set access token in the state
+            this.$store.commit("setAccessToken", authResponse.access_token);
+
+            //Set user data in a global config
+            const appDataPath = app.getPath("appData") + "\\" + pkg.name;
+            const appDataGlobalConfigPath = appDataPath + "\\globalConfig.js";
+            console.log(appDataGlobalConfigPath);
+
+            if(!fs.existsSync(appDataPath)){
+              fs.mkdirSync(appDataPath)
+            }
+            if (!fs.existsSync(appDataGlobalConfigPath)) {
+              fs.openSync(appDataGlobalConfigPath, "w+");
+            }
+
+            fs.writeFileSync(
+              appDataGlobalConfigPath,
+              JSON.stringify({
+                access_token: authResponse.access_token,
+              }),
+              {
+                flag: "w",
+              }
+            );
+
+            this.$router.push("/account");
           }
         });
     },

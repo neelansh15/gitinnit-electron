@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <h1>Account</h1>
-    <div class="d-flex align-center ml-5">
+  <div class="mx-5 mt-5">
+    <div class="d-flex align-center">
       <v-avatar size="70">
         <v-img
           :src="user.avatar_url"
@@ -13,17 +12,35 @@
         <p class="text-caption">@{{ user.login }}</p>
       </div>
     </div>
+
+    <div class="mt-5">
+      <v-btn depressed small>Fetch repos</v-btn>
+      <v-btn @click="logout" depressed small>Log out</v-btn>
+    </div>
+
   </div>
 </template>
 
 <script>
 import axios from "axios";
+const { remote } = require("electron");
+const { app } = remote;
+import pkg from '../../../package.json'
+const fs = require('fs')
 
 export default {
   data: () => ({
     access_token: "",
     user: {},
   }),
+  methods:{
+    logout(){
+      //Not the best solution. Should revoke token from Github too
+      this.$store.commit('setAccessToken', '')
+      //also set empty in global config (WIP)
+      this.$router.push('/') // MAYBE put /login after testing
+    } 
+  },
   created() {
     //check if logged in.
     this.access_token = this.$store.state.access_token;
@@ -42,6 +59,15 @@ export default {
         .then((res) => {
           console.log(res);
           this.user = res.data;
+
+          //Update global config with any possible new data
+          const appDataGlobalConfigPath = app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.js";
+            console.log(appDataGlobalConfigPath);
+
+            fs.writeFileSync(appDataGlobalConfigPath, JSON.stringify({
+              access_token: this.access_token, //Actually this should come from the global config itself not the state. Modify later
+              user: res.data
+            }))
         });
     }
   },
