@@ -1,117 +1,49 @@
 <template>
-  <div class="mx-5 mt-5">
-    <div class="d-flex align-center" v-if="loggedIn">
-      <v-img
-        src="https://img.icons8.com/bubbles/100/000000/gender-neutral-user.png"
-        width="100"
-        height="100"
-        class="flex-grow-0"
-      />
-      <div class="mt-4">
-        <h3>Neelansh Mathur</h3>
-        <p class="text-caption">@mneelansh15</p>
+  <div>
+    <h1>Account</h1>
+    <div class="d-flex align-center ml-5">
+      <v-avatar size="70">
+        <v-img
+          :src="user.avatar_url"
+          class="flex-grow-0"
+        />
+      </v-avatar>
+      <div class="mt-4 ml-4">
+        <h3>{{ user.name }}</h3>
+        <p class="text-caption">@{{ user.login }}</p>
       </div>
-    </div>
-    <!-- <v-btn @click="newWindow">New Window (Testing)</v-btn> -->
-
-    <div v-if="!loggedIn">
-      <v-card class="pa-5">
-        <h1 class="text-h5">Request code and enter it in the Auth page</h1>
-        <v-btn @click="login" depressed>Request code</v-btn>
-        <v-btn
-          @click="openURL"
-          class="red lighten-1"
-          :disabled="
-            this.auth.verification_uri == '' ||
-            this.auth.verification_uri == null
-          "
-          depressed
-          >Go to Auth page</v-btn
-        >
-      </v-card>
-
-      <v-alert class="mt-5" color="red lighten-2" v-if="error != '' && error != null" v-model="showError" dismissible>
-        {{ error }}
-      </v-alert>
-
-      <h1 v-if="auth.user_code" class="text-h1 text-center mt-5">
-        {{ auth.user_code }}
-      </h1>
-
-      <v-footer class="blue lighten-1" v-if="auth.user_code" app
-        >Click here after entering the code in the browser's auth page:
-        <v-btn @click="verifyLogin" class="blue lighten-1" depressed
-          >Go forward</v-btn
-        >
-        {{ final_token_obj.access_token }}
-      </v-footer>
     </div>
   </div>
 </template>
 
 <script>
-import { shell } from "electron";
 import axios from "axios";
-import { config } from "../oauth-config";
-const qs = require("querystring");
-
-// const windowParams = {
-//   alwaysOnTop: true,
-//   autoHideMenuBar: true,
-//   webPreferences: {
-//     nodeIntegration: false,
-//   },
-// };
 
 export default {
   data: () => ({
-    loggedIn: false,
-    step1: true,
-    showError: false,
-    error: '',
-    auth: {},
-    final_token_obj: {}, //Store in Vuex store though
+    access_token: "",
+    user: {},
   }),
-  methods: {
-    // newWindow () {
-    //   // Test creating a new window
-    //   const electron = require('electron')
-    //   const BrowserWindow = electron.BrowserView || electron.remote.BrowserWindow
-    //   const mywindow = new BrowserWindow()
-    //   mywindow.loadURL('https://github.com/login/oauth/authorize')
-    //   mywindow.show()
-    // },
-    login() {
-      //Request verification_url, device_code and user_code
-      const scope = "repo%20read:user";
+  created() {
+    //check if logged in.
+    this.access_token = this.$store.state.access_token;
+    if (this.access_token == "" || this.access_token == null) {
+      //If not logged in redirect to /login
+      this.$router.push("/login");
+    } else {
+      //fetch user info
       axios
-        .post(
-          `https://github.com/login/device/code?client_id=${config.clientId}&scope=${scope}`
-        )
+        .get(`https://api.github.com/user`, {
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+            Authorization: "token " + this.access_token,
+          },
+        })
         .then((res) => {
-          this.auth = qs.parse(res.data);
-          console.log(this.auth);
+          console.log(res);
+          this.user = res.data;
         });
-    },
-    openURL() {
-      shell.openExternal(this.auth.verification_uri);
-    },
-    verifyLogin() {
-      axios
-        .post(
-          `https://github.com/login/oauth/access_token?client_id=${config.clientId}&device_code=${this.auth.device_code}&grant_type=urn:ietf:params:oauth:grant-type:device_code`
-        )
-        .then((res) => {
-          const authResponse = qs.parse(res.data);
-          if (authResponse?.error) {
-            this.error = authResponse.error_description;
-            this.showError = true
-          } else {
-            this.final_token_obj = authResponse;
-            console.log(authResponse);
-          }
-        });
-    },
+    }
   },
 };
 </script>
