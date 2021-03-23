@@ -44,7 +44,7 @@
               </v-dialog>
             </v-col>
             <v-col>
-              <pull />
+              <v-btn @click="pull">Pull Files</v-btn>
             </v-col>
           </v-row>
         </v-flex>
@@ -59,7 +59,6 @@
 </template>
 
 <script>
-import pull from "@/components/pull.vue";
 import push from "@/components/push.vue";
 import timeline from "@/components/timeline.vue";
 import projects from "@/projects.json";
@@ -78,15 +77,14 @@ export default {
     };
   },
   components: {
-    pull,
     timeline,
     push
   },
   mounted() {
-    // note cant change path here needs to be passed as string
-    // this.importAll(
-    //   require.context("C:\\Users\\vedant\\Desktop\\testFolder", true, /\.txt$/)
-    // );
+    //note cant change path here needs to be passed as string
+    this.importAll(
+      require.context("C:\\Users\\vedant\\Desktop\\testFolder", true, /\.txt$/)
+    );
   },
   methods: {
     importAll(r) {
@@ -125,6 +123,11 @@ export default {
       const git = require("../gitWrapper");
       git.log();
       console.log(git.log());
+    },
+    pull() {
+      const git = require("../gitWrapper");
+      git.setPath(this.directoryPath, this.githubPath);
+      git.pull();
     }
   }
 };
