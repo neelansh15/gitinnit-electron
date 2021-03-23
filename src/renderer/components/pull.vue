@@ -8,8 +8,8 @@
 export default {
   methods: {
     GitPull: () => {
-      console.log("Pull files");
+      console.log('Pull files')
     }
   }
-};
+}
 </script>

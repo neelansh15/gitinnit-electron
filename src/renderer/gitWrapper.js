@@ -1,8 +1,13 @@
 const simpleGit = require("simple-git");
+const { gitlogPromise } = require("gitlog");
 
 let path;
 let githubPath;
 let git;
+
+const options = {
+  repo: "C:\\Users\\vedant\\Desktop\\testFolder"
+};
 
 function setPath(inputPath, inputGithubPath) {
   path = inputPath;
@@ -68,7 +73,9 @@ const checkout = () => {
 // Find the return type of git.log()
 
 const log = () => {
-  git.log();
+  gitlogPromise(options)
+    .then(commits => console.log(commits))
+    .catch(err => console.log(err));
 };
 
 export {

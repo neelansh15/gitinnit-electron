@@ -17,35 +17,35 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 
 export default {
   data: () => ({
-    access_token: "",
-    user: {},
+    access_token: '',
+    user: {}
   }),
-  created() {
-    //check if logged in.
-    this.access_token = this.$store.state.access_token;
-    if (this.access_token == "" || this.access_token == null) {
-      //If not logged in redirect to /login
-      this.$router.push("/login");
+  created () {
+    // check if logged in.
+    this.access_token = this.$store.state.access_token
+    if (this.access_token == '' || this.access_token == null) {
+      // If not logged in redirect to /login
+      this.$router.push('/login')
     } else {
-      //fetch user info
+      // fetch user info
       axios
         .get(`https://api.github.com/user`, {
           headers: {
-            Accept: "application/vnd.github.v3+json",
-            Authorization: "token " + this.access_token,
-          },
+            Accept: 'application/vnd.github.v3+json',
+            Authorization: 'token ' + this.access_token
+          }
         })
-        .then((res) => {
-          console.log(res);
-          this.user = res.data;
-        });
+        .then(res => {
+          console.log(res)
+          this.user = res.data
+        })
     }
-  },
-};
+  }
+}
 </script>
 
 <style>

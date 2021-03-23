@@ -100,7 +100,7 @@
             <p>Folder: {{ folder }}</p>
           </div>
 
-          <v-btn @click="submit" color="primary"> Confirm </v-btn>
+          <v-btn color="primary" @click="submit"> Confirm </v-btn>
 
           <v-btn text> Cancel </v-btn>
         </v-stepper-content>
@@ -111,60 +111,60 @@
 </template>
 
 <script>
-const fs = require("fs");
+const fs = require('fs')
 
 export default {
-  data() {
+  data () {
     return {
-      path: "none",
-      githubPath: "https://github.com/devs4shah/Testing1.git",
-      folder: "none",
-      message: "",
+      path: 'none',
+      githubPath: 'https://github.com/devs4shah/Testing1.git',
+      folder: 'none',
+      message: '',
       e1: 1,
       valid: false,
       invalid: true,
       dawItems: [
-        "FL Studio",
-        "Ableton Live",
-        "Reason",
-        "Logic Pro X",
-        "Cubase"
+        'FL Studio',
+        'Ableton Live',
+        'Reason',
+        'Logic Pro X',
+        'Cubase'
       ],
-      name: "",
-      author: "",
-      description: "",
-      genre: "",
-      daw: "",
+      name: '',
+      author: '',
+      description: '',
+      genre: '',
+      daw: '',
       checkbox: false,
 
       nameRules: [
-        v => !!v || "Name is required",
-        v => (v && v.length < 30) || "Name must be less than 10 characters"
+        v => !!v || 'Name is required',
+        v => (v && v.length < 30) || 'Name must be less than 10 characters'
       ],
       descriptionRules: [
-        v => !!v || "Description is required",
+        v => !!v || 'Description is required',
         v =>
-          (v && v.length < 50) || "Description must be less than 50 characters"
+          (v && v.length < 50) || 'Description must be less than 50 characters'
       ]
-    };
+    }
   },
   methods: {
-    handleFileChange(file) {
+    handleFileChange (file) {
       if (file == null) {
-        this.path = "none";
-        this.folder = "No folder choosen";
-        this.invalid = true;
-        return;
+        this.path = 'none'
+        this.folder = 'No folder choosen'
+        this.invalid = true
+        return
       }
-      let pathToFile = file.path;
-      const index = pathToFile.lastIndexOf("\\");
-      pathToFile = pathToFile.slice(0, index);
-      this.path = pathToFile;
-      this.folder = pathToFile.slice(pathToFile.lastIndexOf("\\") + 1);
-      this.invalid = false;
+      let pathToFile = file.path
+      const index = pathToFile.lastIndexOf('\\')
+      pathToFile = pathToFile.slice(0, index)
+      this.path = pathToFile
+      this.folder = pathToFile.slice(pathToFile.lastIndexOf('\\') + 1)
+      this.invalid = false
     },
-    submit() {
-      const configPath = this.path + "\\projectConfig.json";
+    submit () {
+      const configPath = this.path + '\\projectConfig.json'
       const configData = {
         name: this.name,
         author: this.author,
@@ -172,19 +172,19 @@ export default {
         genre: this.genre,
         daw: this.daw,
         folder: this.folder
-      };
-      fs.writeFileSync(configPath, JSON.stringify(configData), function(e) {
-        console.assert("Written to config file. e => " + e);
-      });
-      alert("Created new project config file!");
+      }
+      fs.writeFileSync(configPath, JSON.stringify(configData), function (e) {
+        console.assert('Written to config file. e => ' + e)
+      })
+      alert('Created new project config file!')
 
-      const git = require("../gitWrapper");
-      git.setPath(this.path, this.githubPath);
-      git.init();
-      this.$router.push("/details");
+      const git = require('../gitWrapper')
+      git.setPath(this.path, this.githubPath)
+      git.init()
+      this.$router.push('/details')
     }
   }
-};
+}
 </script>
 
 <style>

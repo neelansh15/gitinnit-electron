@@ -21,8 +21,8 @@
 import electronOauth2 from 'electron-oauth2'
 import { config } from '../oauth-config'
 
-//Note: Use a global config somewhere in AppData to store the tokens in it,
-//and not use the local project-specific config
+// Note: Use a global config somewhere in AppData to store the tokens in it,
+// and not use the local project-specific config
 
 // const GitHubConfigOLD = {
 //   client_id: config.clientId,

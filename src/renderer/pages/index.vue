@@ -55,16 +55,16 @@
                   <v-list-item-title class="headline mb-1">
                     Project Name: {{ project.name }}
                   </v-list-item-title>
-                  <v-list-item-subtitle
-                    >Author: {{ project.author }}</v-list-item-subtitle
-                  >
+                  <v-list-item-subtitle>
+                    Author: {{ project.author }}
+                  </v-list-item-subtitle>
                 </v-list-item-content>
 
                 <v-list-item-avatar
                   tile
                   size="80"
                   color="grey"
-                ></v-list-item-avatar>
+                />
               </v-list-item>
 
               <v-card-actions>
@@ -87,25 +87,25 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       projects: [
         {
-          name: "First Project",
-          author: "Vedant"
+          name: 'First Project',
+          author: 'Vedant'
         },
         {
-          name: "First Project",
-          author: "Parth"
+          name: 'First Project',
+          author: 'Parth'
         },
         {
-          name: "First Project",
-          author: "Neelansh"
+          name: 'First Project',
+          author: 'Neelansh'
         }
       ]
-    };
+    }
   }
-};
+}
 </script>
 
 <style>
