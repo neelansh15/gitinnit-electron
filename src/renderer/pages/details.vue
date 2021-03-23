@@ -84,9 +84,9 @@ export default {
   },
   mounted() {
     // note cant change path here needs to be passed as string
-    this.importAll(
-      require.context("C:\\Users\\vedant\\Desktop\\testFolder", true, /\.txt$/)
-    );
+    // this.importAll(
+    //   require.context("C:\\Users\\vedant\\Desktop\\testFolder", true, /\.txt$/)
+    // );
   },
   methods: {
     importAll(r) {
