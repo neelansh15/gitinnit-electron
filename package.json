@@ -1,5 +1,5 @@
 {
-  "name": "electronuxt",
+  "name": "gitinnit-electron",
   "version": "0.0.1",
   "description": "An electron-nuxt project",
   "main": "./dist/main/index.js",
@@ -13,41 +13,45 @@
     "postinstall": "electron-builder install-app-deps & yarn run lint:fix"
   },
   "keywords": [],
-  "author": "pss10 <parthsatyen@gmail.com>",
+  "author": "neelansh15 <neelansh15@outlook.com>",
   "license": "MIT",
   "homepage": "https://github.com/michalzaq12/electron-nuxt/blob/master/README.md",
-  "engines" : {
-    "node" : ">=12.13.0"
+  "engines": {
+    "node": ">=12.13.0"
   },
   "resolutions": {
     "@types/node": "12.12.6"
   },
   "devDependencies": {
-    "@xpda-dev/core": "^0.1.5",
-    "@xpda-dev/electron-launcher": "^0.2.1",
-    "@xpda-dev/electron-builder": "^0.2.1",
-    "@xpda-dev/webpack-step": "^0.1.2",
-    "deepmerge": "4.2.2",
+    "@babel/preset-env": "7.12.17",
     "@mdi/font": "5.6.55",
+    "@nuxtjs/eslint-config": "1.1.2",
+    "@nuxtjs/vuetify": "1.11.2",
+    "@xpda-dev/core": "^0.1.5",
+    "@xpda-dev/electron-builder": "^0.2.1",
+    "@xpda-dev/electron-launcher": "^0.2.1",
+    "@xpda-dev/webpack-step": "^0.1.2",
+    "babel-eslint": "10.1.0",
     "browser-env": "3.3.0",
     "cross-env": "7.0.2",
+    "deepmerge": "4.2.2",
     "electron": "8.3.0",
     "electron-builder": "22.8.1",
     "electron-debug": "3.1.0",
     "eslint": "5.16.0",
-    "babel-eslint": "10.1.0",
     "eslint-friendly-formatter": "4.0.1",
     "eslint-loader": "4.0.2",
-    "@nuxtjs/eslint-config": "1.1.2",
-    
     "native-ext-loader": "2.3.0",
     "nuxt": "2.14.6",
-    "vue-devtools": "5.1.4",
     "roboto-fontface": "0.10.0",
+    "vue-devtools": "5.1.4",
     "vuetify": "2.3.12",
-    "@nuxtjs/vuetify": "1.11.2",
     "webpack": "4.44.2",
-    "webpack-node-externals": "2.5.2",
-    "@babel/preset-env":"7.12.17"
+    "webpack-node-externals": "2.5.2"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "electron-oauth2": "^3.0.0",
+    "simple-git": "^2.37.0"
   }
 }

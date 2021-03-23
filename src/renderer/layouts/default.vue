@@ -1,14 +1,58 @@
 <template>
-  <div>
-    <app-header />
-    <nuxt />
-  </div>
+  <v-app>
+    <v-navigation-drawer permanent app>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title"> Gitinnit </v-list-item-title>
+          <v-list-item-subtitle> No project selected </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider />
+
+      <v-list dense nav>
+        <v-list-item v-for="item in items" :key="item.title" link :to="item.to">
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+    <v-main>
+      <v-slide-x-transition>
+        <nuxt />
+      </v-slide-x-transition>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import appHeader from '@/components/header'
 export default {
-  components: { appHeader }
+  data () {
+    return {
+      items: [
+        {
+          title: 'Dashboard',
+          icon: 'mdi-view-dashboard',
+          to: '/'
+        },
+        {
+          title: 'Start a project',
+          icon: 'mdi-plus',
+          to: '/startproject'
+        },
+        {
+          title: 'Account',
+          icon: 'mdi-account',
+          to: '/account'
+        }
+      ]
+    }
+  }
 }
 </script>
 

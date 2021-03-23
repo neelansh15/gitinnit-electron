@@ -12,7 +12,7 @@
       </div>
       <div>
         <nuxt-link
-          to="/push"
+          to="/startProject"
           exact
         >
           Start Project
