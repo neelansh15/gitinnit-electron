@@ -11,8 +11,8 @@
     </div>
 
     <div class="mt-5">
-      <v-btn @click="fetchRepos" depressed small>Fetch repos</v-btn>
-      <v-btn @click="logout" depressed small>Log out</v-btn>
+      <v-btn depressed small @click="fetchRepos">Fetch repos</v-btn>
+      <v-btn depressed small @click="logout">Log out</v-btn>
     </div>
 
     <div v-if="repos.length > 0">
@@ -28,84 +28,84 @@
 </template>
 
 <script>
-import axios from "axios";
-const { remote } = require("electron");
-const { app } = remote;
-import pkg from "../../../package.json";
-const fs = require("fs");
+import axios from 'axios'
+import pkg from '../../../package.json'
+const { remote } = require('electron')
+const { app } = remote
+const fs = require('fs')
 
 export default {
   data: () => ({
-    access_token: "",
+    access_token: '',
     user: {},
     repos: []
   }),
-  methods: {
-    fetchRepos() {
-      axios
-        .get(`https://api.github.com/user/repos`, {
-          headers: {
-            Accept: "application/vnd.github.v3+json",
-            Authorization: "token " + this.access_token
-          }
-        })
-        .then(res => {
-          this.repos = res.data;
-          console.log(res.data);
-        });
-    },
-    logout() {
-      //Not the best solution. Should revoke token from Github too
-      this.$store.commit("setAccessToken", "");
-      //also set empty in global config (WIP)
-      this.$router.push("/"); // MAYBE put /login after testing
-    }
-  },
-  created() {
-    //check if logged in.
-    this.access_token = this.$store.state.access_token;
-    if (this.access_token == "" || this.access_token == null) {
-      //If not logged in redirect to /login
-      this.$router.push("/login");
+  created () {
+    // check if logged in.
+    this.access_token = this.$store.state.access_token
+    if (this.access_token == '' || this.access_token == null) {
+      // If not logged in redirect to /login
+      this.$router.push('/login')
     } else {
       // fetch user info
       axios
         .get(`https://api.github.com/user`, {
           headers: {
-            Accept: "application/vnd.github.v3+json",
-            Authorization: "token " + this.access_token
+            Accept: 'application/vnd.github.v3+json',
+            Authorization: 'token ' + this.access_token
           }
         })
         .then(res => {
-          console.log(res);
-          this.user = res.data;
+          console.log(res)
+          this.user = res.data
         })
         .then(res => {
-          console.log(res);
-          this.user = res.data;
+          console.log(res)
+          this.user = res.data
 
-          //Update global config with any possible new data
+          // Update global config with any possible new data
           const appDataGlobalConfigPath =
-            app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
-          console.log(appDataGlobalConfigPath);
+            app.getPath('appData') + '\\' + pkg.name + '\\globalConfig.json'
+          console.log(appDataGlobalConfigPath)
 
-          //Get the already existing globalConfig.json and update user data to it
+          // Get the already existing globalConfig.json and update user data to it
           const globalConfigData = JSON.parse(
             fs.readFileSync(appDataGlobalConfigPath)
-          );
-          globalConfigData.user = res.data;
+          )
+          globalConfigData.user = res.data
 
           fs.writeFileSync(
             appDataGlobalConfigPath,
             JSON.stringify(globalConfigData),
             () => {
-              console.log("Updated user data in globalConfig");
+              console.log('Updated user data in globalConfig')
             }
-          );
-        });
+          )
+        })
+    }
+  },
+  methods: {
+    fetchRepos () {
+      axios
+        .get(`https://api.github.com/user/repos`, {
+          headers: {
+            Accept: 'application/vnd.github.v3+json',
+            Authorization: 'token ' + this.access_token
+          }
+        })
+        .then(res => {
+          this.repos = res.data
+          console.log(res.data)
+        })
+    },
+    logout () {
+      // Not the best solution. Should revoke token from Github too
+      this.$store.commit('setAccessToken', '')
+      // also set empty in global config (WIP)
+      this.$router.push('/') // MAYBE put /login after testing
     }
   }
-};
+}
 </script>
 
 <style></style>

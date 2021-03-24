@@ -41,6 +41,11 @@ export default {
           to: '/'
         },
         {
+          title: 'Details',
+          icon: 'mdi-book-open',
+          to: '/details'
+        },
+        {
           title: 'Start a project',
           icon: 'mdi-plus',
           to: '/startproject'
