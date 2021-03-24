@@ -46,6 +46,7 @@
           <div>
             <v-card
               v-for="project in projects"
+              :key="project.name"
               class="mx-auto"
               max-width="1000"
               outlined

@@ -72,7 +72,7 @@
             </p>
             <v-checkbox
               v-model="checkbox"
-              :rules="[v => !!v || 'You must agree to continue!']"
+              :rules="[(v) => !!v || 'You must agree to continue!']"
               label="Do you agree?"
               required
             />
@@ -111,7 +111,11 @@
 </template>
 
 <script>
+const { remote } = require("electron");
+const { app } = remote;
 const fs = require("fs");
+
+import pkg from "../../../package.json";
 
 export default {
   data() {
@@ -128,7 +132,7 @@ export default {
         "Ableton Live",
         "Reason",
         "Logic Pro X",
-        "Cubase"
+        "Cubase",
       ],
       name: "",
       author: "",
@@ -138,14 +142,14 @@ export default {
       checkbox: false,
 
       nameRules: [
-        v => !!v || "Name is required",
-        v => (v && v.length < 30) || "Name must be less than 10 characters"
+        (v) => !!v || "Name is required",
+        (v) => (v && v.length < 30) || "Name must be less than 10 characters",
       ],
       descriptionRules: [
-        v => !!v || "Description is required",
-        v =>
-          (v && v.length < 50) || "Description must be less than 50 characters"
-      ]
+        (v) => !!v || "Description is required",
+        (v) =>
+          (v && v.length < 50) || "Description must be less than 50 characters",
+      ],
     };
   },
   methods: {
@@ -166,24 +170,45 @@ export default {
     submit() {
       const configPath = this.path + "\\projectConfig.json";
       const configData = {
+        id: Math.floor(Math.random() * 10000),
         name: this.name,
         author: this.author,
         description: this.description,
         genre: this.genre,
         daw: this.daw,
-        folder: this.folder
+        folder: this.folder,
+        path: this.path
       };
-      fs.writeFileSync(configPath, JSON.stringify(configData), function(e) {
+      fs.writeFileSync(configPath, JSON.stringify(configData), function (e) {
         console.assert("Written to config file. e => " + e);
       });
       alert("Created new project config file!");
+
+      //Also append the same config data to the global config
+      const globalConfigPath =
+        app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
+
+      const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath));
+      let projectsArray = globalConfigData.projects;
+      if (projectsArray == undefined) projectsArray = [];
+
+      projectsArray.push(configData);
+      globalConfigData.projects = projectsArray;
+      fs.writeFileSync(globalConfigPath, JSON.stringify(globalConfigData), () => {
+        console.log("Added project to global config");
+      });
+
+      console.log("Projects array: ")
+      console.log(projectsArray);
+      //End of adding project to global config 
 
       const git = require("../gitWrapper");
       git.setPath(this.path, this.githubPath);
       git.init();
       this.$router.push("/details");
-    }
-  }
+    },
+  },
+  mounted() {},
 };
 </script>
 

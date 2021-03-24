@@ -4,6 +4,7 @@
 
 - [ ] Toggle Terminology switch
 - [ ] Detect if app is offline, then use offline data from global config instead of fetching it from the Github API
+- [x] ~~Global config~~: **Done**, path: %appdata%/pkg.name(here: gitnnit-electron)/globalConfig.json (Read https://medium.com/cameron-nokes/how-to-store-user-data-in-electron-3ba6bf66bc1e)
 - [ ] Global config (Read https://medium.com/cameron- [ ]nokes/how- [ ]to- [ ]store- [ ]user- [ ]data- [ ]in- [ ]electron- [ ]3ba6bf66bc1e)
 - [x] Create wrapper for simple- it (assets/ javascript file): **Vedant**
 - [ ] Components
@@ -35,4 +36,4 @@
 
 - [ ] Username in sidebar
 - [ ] commit fucnction explicitly
-- [ ]
+- [ ] Checkout function

@@ -86,15 +86,21 @@ export default {
 
           //Update global config with any possible new data
           const appDataGlobalConfigPath =
-            app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.js";
+            app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
           console.log(appDataGlobalConfigPath);
+
+          //Get the already existing globalConfig.json and update user data to it
+          const globalConfigData = JSON.parse(
+            fs.readFileSync(appDataGlobalConfigPath)
+          );
+          globalConfigData.user = res.data;
 
           fs.writeFileSync(
             appDataGlobalConfigPath,
-            JSON.stringify({
-              access_token: this.access_token, //Actually this should come from the global config itself not the state. Modify later
-              user: res.data
-            })
+            JSON.stringify(globalConfigData),
+            () => {
+              console.log("Updated user data in globalConfig");
+            }
           );
         });
     }
