@@ -3,7 +3,7 @@
 ## ToDo
  - Toggle Terminology switch
  - Detect if app is offline, then use offline data from global config instead of fetching it from the Github API
- - Global config (Read https://medium.com/cameron-nokes/how-to-store-user-data-in-electron-3ba6bf66bc1e)
+ - ~~Global config~~: **Done**, path: %appdata%/pkg.name(here: gitnnit-electron)/globalConfig.json (Read https://medium.com/cameron-nokes/how-to-store-user-data-in-electron-3ba6bf66bc1e)
  - Create wrapper for simple-git (assets/ javascript file): **Vedant**
  - Components
     - pull.vue: **Parth**

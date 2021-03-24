@@ -95,21 +95,28 @@ export default {
 
             //Set user data in a global config
             const appDataPath = app.getPath("appData") + "\\" + pkg.name;
-            const appDataGlobalConfigPath = appDataPath + "\\globalConfig.js";
+            const appDataGlobalConfigPath = appDataPath + "\\globalConfig.json";
             console.log(appDataGlobalConfigPath);
 
             if(!fs.existsSync(appDataPath)){
               fs.mkdirSync(appDataPath)
             }
+
+            let globalConfigData;
             if (!fs.existsSync(appDataGlobalConfigPath)) {
               fs.openSync(appDataGlobalConfigPath, "w+");
+              globalConfigData = {}
             }
+            else{
+              //Previous globalConfig exists
+              globalConfigData = JSON.parse(fs.readFileSync(appDataGlobalConfigPath))
+            }
+            //If there is already a globalConfig.json from a previous login, just update that
+            globalConfigData.access_token = authResponse.access_token
 
             fs.writeFileSync(
               appDataGlobalConfigPath,
-              JSON.stringify({
-                access_token: authResponse.access_token,
-              }),
+              JSON.stringify(globalConfigData),
               {
                 flag: "w",
               }
