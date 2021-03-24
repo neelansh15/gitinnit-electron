@@ -170,6 +170,7 @@ export default {
     submit() {
       const configPath = this.path + "\\projectConfig.json";
       const configData = {
+        id: Math.floor(Math.random() * 10000),
         name: this.name,
         author: this.author,
         description: this.description,
