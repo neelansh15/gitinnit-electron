@@ -1,32 +1,38 @@
 # Gitinnit?
 
 ## ToDo
- - Toggle Terminology switch
- - Detect if app is offline, then use offline data from global config instead of fetching it from the Github API
- - Global config (Read https://medium.com/cameron-nokes/how-to-store-user-data-in-electron-3ba6bf66bc1e)
- - Create wrapper for simple-git (assets/ javascript file): **Vedant**
- - Components
-    - pull.vue: **Parth**
-        - Use wrapper's simple-git module functions for git pull
-        - Vuetify layout
-    - push.vue: **Vedant**
-        - Primary: Commit Changes, Secondary: Push commits
- - Pages
-    - Intro *Tutorial*
-    - index.vue: Latest 3 projects
-    - startProject.vue: **Vedant**
-        - New project / Fetch from Github (clone): with *Tutorial* on how to add user to a repository
-        - Validation
-        - git init (through wrapper)
-        - Generate project config file
-    - Account.vue: **Neelansh**
-        - Github OAuth Login
-    - Timeline.vue: **Parth**
-        - Create new branch command: Local or Local+Remote
-    - details.vue: **Neelansh**, **Parth**
-        - Project details
-        - Timeline
-            - Set Default
-            - Create new Timeline (New branch)
-        - Amazon-type timeline
-            - Commit message, Go to this place in time
+
+- [ ] Toggle Terminology switch
+- [ ] Detect if app is offline, then use offline data from global config instead of fetching it from the Github API
+- [ ] Global config (Read https://medium.com/cameron- [ ]nokes/how- [ ]to- [ ]store- [ ]user- [ ]data- [ ]in- [ ]electron- [ ]3ba6bf66bc1e)
+- [x] Create wrapper for simple- it (assets/ javascript file): **Vedant**
+- [ ] Components
+  - [x] pull.vue: **Parth**
+    - [x] Use wrapper's simple- git module functions for git pull
+    - [x] Vuetify layout
+  - [x] push.vue: **Vedant**
+    - [x] Primary: Commit Changes, Secondary: Push commits
+- [ ] Pages
+
+  - [ ] Intro _Tutorial_
+  - [ ] index.vue: Latest 3 projects
+  - [x] startProject.vue: **Vedant**
+    - [ ] New project / Fetch from Github (clone): with _Tutorial_ on how to add user to a repository
+    - [x] Validation
+    - [x] git init (through wrapper)
+    - [x] Generate project config file
+  - [ ] Account.vue: **Neelansh**
+    - [x] Github OAuth Login
+  - [x] Timeline.vue: **Parth**
+    - [ ] Create new branch command: Local or Local+Remote
+  - [ ] details.vue: **Neelansh**, **Parth**
+    - [x] Project details
+    - [ ] Timeline
+      - [ ] Set Default
+      - [ ] Create new Timeline (New branch)
+    - [ ] Amazon- type timeline
+      - [ ] Commit message, Go to this place in time
+
+- [ ] Username in sidebar
+- [ ] commit fucnction explicitly
+- [ ]

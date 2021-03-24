@@ -60,11 +60,7 @@
                   </v-list-item-subtitle>
                 </v-list-item-content>
 
-                <v-list-item-avatar
-                  tile
-                  size="80"
-                  color="grey"
-                />
+                <v-list-item-avatar tile size="80" color="grey" />
               </v-list-item>
 
               <v-card-actions>
@@ -87,25 +83,25 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       projects: [
         {
-          name: 'First Project',
-          author: 'Vedant'
+          name: "First Project",
+          author: "Vedant"
         },
         {
-          name: 'First Project',
-          author: 'Parth'
+          name: "First Project",
+          author: "Parth"
         },
         {
-          name: 'First Project',
-          author: 'Neelansh'
+          name: "First Project",
+          author: "Neelansh"
         }
       ]
-    }
+    };
   }
-}
+};
 </script>
 
 <style>

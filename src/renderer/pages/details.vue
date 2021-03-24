@@ -51,26 +51,24 @@
       </v-layout>
     </v-container>
 
-    <br>
-    <h1>Timeline</h1>
+    <br />
     <timeline />
-    <v-btn @click="log()">Log</v-btn>
   </div>
 </template>
 
 <script>
-import push from '@/components/push.vue'
-import timeline from '@/components/timeline.vue'
-import projects from '@/projects.json'
+import push from "@/components/push.vue";
+import timeline from "@/components/timeline.vue";
+import projects from "@/projects.json";
 
-const fs = require('fs')
+const fs = require("fs");
 
 export default {
   components: {
     timeline,
     push
   },
-  data () {
+  data() {
     return {
       directoryPath: projects.path,
       githubPath: projects.githubPath,
@@ -78,57 +76,60 @@ export default {
       author: projects.author,
       files: [],
       dialog: false
-    }
+    };
   },
-  mounted () {
+  mounted() {
     // note cant change path here needs to be passed as string
     this.importAll(
-      require.context('C:\\Users\\vedant\\Desktop\\testFolder', true, /\.txt$/)
-    )
+      require.context("C:\\Users\\vedant\\Desktop\\testFolder", true, /\.txt$/)
+    );
   },
   methods: {
-    importAll (r) {
+    importAll(r) {
       r.keys().forEach(key => {
-        this.files.push({ name: key.slice(2) })
-      })
-      console.log(this.files)
+        this.files.push({ name: key.slice(2) });
+      });
+      console.log(this.files);
     },
-    check () {
-      console.log(this.directoryPath)
+    check() {
+      console.log(this.directoryPath);
     },
-    push () {
-      const git = require('../gitWrapper')
-      console.log(this.directoryPath)
-      git.setPath(this.directoryPath, this.githubPath)
-      const tfiles = []
-      fs.readdir(this.directoryPath, function (err, files) {
-        console.log('read')
+    push() {
+      const git = require("../gitWrapper");
+      console.log(this.directoryPath);
+      git.setPath(this.directoryPath, this.githubPath);
+      const tfiles = [];
+      fs.readdir(this.directoryPath, function(err, files) {
+        console.log("read");
         if (err) {
-          return console.log('Unable to scan directory: ' + err)
+          return console.log("Unable to scan directory: " + err);
         }
         files.forEach(file => {
-          console.log('adding to array')
-          tfiles.push(file)
-        })
-        console.log(tfiles)
-        git.addFiles(tfiles)
-        console.log('commit')
-        git.commit('added file')
-        git.pull()
-        console.log('git pull')
-        git.push()
-      })
+          console.log("adding to array");
+          tfiles.push(file);
+        });
+        console.log(tfiles);
+        git.addFiles(tfiles);
+        console.log("commit");
+        git.commit("added file");
+        git.pull();
+        console.log("git pull");
+        git.push();
+      });
     },
-    log () {
-      const git = require('../gitWrapper')
-      git.log()
-      console.log(git.log())
+    async log() {
+      const git = require("../gitWrapper");
+      let temp;
+      const launches = await git.log().then(value => {
+        temp = value;
+      });
+      console.log(temp);
     },
-    pull () {
-      const git = require('../gitWrapper')
-      git.setPath(this.directoryPath, this.githubPath)
-      git.pull()
+    pull() {
+      const git = require("../gitWrapper");
+      git.setPath(this.directoryPath, this.githubPath);
+      git.pull();
     }
   }
-}
+};
 </script>
