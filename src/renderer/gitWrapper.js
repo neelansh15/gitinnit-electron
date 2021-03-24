@@ -73,8 +73,10 @@ const checkout = () => {
 // Find the return type of git.log()
 
 const log = () => {
-  gitlogPromise(options)
-    .then(commits => console.log(commits))
+  return gitlogPromise(options)
+    .then(commits => {
+      return commits;
+    })
     .catch(err => console.log(err));
 };
 
