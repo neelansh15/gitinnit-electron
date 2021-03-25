@@ -6,10 +6,6 @@ let path;
 let githubPath;
 let git;
 
-const options = {
-  repo: globalConfig.getData().current_project.path
-};
-
 const setPath = () => {
   path = globalConfig.getData.current_project.path;
   console.log(path);
@@ -74,6 +70,9 @@ const checkout = () => {
 // Find the return type of git.log()
 
 const log = () => {
+  const options = {
+    repo: globalConfig.getData().current_project.path
+  };
   return gitlogPromise(options)
     .then(commits => {
       return commits;
