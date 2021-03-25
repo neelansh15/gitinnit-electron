@@ -10,7 +10,7 @@
           </template>
           <v-card class="elevation-2">
             <v-card-title class="headline">
-              Subject: {{ launch.subject }}
+              {{ launch.subject }}
             </v-card-title>
             <v-card-subtitle>code : {{ launch.hash }}</v-card-subtitle>
             <v-card-text class="text-end">
@@ -25,28 +25,28 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       launches: [],
-      buttonText: 'Load Timeline'
-    }
+      buttonText: "Load Timeline"
+    };
   },
   computed: {
-    items () {
-      return this.launches
+    items() {
+      return this.launches;
     }
   },
   methods: {
-    async log () {
-      const git = require('../gitWrapper')
+    async log() {
+      const git = require("../gitWrapper");
       await git.log().then(value => {
-        this.launches = value
-        console.log(this.launches)
-        this.buttonText = 'Reload timeline'
-      })
+        this.launches = value;
+        console.log(this.launches);
+        this.buttonText = "Reload timeline";
+      });
     }
   }
-}
+};
 </script>
 
 <style></style>
