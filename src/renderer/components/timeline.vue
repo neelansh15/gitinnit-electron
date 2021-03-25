@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn @click="log">{{ buttonText }}</v-btn>
-    <v-banner class="text-center"></v-banner>
+    <v-banner class="text-center" />
     <v-timeline>
       <v-item v-for="launch in launches" :key="launch.code">
         <v-timeline-item large>
@@ -25,28 +25,28 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       launches: [],
-      buttonText: "Load Timeline"
-    };
+      buttonText: 'Load Timeline'
+    }
   },
   computed: {
-    items() {
-      return this.launches;
+    items () {
+      return this.launches
     }
   },
   methods: {
-    async log() {
-      const git = require("../gitWrapper");
+    async log () {
+      const git = require('../gitWrapper')
       await git.log().then(value => {
-        this.launches = value;
-        console.log(this.launches);
-        this.buttonText = "Reload timeline";
-      });
+        this.launches = value
+        console.log(this.launches)
+        this.buttonText = 'Reload timeline'
+      })
     }
   }
-};
+}
 </script>
 
 <style></style>

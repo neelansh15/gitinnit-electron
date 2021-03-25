@@ -15,9 +15,7 @@
                 </v-card-text>
                 <v-card-actions class="justify-center">
                   <nuxt-link to="/details" exact>
-                    <v-btn>
-                      Retrive previous version
-                    </v-btn>
+                    <v-btn> Retrive previous version </v-btn>
                   </nuxt-link>
                 </v-card-actions>
               </v-card>
@@ -32,9 +30,7 @@
                 </v-card-text>
                 <v-card-actions class="justify-center">
                   <nuxt-link to="/details" exact>
-                    <v-btn>
-                      Confirm new changes
-                    </v-btn>
+                    <v-btn> Confirm new changes </v-btn>
                   </nuxt-link>
                 </v-card-actions>
               </v-card>
@@ -42,33 +38,20 @@
           </v-row>
         </v-flex>
         <v-flex xs12 sm12>
-          <h2>Recent Projects:</h2>
-          <div>
+          <h2>Recent Projects</h2>
+          <div class="mt-5">
             <v-card
               v-for="project in projects"
-              :key="project.name"
+              :key="project.id"
               class="mx-auto"
               max-width="1000"
               outlined
             >
-              <v-list-item three-line>
-                <v-list-item-content>
-                  <v-list-item-title class="headline mb-1">
-                    Project Name: {{ project.name }}
-                  </v-list-item-title>
-                  <v-list-item-subtitle>
-                    Author: {{ project.author }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-
-                <v-list-item-avatar tile size="80" color="grey" />
-              </v-list-item>
-
+              <v-card-title>{{ project.name }}</v-card-title>
+              <v-card-subtitle> {{ project.author }} &middot;&nbsp; <span class="teal--text text-darken-3">{{ project.genre }}</span> &middot;&nbsp; <span class="brown--text text-darken-1">{{ project.path }}</span></v-card-subtitle>
               <v-card-actions>
-                <v-btn outlined rounded text>
-                  <nuxt-link to="/details" exact>
-                    View Details
-                  </nuxt-link>
+                <v-btn text>
+                  <nuxt-link to="/details" exact> View Details </nuxt-link>
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -83,26 +66,46 @@
 </template>
 
 <script>
+import pkg from '../../../package.json'
+
+const { remote } = require('electron')
+const { app } = remote
+const fs = require('fs')
+
 export default {
-  data() {
+  data () {
     return {
       projects: [
         {
-          name: "First Project",
-          author: "Vedant"
+          id: 1,
+          name: 'First Project',
+          author: 'Vedant'
         },
         {
-          name: "First Project",
-          author: "Parth"
+          id: 2,
+          name: 'First Project',
+          author: 'Parth'
         },
         {
-          name: "First Project",
-          author: "Neelansh"
+          id: 3,
+          name: 'First Project',
+          author: 'Neelansh'
         }
       ]
-    };
+    }
+  },
+  mounted () {
+    // Fetch projects if globalConfig exists
+    const globalConfigPath =
+      app.getPath('appData') + '\\' + pkg.name + '\\globalConfig.json'
+    if (fs.existsSync(globalConfigPath)) {
+      const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath))
+      if (globalConfigData.projects && globalConfigData.projects.length > 0) {
+        this.projects = globalConfigData.projects
+      }
+    }
   }
-};
+}
 </script>
 
 <style>
