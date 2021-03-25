@@ -71,8 +71,14 @@ export default {
     };
   },
   computed:{
-    current_project(){
+    current_project:{
+      get(){
       return this.$store.state.current_project
+      },
+      set(val){
+        //Not really needed but strange error without set()
+        this.$store.commit('setCurrentProject', val)
+      }
     }
   },
   mounted() {
