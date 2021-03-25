@@ -7,15 +7,15 @@ let githubPath;
 let git;
 
 const options = {
-  repo: "C:\\Users\\vedant\\Desktop\\testFolder"
+  repo: globalConfig.getData().current_project.path
 };
 
-function setPath(inputPath, inputGithubPath) {
-  path = inputPath;
+const setPath = () => {
+  path = globalConfig.getData.current_project.path;
   console.log(path);
-  githubPath = inputGithubPath;
+  githubPath = globalConfig.getData.current_project.githubPath;
   git = simpleGit(path);
-}
+};
 
 const init = () => {
   git.init();
