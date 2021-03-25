@@ -34,6 +34,6 @@
     - [ ] Amazon- type timeline
       - [ ] Commit message, Go to this place in time
 
-- [ ] Username in sidebar
-- [ ] commit fucnction explicitly
-- [ ] Checkout function
+- [ ] Username in sidebar **Neelansh**
+- [ ] commit fucnction explicitly **Vedant**
+- [ ] Checkout function **Vedant**
