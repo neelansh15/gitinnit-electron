@@ -37,3 +37,4 @@
 - [ ] Username in sidebar **Neelansh**
 - [ ] commit fucnction explicitly **Vedant**
 - [ ] Checkout function **Vedant**
+- [ ] Pagination in index.vue for projects **Vedant**

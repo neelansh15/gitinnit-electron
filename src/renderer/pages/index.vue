@@ -48,7 +48,16 @@
               outlined
             >
               <v-card-title>{{ project.name }}</v-card-title>
-              <v-card-subtitle> {{ project.author }} &middot;&nbsp; <span class="teal--text text-darken-3">{{ project.genre }}</span> &middot;&nbsp; <span class="brown--text text-darken-1">{{ project.path }}</span></v-card-subtitle>
+              <v-card-subtitle>
+                {{ project.author }} &middot;&nbsp;
+                <span class="teal--text text-darken-3">{{
+                  project.genre
+                }}</span>
+                &middot;&nbsp;
+                <span class="brown--text text-darken-1">{{
+                  project.path
+                }}</span></v-card-subtitle
+              >
               <v-card-actions>
                 <v-btn text>
                   <nuxt-link to="/details" exact> View Details </nuxt-link>
@@ -66,46 +75,20 @@
 </template>
 
 <script>
-import pkg from '../../../package.json'
-
-const { remote } = require('electron')
-const { app } = remote
-const fs = require('fs')
+const fs = require("fs");
+const globalConfig = require("../utils/index");
 
 export default {
-  data () {
+  data() {
     return {
-      projects: [
-        {
-          id: 1,
-          name: 'First Project',
-          author: 'Vedant'
-        },
-        {
-          id: 2,
-          name: 'First Project',
-          author: 'Parth'
-        },
-        {
-          id: 3,
-          name: 'First Project',
-          author: 'Neelansh'
-        }
-      ]
-    }
+      projects: []
+    };
   },
-  mounted () {
+  mounted() {
     // Fetch projects if globalConfig exists
-    const globalConfigPath =
-      app.getPath('appData') + '\\' + pkg.name + '\\globalConfig.json'
-    if (fs.existsSync(globalConfigPath)) {
-      const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath))
-      if (globalConfigData.projects && globalConfigData.projects.length > 0) {
-        this.projects = globalConfigData.projects
-      }
-    }
+    this.projects = globalConfig.getData().projects;
   }
-}
+};
 </script>
 
 <style>
