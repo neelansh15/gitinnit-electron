@@ -105,7 +105,7 @@ export default {
     push() {
       const git = require("../gitWrapper");
       console.log(this.directoryPath);
-      git.setPath(this.directoryPath, this.githubPath);
+      git.setPath();
       const tfiles = [];
       fs.readdir(this.directoryPath, function(err, files) {
         console.log("read");
