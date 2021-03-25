@@ -100,7 +100,7 @@ export default {
   },
   mounted() {
     // Fetch projects if globalConfig exists
-    this.projects = getData().projects;
+    this.projects = getData().projects.reverse();
     this.current_project = getData().current_project
   }
 };
