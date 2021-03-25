@@ -5,7 +5,11 @@
         <v-list-item-content>
           <v-list-item-title class="title"> Gitinnit </v-list-item-title>
           <v-list-item-subtitle>
-            {{ current_project ? current_project : "No project selected" }}
+            {{ current_project ? current_project.name : "No project selected" }}
+            &middot; &nbsp; 
+            <span v-if="current_project" class="teal--text text-darken-3">{{
+                  current_project.genre
+                }}</span>
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -68,7 +72,8 @@ export default {
     };
   },
   mounted() {
-    //NOT WORKING RIGHT NOW
+    //NOTE: NOT REACTIVE AT THE MOMENT. DO SOMETHING ABOUT THIS, USE VUEX TO TRIGGER
+
     //Fetch current project if exists
     const globalConfigPath =
       app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
