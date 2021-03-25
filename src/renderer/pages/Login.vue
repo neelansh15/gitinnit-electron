@@ -25,7 +25,7 @@
           mdi-arrow-right
         </v-icon>
 
-        <v-btn :disabled="!auth.user_code" class="blue lighten-1" depressed @click="verifyLogin">
+        <v-btn :disabled="!auth.user_code" class="light-blue darken-1" depressed @click="verifyLogin">
           Go forward
         </v-btn>
 
