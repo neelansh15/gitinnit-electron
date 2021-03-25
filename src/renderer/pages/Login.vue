@@ -25,7 +25,7 @@
           mdi-arrow-right
         </v-icon>
 
-        <v-btn :disabled="!auth.user_code" class="light-blue darken-1" depressed @click="verifyLogin">
+        <v-btn :disabled="!auth.user_code || !clicked" class="light-blue darken-1" depressed @click="verifyLogin">
           Go forward
         </v-btn>
 
@@ -69,7 +69,7 @@ const fs = require('fs')
 
 export default {
   data: () => ({
-    step1: true,
+    clicked: false,
     showError: false,
     error: '',
     auth: {},
@@ -90,6 +90,7 @@ export default {
     },
     openURL () {
       shell.openExternal(this.auth.verification_uri)
+      this.clicked = true
     },
     verifyLogin () {
       axios
