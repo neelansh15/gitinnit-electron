@@ -82,12 +82,14 @@ const globalConfig = require("../utils/index");
 export default {
   data() {
     return {
-      projects: []
+      projects: [],
+      current_project: {}
     };
   },
   mounted() {
     // Fetch projects if globalConfig exists
     this.projects = globalConfig.getData().projects;
+    this.current_project = globalConfig.getData().current_project
   }
 };
 </script>
