@@ -119,7 +119,7 @@ export default {
         console.log(tfiles);
         git.addFiles(tfiles);
         console.log("commit");
-        git.commit("added file");
+        git.commit("wrapper commit");
         git.pull();
         console.log("git pull");
         git.push();
@@ -135,7 +135,7 @@ export default {
     },
     pull() {
       const git = require("../gitWrapper");
-      git.setPath(this.directoryPath, this.githubPath);
+      git.setPath();
       git.pull();
     }
   }
