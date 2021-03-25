@@ -3,7 +3,7 @@
   
   <v-layout row wrap align-center justify-center>
     
-      <v-card class="elevation-0 mt-10">
+      <v-card class="elevation-0 mt-10" width="60vw">
               <v-card-title primary-title class="layout justify-center">
                 <h1>Start Project</h1>
                 </v-card-title>
@@ -236,7 +236,7 @@ export default {
   justify-content: space-around;
   align-items: center;
 } */
-
+/* 
 .input {
   width: 60vw;
 }
@@ -245,5 +245,5 @@ export default {
   width: 60vw;
   display: flex;
   justify-content: space-around;
-}
+} */
 </style>
