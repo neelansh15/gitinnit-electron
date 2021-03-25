@@ -2,8 +2,13 @@
   <div class="mx-5 mt-5">
     <div>
       <v-card class="pa-5">
-        <h1 class="text-h5">Request code and enter it in the Auth page</h1>
+        <h1 class="mb-3 text-h5">Request code and enter it in the Auth page</h1>
         <v-btn depressed @click="login">Request code</v-btn>
+
+        <v-icon>
+          mdi-arrow-right
+        </v-icon>
+
         <v-btn
           class="red lighten-1"
           :disabled="
@@ -15,6 +20,15 @@
         >
           Go to Auth page
         </v-btn>
+
+        <v-icon>
+          mdi-arrow-right
+        </v-icon>
+
+        <v-btn :disabled="!auth.user_code" class="blue lighten-1" depressed @click="verifyLogin">
+          Go forward
+        </v-btn>
+
       </v-card>
 
       <v-alert
@@ -31,13 +45,13 @@
         {{ auth.user_code }}
       </h1>
 
-      <v-footer v-if="auth.user_code" class="blue lighten-1" app>
+      <!-- <v-footer v-if="auth.user_code" class="blue lighten-1" app>
         Once you have entered the code in the browser's auth page,
         <v-btn class="blue lighten-1" depressed @click="verifyLogin">
           Go forward
         </v-btn>
         {{ final_token_obj.access_token }}
-      </v-footer>
+      </v-footer> -->
     </div>
   </div>
 </template>
