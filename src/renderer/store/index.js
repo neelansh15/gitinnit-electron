@@ -5,6 +5,6 @@ export const state = () => ({
 export const mutations = {
   setAccessToken (state, payload) {
     state.access_token = payload
-    // Also set in global config
+    // Also set in global config: DONE in login page
   }
 }

@@ -48,11 +48,21 @@
               outlined
             >
               <v-card-title>{{ project.name }}</v-card-title>
-              <v-card-subtitle> {{ project.author }} &middot;&nbsp; <span class="teal--text text-darken-3">{{ project.genre }}</span> &middot;&nbsp; <span class="brown--text text-darken-1">{{ project.path }}</span></v-card-subtitle>
+              <v-card-subtitle>
+                {{ project.author }} &middot;&nbsp;
+                <span class="teal--text text-darken-3">{{
+                  project.genre
+                }}</span>
+                &middot;&nbsp;
+                <span class="brown--text text-darken-1">{{
+                  project.path
+                }}</span></v-card-subtitle
+              >
               <v-card-actions>
-                <v-btn text>
-                  <nuxt-link to="/details" exact> View Details </nuxt-link>
+                <v-btn v-if="project.id != current_project.id" text>
+                  Set as current project
                 </v-btn>
+                <v-chip color="primary" class="ml-1" small v-else>Current project</v-chip>
               </v-card-actions>
             </v-card>
           </div>
@@ -66,46 +76,53 @@
 </template>
 
 <script>
-import pkg from '../../../package.json'
+import pkg from "../../../package.json";
 
-const { remote } = require('electron')
-const { app } = remote
-const fs = require('fs')
+const { remote } = require("electron");
+const { app } = remote;
+const fs = require("fs");
 
 export default {
-  data () {
+  data() {
     return {
       projects: [
         {
           id: 1,
-          name: 'First Project',
-          author: 'Vedant'
+          name: "First Project",
+          author: "Vedant",
         },
         {
           id: 2,
-          name: 'First Project',
-          author: 'Parth'
+          name: "First Project",
+          author: "Parth",
         },
         {
           id: 3,
-          name: 'First Project',
-          author: 'Neelansh'
-        }
-      ]
-    }
+          name: "First Project",
+          author: "Neelansh",
+        },
+      ],
+      current_project: {},
+    };
   },
-  mounted () {
-    // Fetch projects if globalConfig exists
-    const globalConfigPath =
-      app.getPath('appData') + '\\' + pkg.name + '\\globalConfig.json'
-    if (fs.existsSync(globalConfigPath)) {
-      const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath))
-      if (globalConfigData.projects && globalConfigData.projects.length > 0) {
-        this.projects = globalConfigData.projects
+  methods: {
+    fetchProjects() {
+      const globalConfigPath =
+        app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
+      if (fs.existsSync(globalConfigPath)) {
+        const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath));
+        if (globalConfigData.projects && globalConfigData.projects.length > 0) {
+          this.projects = globalConfigData.projects;
+          this.current_project = globalConfigData.current_project;
+        }
       }
-    }
-  }
-}
+    },
+  },
+  mounted() {
+    // Fetch projects if globalConfig exists
+    this.fetchProjects();
+  },
+};
 </script>
 
 <style>

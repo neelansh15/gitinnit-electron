@@ -4,7 +4,9 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title"> Gitinnit </v-list-item-title>
-          <v-list-item-subtitle> No project selected </v-list-item-subtitle>
+          <v-list-item-subtitle>
+            {{ current_project ? current_project : "No project selected" }}
+          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -31,34 +33,55 @@
 </template>
 
 <script>
+import pkg from "../../../package.json";
+
+const { remote } = require("electron");
+const { app } = remote;
+const fs = require("fs");
+
 export default {
-  data () {
+  data() {
     return {
+      current_project: null,
       items: [
         {
-          title: 'Dashboard',
-          icon: 'mdi-view-dashboard',
-          to: '/'
+          title: "Dashboard",
+          icon: "mdi-view-dashboard",
+          to: "/",
         },
         {
-          title: 'Details',
-          icon: 'mdi-book-open',
-          to: '/details'
+          title: "Details",
+          icon: "mdi-book-open",
+          to: "/details",
         },
         {
-          title: 'Start a project',
-          icon: 'mdi-plus',
-          to: '/startproject'
+          title: "Start a project",
+          icon: "mdi-plus",
+          to: "/startproject",
         },
         {
-          title: 'Account',
-          icon: 'mdi-account',
-          to: '/account'
-        }
-      ]
+          title: "Account",
+          icon: "mdi-account",
+          to: "/account",
+        },
+      ],
+    };
+  },
+  mounted() {
+    //NOT WORKING RIGHT NOW
+    //Fetch current project if exists
+    const globalConfigPath =
+      app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
+    if (fs.existsSync(globalConfigPath)) {
+      const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath));
+      if (globalConfigData.current_project) {
+        this.current_project = globalConfigData.current_project;
+      }
     }
-  }
-}
+
+    console.log("SIDEBAR: current_project = " + this.current_project);
+  },
+};
 </script>
 
 <style>

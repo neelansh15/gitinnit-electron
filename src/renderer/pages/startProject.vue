@@ -196,6 +196,7 @@ export default {
 
       projectsArray.push(configData)
       globalConfigData.projects = projectsArray
+      globalConfigData.current_project = configData
       fs.writeFileSync(globalConfigPath, JSON.stringify(globalConfigData), () => {
         console.log('Added project to global config')
       })
