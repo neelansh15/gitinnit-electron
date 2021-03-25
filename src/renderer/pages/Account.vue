@@ -58,10 +58,6 @@ export default {
         .then(res => {
           console.log(res)
           this.user = res.data
-        })
-        .then(res => {
-          console.log(res)
-          this.user = res.data
 
           // Update global config with any possible new data
           const appDataGlobalConfigPath =
