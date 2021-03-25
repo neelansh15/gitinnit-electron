@@ -7,9 +7,9 @@ let githubPath;
 let git;
 
 const setPath = () => {
-  path = globalConfig.getData.current_project.path;
+  path = globalConfig.getData().current_project.path;
   console.log(path);
-  githubPath = globalConfig.getData.current_project.githubPath;
+  githubPath = globalConfig.getData().current_project.githubPath;
   git = simpleGit(path);
 };
 
@@ -50,11 +50,11 @@ const addFiles = files => {
 const commit = text => {
   git.commit(text);
 };
-const pull = async () => {
-  await git.pull("origin", "master");
+const pull = async (remoteName = "origin", branchName = "master") => {
+  await git.pull(remoteName, branchName);
 };
-const push = async () => {
-  await git.push("origin", "master");
+const push = async (remoteName = "origin", branchName = "master") => {
+  await git.push(remoteName, branchName);
 };
 const config = () => {
   console.log("config");
