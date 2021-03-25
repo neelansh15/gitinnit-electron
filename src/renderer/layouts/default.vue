@@ -46,7 +46,6 @@ const fs = require("fs");
 export default {
   data() {
     return {
-      current_project: null,
       items: [
         {
           title: "Dashboard",
@@ -71,6 +70,11 @@ export default {
       ],
     };
   },
+  computed:{
+    current_project(){
+      return this.$store.state.current_project
+    }
+  },
   mounted() {
     //NOTE: NOT REACTIVE AT THE MOMENT. DO SOMETHING ABOUT THIS, USE VUEX TO TRIGGER
 
@@ -84,7 +88,9 @@ export default {
       }
     }
 
-    console.log("SIDEBAR: current_project = " + this.current_project);
+
+    console.log("SIDEBAR: current_project = ")
+    console.log(this.current_project);
   },
 };
 </script>
