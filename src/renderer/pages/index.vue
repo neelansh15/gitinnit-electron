@@ -76,52 +76,19 @@
 </template>
 
 <script>
-import pkg from "../../../package.json";
-
-const { remote } = require("electron");
-const { app } = remote;
 const fs = require("fs");
+const globalConfig = require("../utils/index");
 
 export default {
   data() {
     return {
-      projects: [
-        {
-          id: 1,
-          name: "First Project",
-          author: "Vedant",
-        },
-        {
-          id: 2,
-          name: "First Project",
-          author: "Parth",
-        },
-        {
-          id: 3,
-          name: "First Project",
-          author: "Neelansh",
-        },
-      ],
-      current_project: {},
+      projects: []
     };
-  },
-  methods: {
-    fetchProjects() {
-      const globalConfigPath =
-        app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
-      if (fs.existsSync(globalConfigPath)) {
-        const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath));
-        if (globalConfigData.projects && globalConfigData.projects.length > 0) {
-          this.projects = globalConfigData.projects;
-          this.current_project = globalConfigData.current_project;
-        }
-      }
-    },
   },
   mounted() {
     // Fetch projects if globalConfig exists
-    this.fetchProjects();
-  },
+    this.projects = globalConfig.getData().projects;
+  }
 };
 </script>
 
