@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn @click="log">{{ buttonText }}</v-btn>
+    <v-btn class="ml-5" depressed @click="log">{{ buttonText }}</v-btn>
     <v-banner class="text-center" />
     <v-timeline>
       <v-item v-for="launch in launches" :key="launch.code">
