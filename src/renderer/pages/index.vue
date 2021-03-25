@@ -59,7 +59,7 @@
                 }}</span></v-card-subtitle
               >
               <v-card-actions>
-                <v-btn v-if="project.id != current_project.id" text>
+                <v-btn @click="setCurrentProject(project)" v-if="project.id != current_project.id" text>
                   Set as current project
                 </v-btn>
                 <v-chip color="primary" class="ml-1" small v-else>Current project</v-chip>
@@ -76,18 +76,31 @@
 </template>
 
 <script>
-const fs = require("fs");
-const globalConfig = require("../utils/index");
+const {getData, setData} = require("../utils");
 
 export default {
   data() {
     return {
-      projects: []
+      projects: [],
+      current_project: {}
     };
+  },
+  methods:{
+    setCurrentProject(project){
+      let globalConfigObj = getData()
+      globalConfigObj.current_project = project
+      setData(globalConfigObj)
+
+      this.current_project = getData().current_project
+
+      // console.log("TRIGGERED change project ")
+      // console.log(getData().current_project)
+    }
   },
   mounted() {
     // Fetch projects if globalConfig exists
-    this.projects = globalConfig.getData().projects;
+    this.projects = getData().projects;
+    this.current_project = getData().current_project
   }
 };
 </script>

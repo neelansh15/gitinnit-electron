@@ -27,4 +27,9 @@ const getData = () => {
   return globalConfigData;
 };
 
-export { getPathToGlobalConfig, getData };
+const setData = (globalConfigData) => {
+  if(fs.existsSync(getPathToGlobalConfig()))
+    fs.writeFileSync(getPathToGlobalConfig(), JSON.stringify(globalConfigData))
+}
+
+export { getPathToGlobalConfig, getData, setData };
