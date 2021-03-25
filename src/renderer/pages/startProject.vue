@@ -1,6 +1,13 @@
 <template>
-  <div id="container">
-    <h1>Start a new project</h1>
+<div>
+  
+  <v-layout row wrap align-center justify-center>
+    
+      <v-card class="elevation-0 mt-10">
+              <v-card-title primary-title class="layout justify-center">
+                <h1>Start Project</h1>
+                </v-card-title>
+ 
     <v-stepper v-model="e1">
       <v-stepper-header>
         <v-stepper-step :complete="e1 > 1" step="1">
@@ -106,8 +113,10 @@
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
-    <nuxt-link to="/" exact> Back to Dashboard </nuxt-link>
-  </div>
+    </v-card>
+         
+      </v-layout>
+</div>
 </template>
 
 <script>
@@ -134,6 +143,7 @@ export default {
         'Logic Pro X',
         'Cubase'
       ],
+      // reveal='false',
       name: '',
       author: '',
       description: '',
@@ -214,15 +224,18 @@ export default {
 }
 </script>
 
+
+
+
 <style>
-#container {
+/* #container {
   width: 90vw;
   height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-}
+} */
 
 .input {
   width: 60vw;
