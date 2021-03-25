@@ -92,6 +92,7 @@ export default {
       setData(globalConfigObj)
 
       this.current_project = getData().current_project
+      this.$store.commit('setCurrentProject', project)
 
       // console.log("TRIGGERED change project ")
       // console.log(getData().current_project)
