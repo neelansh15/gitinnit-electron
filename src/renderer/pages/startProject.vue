@@ -178,7 +178,8 @@ export default {
         genre: this.genre,
         daw: this.daw,
         folder: this.folder,
-        path: this.path
+        path: this.path,
+        githubPath: this.githubPath
       }
       fs.writeFileSync(configPath, JSON.stringify(configData), function (e) {
         console.assert('Written to config file. e => ' + e)
