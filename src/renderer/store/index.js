@@ -1,5 +1,7 @@
 import { getData } from '../utils'
 
+
+
 export const state = () => ({
   access_token: '',
   current_project: getData().current_project //Needed for reactivity in the sidebar
