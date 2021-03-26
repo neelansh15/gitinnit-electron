@@ -228,22 +228,4 @@ export default {
 
 
 <style>
-/* #container {
-  width: 90vw;
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-} */
-/* 
-.input {
-  width: 60vw;
-}
-
-.path {
-  width: 60vw;
-  display: flex;
-  justify-content: space-around;
-} */
 </style>
