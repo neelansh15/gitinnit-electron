@@ -13,6 +13,8 @@
     <div class="mt-5">
       <v-btn depressed small @click="fetchRepos">Fetch repos</v-btn>
       <v-btn depressed small @click="logout">Log out</v-btn>
+      <Combobox></Combobox>
+      
     </div>
 
     <div v-if="repos.length > 0">
@@ -27,15 +29,25 @@
   </div>
 </template>
 
+
 <script>
+
+
+
 import axios from 'axios'
+import Combobox from "@/components/Combo.vue";
 import pkg from '../../../package.json'
 const { remote } = require('electron')
 const { app } = remote
 const fs = require('fs')
 
 export default {
+  components:{
+    Combobox
+  },
+
   data: () => ({
+    
     access_token: '',
     user: {},
     repos: []
