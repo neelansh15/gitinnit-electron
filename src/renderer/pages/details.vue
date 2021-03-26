@@ -40,7 +40,6 @@
                     label="Commit message"
                     v-model="commitMessage"
                   ></v-text-field>
-                  <p>{{ this.commitMessage }}</p>
                   <v-card-actions>
                     <v-btn @click="push">Push files</v-btn>
                     <v-btn @click="dialog = false">Close</v-btn>
@@ -110,7 +109,9 @@ export default {
     },
     push() {
       const git = require("../gitWrapper");
+      const message = this.commitMessage;
       console.log(this.commitMessage);
+      console.log(message);
       git.setPath();
       const tfiles = [];
       fs.readdir(this.directoryPath, function(err, files) {
@@ -125,7 +126,7 @@ export default {
         console.log(tfiles);
         git.addFiles(tfiles);
         console.log("commit");
-        git.commit(this.commitMessage);
+        git.commit(message);
         git.pull();
         console.log("git pull");
         git.push();
