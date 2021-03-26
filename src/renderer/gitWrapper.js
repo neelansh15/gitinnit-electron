@@ -50,11 +50,11 @@ const addFiles = files => {
 const commit = text => {
   git.commit(text);
 };
-const pull = async (remoteName = "origin", branchName = "master") => {
-  await git.pull(remoteName, branchName);
+const pull = async () => {
+  await git.pull("origin", "master");
 };
-const push = async (remoteName = "origin", branchName = "master") => {
-  await git.push(remoteName, branchName);
+const push = async () => {
+  await git.push("origin", "master");
 };
 const config = () => {
   console.log("config");
