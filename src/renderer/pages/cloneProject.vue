@@ -20,8 +20,8 @@
         </v-col>
       </v-row>
       <div class="path">
-        <h5>Folder:</h5>
-        <p>{{ folder }}</p>
+        <h5>Path:</h5>
+        <p>{{ path }}</p>
       </div>
       <p>{{ message }}</p>
 
@@ -38,7 +38,6 @@ export default {
     return {
       githubPath: "",
       path: "",
-      folder: "",
       message: "",
       invalid: true
     };
@@ -47,19 +46,16 @@ export default {
     handleFileChange(file) {
       if (file == null) {
         this.path = "none";
-        this.folder = "No folder choosen";
         this.invalid = true;
         return;
       }
       let pathToFile = file.path;
-      const index = pathToFile.lastIndexOf("\\");
-      pathToFile = pathToFile.slice(0, index);
       this.path = pathToFile;
-      this.folder = pathToFile.slice(pathToFile.lastIndexOf("\\") + 1);
       this.invalid = false;
     },
     clone() {
       const git = require("../gitWrapper");
+      git.setPath();
       git.clone();
     }
   }
