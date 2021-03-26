@@ -13,6 +13,8 @@
     <div class="mt-5">
       <v-btn depressed small @click="fetchRepos">Fetch repos</v-btn>
       <v-btn depressed small @click="logout">Log out</v-btn>
+      <Combobox></Combobox>
+      
     </div>
 
     <div v-if="repos.length > 0">
@@ -27,13 +29,22 @@
   </div>
 </template>
 
+
 <script>
+
+
+
 import axios from 'axios'
 
 import { getData, setData } from '../utils'
 
 export default {
+  components:{
+    Combobox
+  },
+
   data: () => ({
+    
     access_token: '',
     user: {},
     repos: []

@@ -65,6 +65,7 @@ import pushComponent from "@/components/push.vue";
 import timeline from "@/components/timeline.vue";
 const globalConfig = require("../utils/index");
 
+
 const fs = require("fs");
 
 export default {
