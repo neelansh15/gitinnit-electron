@@ -12,21 +12,14 @@ const setPath = () => {
   githubPath = globalConfig.getData().current_project.githubPath;
   git = simpleGit(path);
 };
+const remote = () => {
+  git.addRemote("origin", githubPath);
+};
 
 const init = () => {
   git.init();
+  // git.remote();
 };
-
-const remote = new Promise(function(resolve, reject) {
-  console.log("remote wrapper");
-
-  if (git.addRemote("origin", githubPath)) {
-    resolve("ok");
-    console.log("ok2");
-  } else {
-    reject("No");
-  }
-});
 
 const add = new Promise(function(resolve, reject) {
   console.log("add wrapper");
@@ -50,11 +43,11 @@ const addFiles = files => {
 const commit = text => {
   git.commit(text);
 };
-const pull = async (remoteName = "origin", branchName = "master") => {
-  await git.pull(remoteName, branchName);
+const pull = async () => {
+  await git.pull("origin", "master");
 };
-const push = async (remoteName = "origin", branchName = "master") => {
-  await git.push(remoteName, branchName);
+const push = async () => {
+  await git.push("origin", "master");
 };
 const config = () => {
   console.log("config");

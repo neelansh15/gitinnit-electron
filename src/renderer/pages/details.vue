@@ -16,7 +16,7 @@
 
           <v-row align="center" justify="space-around">
             <v-col>
-              <!-- <v-dialog v-model="dialog" width="500">
+              <v-dialog v-model="dialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn v-bind="attrs" v-on="on">
                     Push Files
@@ -36,12 +36,16 @@
                     </v-list-item-group>
                   </v-list>
                   <v-spacer />
+                  <v-text-field
+                    label="Commit message"
+                    v-model="commitMessage"
+                  ></v-text-field>
                   <v-card-actions>
+                    <v-btn @click="push">Push files</v-btn>
                     <v-btn @click="dialog = false">Close</v-btn>
                   </v-card-actions>
                 </v-card>
-              </v-dialog> -->
-              <v-btn @click="push">Push files</v-btn>
+              </v-dialog>
             </v-col>
             <v-col>
               <v-btn @click="pull">Pull Files</v-btn>
@@ -76,6 +80,7 @@ export default {
       githubPath: "",
       projectName: "",
       author: "",
+      commitMessage: "",
       files: [],
       dialog: false
     };
@@ -105,7 +110,9 @@ export default {
     },
     push() {
       const git = require("../gitWrapper");
-      console.log(this.directoryPath);
+      const message = this.commitMessage;
+      console.log(this.commitMessage);
+      console.log(message);
       git.setPath();
       const tfiles = [];
       fs.readdir(this.directoryPath, function(err, files) {
@@ -120,7 +127,7 @@ export default {
         console.log(tfiles);
         git.addFiles(tfiles);
         console.log("commit");
-        git.commit("wrapper commit");
+        git.commit(message);
         git.pull();
         console.log("git pull");
         git.push();

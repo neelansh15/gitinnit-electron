@@ -35,11 +35,8 @@
 
 
 import axios from 'axios'
-import Combobox from "@/components/Combo.vue";
-import pkg from '../../../package.json'
-const { remote } = require('electron')
-const { app } = remote
-const fs = require('fs')
+
+import { getData, setData } from '../utils'
 
 export default {
   components:{
@@ -72,23 +69,17 @@ export default {
           this.user = res.data
 
           // Update global config with any possible new data
-          const appDataGlobalConfigPath =
-            app.getPath('appData') + '\\' + pkg.name + '\\globalConfig.json'
-          console.log(appDataGlobalConfigPath)
+          // const appDataGlobalConfigPath =
+          //   app.getPath('appData') + '\\' + pkg.name + '\\globalConfig.json'
+          // console.log(appDataGlobalConfigPath)
 
-          // Get the already existing globalConfig.json and update user data to it
-          const globalConfigData = JSON.parse(
-            fs.readFileSync(appDataGlobalConfigPath)
-          )
+          // // Get the already existing globalConfig.json and update user data to it
+          // const globalConfigData = JSON.parse(
+          //   fs.readFileSync(appDataGlobalConfigPath)
+          // )
+          let globalConfigData = getData()
           globalConfigData.user = res.data
-
-          fs.writeFileSync(
-            appDataGlobalConfigPath,
-            JSON.stringify(globalConfigData),
-            () => {
-              console.log('Updated user data in globalConfig')
-            }
-          )
+          setData(globalConfigData)
         })
     }
   },
@@ -109,7 +100,12 @@ export default {
     logout () {
       // Not the best solution. Should revoke token from Github too
       this.$store.commit('setAccessToken', '')
-      // also set empty in global config (WIP)
+      // also set empty in global config
+      let globalConfigData = getData()
+      globalConfigData.access_token =  ''
+      globalConfigData.user = {}
+      setData(globalConfigData)
+
       this.$router.push('/') // MAYBE put /login after testing
     }
   }
