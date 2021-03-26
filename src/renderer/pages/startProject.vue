@@ -43,7 +43,7 @@
                 Continue
               </v-btn>
 
-              <v-btn text> Cancel </v-btn>
+              <v-btn text @click="e1 = 1"> Cancel </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="2">
@@ -97,7 +97,7 @@
                 </v-btn>
               </v-form>
 
-              <v-btn text> Cancel </v-btn>
+              <v-btn text @click="e1 = 1"> Cancel </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="3">
@@ -112,7 +112,7 @@
 
               <v-btn color="primary" @click="submit"> Confirm </v-btn>
 
-              <v-btn text> Cancel </v-btn>
+              <v-btn text @click="e1 = 1"> Cancel </v-btn>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
