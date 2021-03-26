@@ -25,7 +25,7 @@
       </div>
       <p>{{ message }}</p>
 
-      <v-btn :disabled="invalid" color="primary" @click="e1 = 2">
+      <v-btn :disabled="invalid" color="primary" @click="clone">
         Continue
       </v-btn>
     </v-container>
@@ -57,6 +57,10 @@ export default {
       this.path = pathToFile;
       this.folder = pathToFile.slice(pathToFile.lastIndexOf("\\") + 1);
       this.invalid = false;
+    },
+    clone() {
+      const git = require("../gitWrapper");
+      git.clone();
     }
   }
 };

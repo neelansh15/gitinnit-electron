@@ -73,6 +73,10 @@ const log = () => {
     .catch(err => console.log(err));
 };
 
+const clone = () => {
+  git.clone(githubPath, path);
+};
+
 export {
   init,
   add,
@@ -85,5 +89,6 @@ export {
   push,
   config,
   log,
-  setPath
+  setPath,
+  clone
 };
