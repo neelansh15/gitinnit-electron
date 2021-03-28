@@ -4,7 +4,6 @@
       <v-layout row wrap>
         <!-- xs12 and sm12 to make it responsive = 12 columns on mobile and 6 columns from medium to XL layouts -->
         <v-flex xs12 sm12>
-          <h1>Details</h1>
           <v-row align="center" justify="center">
             <v-col>
               <v-card color="teal darken-3">
