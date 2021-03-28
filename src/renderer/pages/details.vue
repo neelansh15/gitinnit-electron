@@ -7,10 +7,26 @@
           <h1>Details</h1>
           <v-row align="center" justify="center">
             <v-col>
-              <h2>Project Name: {{ projectName }}</h2>
-            </v-col>
-            <v-col>
-              <h2>Author Name: {{ author }}</h2>
+              <v-card color="teal darken-3">
+                <v-card-text class="white--text">
+                  <div class="overline teal--text text--lighten-3">
+                    {{ project.genre }}
+                  </div>
+                  <div class="text-h5 teal--text text--lighten-5">
+                    {{ project.name }}
+                  </div>
+                  <div class="teal--text text--lighten-3">
+                    By {{ project.author }}
+                  </div>
+                  <div class="mt-2 teal--text text--lighten-2">
+                    {{ project.path }}
+                  </div>
+                </v-card-text>
+                <div class="pa-2 teal lighten-2 font-weight-medium">
+                  <v-btn color="teal lighten-2 teal--text text--darken-4" depressed>Push</v-btn>
+                  <v-btn color="teal lighten-2 teal--text text--darken-4" depressed>Pull</v-btn>
+                </div>
+              </v-card>
             </v-col>
           </v-row>
 
@@ -18,9 +34,7 @@
             <v-col>
               <v-dialog v-model="dialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn v-bind="attrs" v-on="on">
-                    Push Files
-                  </v-btn>
+                  <v-btn v-bind="attrs" v-on="on"> Push Files </v-btn>
                 </template>
 
                 <v-card max-width="475" class="mx-auto">
@@ -31,7 +45,7 @@
                         v-for="(file, index) in files.length"
                         :key="file.name"
                         :index="index"
-                        :names-array="files.map(a => a.name)"
+                        :names-array="files.map((a) => a.name)"
                       />
                     </v-list-item-group>
                   </v-list>
@@ -65,35 +79,26 @@ import pushComponent from "@/components/push.vue";
 import timeline from "@/components/timeline.vue";
 const globalConfig = require("../utils/index");
 
-
 const fs = require("fs");
 
 export default {
   components: {
     timeline,
-    pushComponent
+    pushComponent,
   },
   data() {
     return {
       project: {},
-      directoryPath: "",
-      githubPath: "",
-      projectName: "",
-      author: "",
       commitMessage: "",
       files: [],
-      dialog: false
+      dialog: false,
     };
   },
   mounted() {
     // note cant change path here needs to be passed as string
     this.project = globalConfig.getData().current_project;
-    this.directoryPath = this.project.path;
-    this.githubPath = this.project.githubPath;
-    this.projectName = this.project.name;
-    this.author = this.project.author;
     console.log(this.project);
-    console.log(this.directoryPath);
+    console.log(this.project.path);
     // this.importAll(
     //   require.context("C:\\Users\\vedant\\Desktop\\testFolder", true, /\.txt$/)
     // );
@@ -106,7 +111,7 @@ export default {
     //   console.log(this.files);
     // },
     check() {
-      console.log(this.directoryPath);
+      console.log(this.project.path);
     },
     push() {
       const git = require("../gitWrapper");
@@ -115,12 +120,12 @@ export default {
       console.log(message);
       git.setPath();
       const tfiles = [];
-      fs.readdir(this.directoryPath, function(err, files) {
+      fs.readdir(this.project.path, function (err, files) {
         console.log("read");
         if (err) {
           return console.log("Unable to scan directory: " + err);
         }
-        files.forEach(file => {
+        files.forEach((file) => {
           console.log("adding to array");
           tfiles.push(file);
         });
@@ -136,7 +141,7 @@ export default {
     async log() {
       const git = require("../gitWrapper");
       let temp;
-      const launches = await git.log().then(value => {
+      const launches = await git.log().then((value) => {
         temp = value;
       });
       console.log(temp);
@@ -145,7 +150,7 @@ export default {
       const git = require("../gitWrapper");
       git.setPath();
       git.pull();
-    }
-  }
+    },
+  },
 };
 </script>
