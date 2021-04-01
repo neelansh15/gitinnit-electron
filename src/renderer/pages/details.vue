@@ -54,7 +54,7 @@
                   <v-btn color="red darken-1" text @click="dialog = false">
                     Cancel
                   </v-btn>
-                  <v-btn color="green darken-1" text @click="dialog = false">
+                  <v-btn color="green darken-1" text @click="push">
                     Push
                   </v-btn>
                 </v-card-actions>

@@ -18,7 +18,7 @@ const remote = () => {
 
 const init = () => {
   git.init();
-  // git.remote();
+  git.remote();
 };
 
 const add = new Promise(function(resolve, reject) {
@@ -44,10 +44,10 @@ const commit = text => {
   git.commit(text);
 };
 const pull = async () => {
-  await git.pull("origin", "master");
+  await git.pull("origin", "main");
 };
 const push = async () => {
-  await git.push("origin", "master");
+  await git.push(['-u', 'origin', 'main'])
 };
 const config = () => {
   console.log("config");
