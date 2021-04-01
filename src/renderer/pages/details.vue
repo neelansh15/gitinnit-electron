@@ -22,18 +22,50 @@
                   </div>
                 </v-card-text>
                 <div class="pa-2 teal lighten-2 font-weight-medium">
-                  <v-btn color="teal lighten-2 teal--text text--darken-4" depressed>Push</v-btn>
-                  <v-btn color="teal lighten-2 teal--text text--darken-4" depressed>Pull</v-btn>
+                  <v-btn
+                    color="teal lighten-2 teal--text text--darken-4"
+                    depressed
+                    @click.stop="dialog = true"
+                    >Push</v-btn
+                  >
+                  <v-btn
+                    color="teal lighten-2 teal--text text--darken-4"
+                    depressed
+                    >Pull</v-btn
+                  >
                 </div>
               </v-card>
             </v-col>
           </v-row>
 
-          <v-row align="center" justify="space-around">
+            <v-dialog v-model="dialog" max-width="320">
+              <v-card>
+                <v-card-title class="headline">
+                  Commit Message
+                </v-card-title>
+
+                <v-card-text>
+                  <v-text-field label="Message" v-model="commitMessage" counter="50" filled/>
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+
+                  <v-btn color="red darken-1" text @click="dialog = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn color="green darken-1" text @click="dialog = false">
+                    Push
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+          <!-- <v-row align="center" justify="space-around">
             <v-col>
               <v-dialog v-model="dialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn v-bind="attrs" v-on="on"> Push Files </v-btn>
+                  <v-btn v-bind="attrs" v-on="on"> Push Files finally</v-btn>
                 </template>
 
                 <v-card max-width="475" class="mx-auto">
@@ -63,7 +95,7 @@
             <v-col>
               <v-btn @click="pull">Pull Files</v-btn>
             </v-col>
-          </v-row>
+          </v-row> -->
         </v-flex>
       </v-layout>
     </v-container>
