@@ -18,7 +18,7 @@
 
   - [ ] Intro _Tutorial_
   - [ ] index.vue: Latest 3 projects
-  - [x] startProject.vue: **Vedant**
+  - [ ] startProject.vue: **Vedant**
     - [ ] Stepper 2: New project / Fetch from Github (clone) and add projectConfig to globalConfig: with _Tutorial_ on how to add user to a repository
     - [ ] After git init, CREATE a new repo (probably org repo) and set as remote **Neelansh**
     - [x] Validation
@@ -36,7 +36,7 @@
     - [ ] Amazon- type timeline
       - [ ] Commit message, Go to this place in time
 
-- [x] Username in sidebar **Neelansh**
+- [ ] Username in sidebar **Neelansh**
 - [ ] commit function explicitly **Vedant**
 - [ ] Checkout function **Vedant**
 - [ ] Pagination in index.vue for projects **Vedant**

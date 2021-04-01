@@ -24,7 +24,7 @@ const init = () => {
 const add = new Promise(function(resolve, reject) {
   console.log("add wrapper");
 
-  reject("NO");
+  reject("cant add files");
   const i = 1;
   if (i === 1) {
     resolve("ok");
@@ -59,8 +59,6 @@ const branch = () => {
 const checkout = () => {
   console.log("checkout");
 };
-
-// Find the return type of git.log()
 
 const log = () => {
   const options = {
