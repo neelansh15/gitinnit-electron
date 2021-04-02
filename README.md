@@ -40,3 +40,4 @@
 - [ ] commit function explicitly **Vedant**
 - [ ] Checkout function **Vedant**
 - [ ] Pagination in index.vue for projects **Vedant**
+- [ ] cloneProject.vue -> setPath for git wrapper **Vedant**

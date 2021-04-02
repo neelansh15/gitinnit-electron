@@ -225,7 +225,7 @@ export default {
       fs.writeFileSync(configPath, JSON.stringify(configData), function(e) {
         console.assert("Written to config file. e => " + e);
       });
-      alert("Created new project config file!");
+      // alert("Created new project config file!");
 
       // Also append the same config data to the global config
       const globalConfigPath =
