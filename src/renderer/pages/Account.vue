@@ -35,6 +35,7 @@
 
 
 import axios from 'axios'
+import Combobox from '@/components/Combo.vue'
 
 import { getData, setData } from '../utils'
 
