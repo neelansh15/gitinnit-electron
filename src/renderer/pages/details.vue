@@ -38,28 +38,33 @@
             </v-col>
           </v-row>
 
-            <v-dialog v-model="dialog" max-width="320">
-              <v-card>
-                <v-card-title class="headline">
-                  Commit Message
-                </v-card-title>
+          <v-dialog v-model="dialog" max-width="320">
+            <v-card>
+              <v-card-title class="headline">
+                Commit Message
+              </v-card-title>
 
-                <v-card-text>
-                  <v-text-field label="Message" v-model="commitMessage" counter="50" filled/>
-                </v-card-text>
+              <v-card-text>
+                <v-text-field
+                  label="Message"
+                  v-model="commitMessage"
+                  counter="50"
+                  filled
+                />
+              </v-card-text>
 
-                <v-card-actions>
-                  <v-spacer></v-spacer>
+              <v-card-actions>
+                <v-spacer></v-spacer>
 
-                  <v-btn color="red darken-1" text @click="dialog = false">
-                    Cancel
-                  </v-btn>
-                  <v-btn color="green darken-1" text @click="push">
-                    Push
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
+                <v-btn color="red darken-1" text @click="dialog = false">
+                  Cancel
+                </v-btn>
+                <v-btn color="green darken-1" text @click="push">
+                  Push
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
 
           <!-- <v-row align="center" justify="space-around">
             <v-col>
@@ -115,14 +120,14 @@ const fs = require("fs");
 export default {
   components: {
     timeline,
-    pushComponent,
+    pushComponent
   },
   data() {
     return {
       project: {},
       commitMessage: "",
       files: [],
-      dialog: false,
+      dialog: false
     };
   },
   mounted() {
@@ -151,12 +156,12 @@ export default {
       console.log(message);
       git.setPath();
       const tfiles = [];
-      fs.readdir(this.project.path, function (err, files) {
+      fs.readdir(this.project.path, function(err, files) {
         console.log("read");
         if (err) {
           return console.log("Unable to scan directory: " + err);
         }
-        files.forEach((file) => {
+        files.forEach(file => {
           console.log("adding to array");
           tfiles.push(file);
         });
@@ -167,12 +172,13 @@ export default {
         git.pull();
         console.log("git pull");
         git.push();
+        this.dialog = false;
       });
     },
     async log() {
       const git = require("../gitWrapper");
       let temp;
-      const launches = await git.log().then((value) => {
+      const launches = await git.log().then(value => {
         temp = value;
       });
       console.log(temp);
@@ -181,7 +187,7 @@ export default {
       const git = require("../gitWrapper");
       git.setPath();
       git.pull();
-    },
-  },
+    }
+  }
 };
 </script>

@@ -47,7 +47,9 @@ const pull = async () => {
   await git.pull("origin", "main");
 };
 const push = async () => {
-  await git.push(['-u', 'origin', 'main'])
+  await git.push(["-u", "origin", "main"], () => {
+    console.log("push done");
+  });
 };
 const config = () => {
   console.log("config");
