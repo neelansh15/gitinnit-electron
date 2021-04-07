@@ -2,8 +2,8 @@
 
 ## ToDo
 
-- [ ] Toggle Terminology switch
-- [ ] ComboBox for Github Remote **Parth**
+- [ ] Toggle Terminology switch (Optional) **Neelansh**
+- [ ] ComboBox for Github Remote **Parth** : **10th April** **Important**
 - [ ] Detect if app is offline, then use offline data from global config instead of fetching it from the Github API
 - [x] ~~Global config~~: **Done**, path: %appdata%/pkg.name(here: gitnnit-electron)/globalConfig.json (Read https://medium.com/cameron-nokes/how-to-store-user-data-in-electron-3ba6bf66bc1e)
 
@@ -17,9 +17,10 @@
 - [ ] Pages
 
   - [ ] Intro _Tutorial_
-  - [ ] index.vue: Latest 3 projects
+  - [x] index.vue: Latest 3 projects
   - [x] startProject.vue: **Vedant**
-    - [ ] Stepper 2: New project / Fetch from Github (clone) and add projectConfig to globalConfig: with _Tutorial_ on how to add user to a repository
+    - [ ] Stepper 2: ~~New project / Fetch from Github (clone) and~~ add projectConfig to globalConfig: with _Tutorial_ on how to add user to a repository.  
+    Routing + Put in project config **Vedant** : **10th April**
     - [ ] After git init, CREATE a new repo (probably org repo) and set as remote **Neelansh**
     - [x] Validation
     - [x] git init (through wrapper)
@@ -31,10 +32,9 @@
   - [ ] details.vue: **Neelansh**, **Parth**
     - [x] Project details
     - [ ] Timeline
-      - [ ] Set Default
+      - [x] Set Default
       - [ ] Create new Timeline (New branch)
-    - [ ] Amazon- type timeline
-      - [ ] Commit message, Go to this place in time
+    - [ ] Commit message, Go to this place in time **Parth** **Important**
 
 - [x] Username in sidebar **Neelansh**
 - [ ] commit function explicitly **Vedant**
