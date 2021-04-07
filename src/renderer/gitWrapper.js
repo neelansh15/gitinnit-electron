@@ -44,10 +44,10 @@ const commit = text => {
   git.commit(text);
 };
 const pull = async () => {
-  await git.pull("origin", "main");
+  await git.pull("origin", "master");
 };
 const push = async () => {
-  await git.push(["-u", "origin", "main"], () => {
+  await git.push(["-u", "origin", "master"], () => {
     console.log("push done");
   });
 };

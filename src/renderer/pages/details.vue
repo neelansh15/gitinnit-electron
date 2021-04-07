@@ -31,8 +31,10 @@
                   <v-btn
                     color="teal lighten-2 teal--text text--darken-4"
                     depressed
-                    >Pull</v-btn
+                    @click="pull"
                   >
+                    Pull
+                  </v-btn>
                 </div>
               </v-card>
             </v-col>
@@ -150,6 +152,7 @@ export default {
       console.log(this.project.path);
     },
     push() {
+      this.dialog = false;
       const git = require("../gitWrapper");
       const message = this.commitMessage;
       console.log(this.commitMessage);
@@ -184,6 +187,7 @@ export default {
       console.log(temp);
     },
     pull() {
+      console.log("git pull");
       const git = require("../gitWrapper");
       git.setPath();
       git.pull();
