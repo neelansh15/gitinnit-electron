@@ -36,7 +36,7 @@
       - [ ] Create new Timeline (New branch)
     - [ ] Commit message, Go to this place in time **Parth** **Important**
 
-- [x] Username in sidebar **Neelansh**
+- [ ] Username in sidebar **Neelansh**
 - [ ] commit function explicitly **Vedant**
 - [ ] Checkout function **Vedant**
 - [ ] Pagination in index.vue for projects **Vedant**

@@ -24,7 +24,7 @@ const init = () => {
 const add = new Promise(function(resolve, reject) {
   console.log("add wrapper");
 
-  reject("NO");
+  reject("cant add files");
   const i = 1;
   if (i === 1) {
     resolve("ok");
@@ -44,10 +44,12 @@ const commit = text => {
   git.commit(text);
 };
 const pull = async () => {
-  await git.pull("origin", "main");
+  await git.pull("origin", "master");
 };
 const push = async () => {
-  await git.push(['-u', 'origin', 'main'])
+  await git.push(["-u", "origin", "master"], () => {
+    console.log("push done");
+  });
 };
 const config = () => {
   console.log("config");
@@ -59,8 +61,6 @@ const branch = () => {
 const checkout = () => {
   console.log("checkout");
 };
-
-// Find the return type of git.log()
 
 const log = () => {
   const options = {
