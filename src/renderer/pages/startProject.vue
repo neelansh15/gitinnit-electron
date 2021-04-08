@@ -37,7 +37,7 @@
         <v-stepper v-if="!repoExists" v-model="e1">
           <v-stepper-header>
             <v-stepper-step :complete="e1 > 1" step="1">
-              Select folder
+              Select folder and set Github path
             </v-stepper-step>
 
             <v-divider />
@@ -53,25 +53,31 @@
 
           <v-stepper-items>
             <v-stepper-content step="1">
-              <div class="input">
+              <v-form ref="form" v-model="invalid">
                 <v-file-input
                   label="Select file to get path"
                   @change="handleFileChange"
-                >
-                  Select Folder
-                </v-file-input>
-              </div>
-              <div class="path">
-                <h5>Folder:</h5>
-                <p>{{ folder }}</p>
-              </div>
-              <p>{{ message }}</p>
+                  required
+                />
+                <v-text-field
+                  v-model="githubPath"
+                  label="Enter github path here"
+                  :rules="[v => !!v || 'Enter a github path to continue']"
+                  required
+                />
 
-              <v-btn :disabled="invalid" color="primary" @click="e1 = 2">
-                Continue
-              </v-btn>
+                <div class="path">
+                  <h5>Folder:</h5>
+                  <p>{{ folder }}</p>
+                </div>
+                <p>{{ message }}</p>
 
-              <v-btn text @click="e1 = 1"> Cancel </v-btn>
+                <v-btn :disabled="!invalid" color="primary" @click="e1 = 2">
+                  Continue
+                </v-btn>
+
+                <v-btn text @click="clearDetails"> Cancel </v-btn>
+              </v-form>
             </v-stepper-content>
 
             <v-stepper-content step="2">
@@ -161,7 +167,7 @@ export default {
     return {
       repoExists: false,
       path: "none",
-      githubPath: "https://github.com/devs4shah/Testing1.git",
+      githubPath: "",
       folder: "none",
       message: "",
       e1: 1,
@@ -196,18 +202,19 @@ export default {
   mounted() {},
   methods: {
     handleFileChange(file) {
+      console.log("file changes");
       if (file == null) {
         this.path = "none";
         this.folder = "No folder choosen";
         this.invalid = true;
         return;
       }
+
       let pathToFile = file.path;
       const index = pathToFile.lastIndexOf("\\");
       pathToFile = pathToFile.slice(0, index);
       this.path = pathToFile;
       this.folder = pathToFile.slice(pathToFile.lastIndexOf("\\") + 1);
-      this.invalid = false;
     },
     submit() {
       const configPath = this.path + "\\projectConfig.json";
