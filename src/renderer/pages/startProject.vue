@@ -156,11 +156,12 @@
 </template>
 
 <script>
-import pkg from "../../../package.json";
+// import pkg from "../../../package.json";
+// const { remote } = require("electron");
+// const { app } = remote;
 
-const { remote } = require("electron");
-const { app } = remote;
 const fs = require("fs");
+import { getData, setData } from '../utils'
 
 export default {
   data() {
@@ -229,29 +230,32 @@ export default {
         path: this.path,
         githubPath: this.githubPath
       };
+      //Required for project-level config
       fs.writeFileSync(configPath, JSON.stringify(configData), function(e) {
-        console.assert("Written to config file. e => " + e);
+        console.log("Written to config file. e => " + e);
       });
-      // alert("Created new project config file!");
 
       // Also append the same config data to the global config
-      const globalConfigPath =
-        app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
+      // const globalConfigPath =
+      //   app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
 
-      const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath));
+      // const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath));
+      const globalConfigData = getData()
       let projectsArray = globalConfigData.projects;
       if (projectsArray == undefined) projectsArray = [];
 
       projectsArray.push(configData);
       globalConfigData.projects = projectsArray;
       globalConfigData.current_project = configData;
-      fs.writeFileSync(
-        globalConfigPath,
-        JSON.stringify(globalConfigData),
-        () => {
-          console.log("Added project to global config");
-        }
-      );
+
+      setData(globalConfigData)
+      // fs.writeFileSync(
+      //   globalConfigPath,
+      //   JSON.stringify(globalConfigData),
+      //   () => {
+      //     console.log("Added project to global config");
+      //   }
+      // );
 
       console.log("Projects array: ");
       console.log(projectsArray);
