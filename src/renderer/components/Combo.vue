@@ -29,8 +29,6 @@ export default {
   },
 
   mounted() {
-    let config = getData();
-    this.selected = config.current_project.githubPath;
     this.fetchRepos();
   },
   watch: {
@@ -39,7 +37,7 @@ export default {
   methods: {
     update_value() {
       let config = getData();
-      
+
       let newGithubPath = 
         "https://github.com/" +
         config.user.login +
