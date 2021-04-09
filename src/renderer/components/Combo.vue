@@ -41,7 +41,7 @@ export default {
     update_value(){
     console.log(this.selected)
     let config= getData()
-    config.current_project.githubPath=this.selected
+    config.current_project.githubPath = "https://github.com/" + config.user.login + "/" + this.selected + ".git"
     setData(config)
     // Also updata projects array -todo 
 
@@ -49,7 +49,7 @@ export default {
     fetchRepos() {
       let access_token = this.$store.state.access_token;
       axios
-        .get(`https://api.github.com/user/repos`, {
+        .get(`https://api.github.com/user/repos?per_page=100&affiliation=owner`, {
           headers: {
             Accept: "application/vnd.github.v3+json",
             Authorization: "token " + access_token,

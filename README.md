@@ -42,3 +42,8 @@
 - [ ] Pagination in index.vue for projects **Vedant**
 - [ ] cloneProject.vue -> setPath for git wrapper **Vedant**
 - [ ] Add branch attribute to config for checkout **Neelansh**
+
+## Caveats
+1) Github api repo listing limit is max 100 per page. For more than 100 repos, would need pagination (api does provide page by page)
+
+2) Again in repo listing, we are using "owner" affiliation for user-owned repos. For repos the user has been added as a collaborator to, we need to lock the repo in the combobox/dropdown.

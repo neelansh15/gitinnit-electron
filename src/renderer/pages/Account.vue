@@ -81,7 +81,7 @@ export default {
   methods: {
     fetchRepos() {
       axios
-        .get(`https://api.github.com/user/repos`, {
+        .get(`https://api.github.com/user/repos?per_page=100&affiliation=owner`, {
           headers: {
             Accept: "application/vnd.github.v3+json",
             Authorization: "token " + this.access_token
