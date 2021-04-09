@@ -132,7 +132,6 @@ export default {
     return {
       repoExists: false,
       path: "none",
-      githubPath: "",
       folder: "none",
       message: "",
       e1: 1,
@@ -188,7 +187,6 @@ export default {
       this.name = this.name.trim();
       //End Optimization
 
-      let repoSuccess = false;
       //Check if a remote Github repo with this project name exists. If it does, show error and return
       let access_token = this.$store.state.access_token;
       const data = {
@@ -199,7 +197,7 @@ export default {
         auto_init: false,
       };
       axios({
-        method: 'post',
+        method: "post",
         url: "https://api.github.com/user/repos",
         data,
         headers: {
@@ -208,11 +206,61 @@ export default {
         },
       })
         .then((res) => {
-          console.log("New repo created");
-          console.log("Response: ")
-          console.log(res)
-          repoSuccess = true;
-          console.log("repoSuccess: " + repoSuccess)
+          console.log("New repo created!");
+          console.log("Response: ");
+          console.log(res);
+
+          //Only if repo creation is a success
+
+          // Also append the same config data to the global config
+          const globalConfigData = getData();
+          let githubPath =
+            "https://github.com/" +
+            globalConfigData.user.login +
+            "/" +
+            this.name +
+            ".git";
+
+          //Project config creation
+          const configPath = this.path + "\\projectConfig.json";
+          const configData = {
+            id: Math.floor(Math.random() * 10000),
+            name: this.name,
+            author: this.author,
+            description: this.description,
+            genre: this.genre,
+            daw: this.daw,
+            folder: this.folder,
+            path: this.path,
+            githubPath: githubPath,
+          };
+          //Required for project-level config
+          fs.writeFileSync(
+            configPath,
+            JSON.stringify(configData),
+            function (e) {
+              console.log("Written to config file. e => " + e);
+            }
+          );
+          //End of project config creation
+
+          let projectsArray = globalConfigData.projects;
+          if (projectsArray == undefined) projectsArray = [];
+
+          projectsArray.push(configData);
+          globalConfigData.projects = projectsArray;
+          globalConfigData.current_project = configData;
+
+          setData(globalConfigData);
+
+          console.log("Projects array: ");
+          console.log(projectsArray);
+          // End of adding project to global config
+
+          const git = require("../gitWrapper");
+          git.setPath(this.path, githubPath);
+          git.init();
+          this.$router.push("/details");
         })
         .catch((e) => {
           console.error("Error while creating new repo omg");
@@ -222,50 +270,6 @@ export default {
           this.repoCreationErrorShow = true;
         });
       //End of remote repo check and creation
-
-      //Only if repo creation is a success
-      if (repoSuccess) {
-        const configPath = this.path + "\\projectConfig.json";
-        const configData = {
-          id: Math.floor(Math.random() * 10000),
-          name: this.name,
-          author: this.author,
-          description: this.description,
-          genre: this.genre,
-          daw: this.daw,
-          folder: this.folder,
-          path: this.path,
-          githubPath: this.githubPath,
-        };
-        //Required for project-level config
-        fs.writeFileSync(configPath, JSON.stringify(configData), function (e) {
-          console.log("Written to config file. e => " + e);
-        });
-
-        // Also append the same config data to the global config
-        // const globalConfigPath =
-        //   app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
-
-        // const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath));
-        const globalConfigData = getData();
-        let projectsArray = globalConfigData.projects;
-        if (projectsArray == undefined) projectsArray = [];
-
-        projectsArray.push(configData);
-        globalConfigData.projects = projectsArray;
-        globalConfigData.current_project = configData;
-
-        setData(globalConfigData);
-
-        console.log("Projects array: ");
-        console.log(projectsArray);
-        // End of adding project to global config
-
-        const git = require("../gitWrapper");
-        git.setPath(this.path, this.githubPath);
-        git.init();
-        this.$router.push("/details");
-      }
     },
     projectExists() {
       this.repoExists = true;

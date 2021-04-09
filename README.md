@@ -47,7 +47,9 @@
 - [ ] Add branch attribute to config for checkout **Neelansh**
 
 ## Pre-release
-1) startProject.vue: Set private to false by default while creating repo, or even ask user
+1) startProject.vue: 
+   - Set private to false by default while creating repo, or even ask user
+   - Alter project name used in repo creation for fitting github repo name standards
 
 ## Caveats
 1) Github api repo listing limit is max 100 per page. For more than 100 repos, would need pagination (api does provide page by page)
