@@ -1,14 +1,13 @@
 <template>
   <v-container fluid>
     <v-row align="center">
-      <v-col
-        class="d-flex"
-        cols="12"
-        sm="6"
-      >
-        <v-select
+      <v-col class="d-flex" cols="12" sm="6" >
+        
+        <v-select offset-y
           :items="repos"
-          label="Select Repository"
+           v-model="selected"
+           label="Select Repo "
+           item-text="name"
           dense
           outlined
         ></v-select>
@@ -17,28 +16,50 @@
   </v-container>
 </template>
 
+
 <script>
-  export default {
-    data () {
-      return {
-            access_token: "",
-            repos: [],
-        }
+import axios from "axios"
+import {getData,setData} from "../utils"
+export default {
+  data() {
+    return {
+      repos: [],
+      selected: " "
+    };
+  },
+
+  mounted() {
+    let config= getData()
+    this.selected=config.current_project.githubPath
+    this.fetchRepos();
+
+  },
+  watch:{
+    "selected":"update_value"
+  },
+  methods: {
+    update_value(){
+    console.log(this.selected)
+    let config= getData()
+    config.current_project.githubPath=this.selected
+    setData(config)
+    // Also updata projects array -todo 
+
     },
-    methods: {
-    async fetchRepos() {
+    fetchRepos() {
+      let access_token = this.$store.state.access_token;
       axios
         .get(`https://api.github.com/user/repos`, {
           headers: {
             Accept: "application/vnd.github.v3+json",
-            Authorization: "token " + this.access_token
-          }
+            Authorization: "token " + access_token,
+          },
         })
-        .then(res => {
+        .then((res) => {
           this.repos = res.data;
           console.log(res.data);
         });
     },
-  }
-  }
+  },
+};
 </script>
