@@ -18,7 +18,9 @@
                     By {{ project.author }}
                   </div>
                   <div class="mt-2 teal--text text--lighten-2">
+                    <v-chip class="teal lighten-2 teal--text text--darken-3 font-weight-bold" x-small>Local</v-chip>
                     {{ project.path }} <br />
+                    <v-chip class="teal lighten-2 teal--text text--darken-3 font-weight-bold" x-small>Remote</v-chip>
                     {{ project.githubPath }}
                   </div>
                 </v-card-text>
