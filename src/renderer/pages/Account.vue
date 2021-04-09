@@ -13,7 +13,7 @@
     <div class="mt-5">
       <v-btn depressed small @click="fetchRepos">Fetch repos</v-btn>
       <v-btn depressed small @click="logout">Log out</v-btn>
-      <!-- <Combobox></Combobox> -->
+      <Combobox></Combobox>
     </div>
 
     <div v-if="repos.length > 0">
@@ -30,13 +30,14 @@
 
 <script>
 import axios from "axios";
+import Combobox from "@/components/Combo.vue";
 
 import { getData, setData } from "../utils";
 
 export default {
-  // components: {
-  //   Combobox
-  // },
+  components: {
+    Combobox
+  },
 
   data: () => ({
     access_token: "",
@@ -80,7 +81,7 @@ export default {
   methods: {
     fetchRepos() {
       axios
-        .get(`https://api.github.com/user/repos`, {
+        .get(`https://api.github.com/user/repos?per_page=100&affiliation=owner`, {
           headers: {
             Accept: "application/vnd.github.v3+json",
             Authorization: "token " + this.access_token

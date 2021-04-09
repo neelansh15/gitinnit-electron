@@ -2,6 +2,7 @@
 
 ## ToDo
 
+- [ ] **Important** In the simple-git plugin source code, change branch on init from master to main
 - [ ] Toggle Terminology switch (Optional) **Neelansh**
 - [ ] ComboBox for Github Remote **Parth** : **10th April** **Important**
 - [ ] Detect if app is offline, then use offline data from global config instead of fetching it from the Github API
@@ -42,3 +43,8 @@
 - [ ] Pagination in index.vue for projects **Vedant**
 - [ ] cloneProject.vue -> setPath for git wrapper **Vedant**
 - [ ] Add branch attribute to config for checkout **Neelansh**
+
+## Caveats
+1) Github api repo listing limit is max 100 per page. For more than 100 repos, would need pagination (api does provide page by page)
+
+2) Again in repo listing, we are using "owner" affiliation for user-owned repos. For repos the user has been added as a collaborator to, we need to lock the repo in the combobox/dropdown.
