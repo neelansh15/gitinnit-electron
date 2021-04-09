@@ -2,38 +2,6 @@
   <div>
     <v-layout row wrap align-center justify-center>
       <v-card class="elevation-0 mt-10" width="60vw">
-        <v-card-title primary-title class="layout justify-center">
-          <h1>Start Project</h1>
-        </v-card-title>
-        <v-flex xs12 sm12>
-          <v-row align="center" justify="center">
-            <v-col cols="12" sm="4">
-              <v-card class="mx-auto" max-width="1200" height="200">
-                <v-card-text class="text-center">
-                  <h3>Already have an existing project?</h3>
-                </v-card-text>
-                <v-card-actions class="justify-center">
-                  <nuxt-link to="/cloneProject">
-                    <v-btn @click="projectExists">
-                      Use project from online repo.
-                    </v-btn>
-                  </nuxt-link>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-            <v-col cols="12" sm="4">
-              <v-card class="mx-auto" max-width="1200" height="200">
-                <v-card-text class="text-center">
-                  <h3>Create a new project.</h3>
-                </v-card-text>
-                <v-card-actions class="justify-center">
-                  <v-btn @click="projectNotExists"> Create project. </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-flex>
-
         <v-stepper v-if="!repoExists" v-model="e1">
           <v-stepper-header>
             <v-stepper-step :complete="e1 > 1" step="1">
@@ -59,12 +27,6 @@
                   @change="handleFileChange"
                   required
                 />
-                <v-text-field
-                  v-model="githubPath"
-                  label="Enter github path here"
-                  :rules="[v => !!v || 'Enter a github path to continue']"
-                  required
-                />
 
                 <div class="path">
                   <h5>Folder:</h5>
@@ -76,7 +38,7 @@
                   Continue
                 </v-btn>
 
-                <v-btn text @click="clearDetails"> Cancel </v-btn>
+                <v-btn text @click="el = 1"> Cancel </v-btn>
               </v-form>
             </v-stepper-content>
 
