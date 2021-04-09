@@ -18,7 +18,8 @@
                     By {{ project.author }}
                   </div>
                   <div class="mt-2 teal--text text--lighten-2">
-                    {{ project.path }}
+                    {{ project.path }} <br />
+                    {{ project.githubPath }}
                   </div>
                 </v-card-text>
                 <div class="pa-2 teal lighten-2 font-weight-medium">
