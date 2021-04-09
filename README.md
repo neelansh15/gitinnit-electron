@@ -3,6 +3,7 @@
 ## ToDo
 
 - [ ] **Important** In the simple-git plugin source code, change branch on init from master to main
+- [ ] Change design of Timeline
 - [ ] Toggle Terminology switch (Optional) **Neelansh**
 - [ ] ComboBox for Github Remote **Parth** : **10th April** **Important**
 - [ ] Detect if app is offline, then use offline data from global config instead of fetching it from the Github API
@@ -20,6 +21,7 @@
   - [ ] Intro _Tutorial_
   - [x] index.vue: Latest 3 projects
   - [x] startProject.vue: **Vedant**
+    - [ ] Check if a repo with the project name already exists before creating a new repo, or use error while creating repo **Neelansh**
     - [ ] Stepper 2: ~~New project / Fetch from Github (clone) and~~ add projectConfig to globalConfig: with _Tutorial_ on how to add user to a repository.  
     Routing + Put in project config **Vedant** : **10th April**
     - [ ] After git init, CREATE a new repo (probably org repo) and set as remote **Neelansh**
@@ -43,6 +45,9 @@
 - [ ] Pagination in index.vue for projects **Vedant**
 - [ ] cloneProject.vue -> setPath for git wrapper **Vedant**
 - [ ] Add branch attribute to config for checkout **Neelansh**
+
+## Pre-release
+1) startProject.vue: Set private to false by default while creating repo, or even ask user
 
 ## Caveats
 1) Github api repo listing limit is max 100 per page. For more than 100 repos, would need pagination (api does provide page by page)
