@@ -25,7 +25,7 @@
       </div>
       <p>{{ message }}</p>
 
-      <v-btn :disabled="invalid" color="primary" @click="clone">
+      <v-btn :disabled="!valid" color="primary" @click="clone">
         Continue
       </v-btn>
     </v-container>
@@ -39,7 +39,7 @@ export default {
       githubPath: "",
       path: "",
       message: "",
-      invalid: true
+      valid: false
     };
   },
   methods: {

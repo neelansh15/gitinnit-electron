@@ -6,10 +6,10 @@
           <v-list-item-title class="title"> Gitinnit </v-list-item-title>
           <v-list-item-subtitle>
             {{ current_project ? current_project.name : "No project selected" }}
-            &middot; &nbsp; 
+            &middot; &nbsp;
             <span v-if="current_project" class="teal--text text-darken-3">{{
-                  current_project.genre
-                }}</span>
+              current_project.genre
+            }}</span>
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -17,14 +17,42 @@
       <v-divider />
 
       <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" link :to="item.to">
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+        <v-list-item v-for="item in items" :key="item.title">
+          <v-list-group
+            prepend-icon="mdi-folder-plus"
+            v-if="item.sublinks"
+            :value="true"
+          >
+            <!--Remove v-list-group__header from template to make it aligned correctly -->
+            <template v-slot:activator>
+              <v-list-item-title>
+                {{ item.title }}
+              </v-list-item-title>
+            </template>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
+            <v-list-item
+              v-for="sublink in item.sublinks"
+              :key="sublink.title"
+              link
+              class="pl-7"
+              :to="sublink.to"
+            >
+              <v-list-item-icon>
+                <v-icon>{{ sublink.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>{{ sublink.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list-group>
+
+          <v-list-item v-else link :to="item.to">
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -50,34 +78,46 @@ export default {
         {
           title: "Dashboard",
           icon: "mdi-view-dashboard",
-          to: "/",
+          to: "/"
         },
         {
           title: "Details",
           icon: "mdi-book-open",
-          to: "/details",
+          to: "/details"
         },
         {
           title: "Start a project",
-          icon: "mdi-plus",
-          to: "/startproject",
+
+          to: "/",
+          sublinks: [
+            {
+              title: "Create a new project",
+              icon: "mdi-plus",
+              to: "/startproject"
+            },
+            {
+              title: "Clone a project",
+              icon: "mdi-cloud-download",
+              to: "/cloneProject"
+            }
+          ]
         },
         {
           title: "Account",
           icon: "mdi-account",
-          to: "/account",
-        },
-      ],
+          to: "/account"
+        }
+      ]
     };
   },
-  computed:{
-    current_project:{
-      get(){
-      return this.$store.state.current_project
+  computed: {
+    current_project: {
+      get() {
+        return this.$store.state.current_project;
       },
-      set(val){
+      set(val) {
         //Not really needed but strange error without set()
-        this.$store.commit('setCurrentProject', val)
+        this.$store.commit("setCurrentProject", val);
       }
     }
   },
@@ -94,10 +134,9 @@ export default {
       }
     }
 
-
-    console.log("SIDEBAR: current_project = ")
+    console.log("SIDEBAR: current_project = ");
     console.log(this.current_project);
-  },
+  }
 };
 </script>
 
