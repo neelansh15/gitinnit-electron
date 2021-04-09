@@ -2,6 +2,7 @@
 
 ## ToDo
 
+- [ ] **Important** In the simple-git plugin source code, change branch on init from master to main
 - [ ] Toggle Terminology switch (Optional) **Neelansh**
 - [ ] ComboBox for Github Remote **Parth** : **10th April** **Important**
 - [ ] Detect if app is offline, then use offline data from global config instead of fetching it from the Github API
