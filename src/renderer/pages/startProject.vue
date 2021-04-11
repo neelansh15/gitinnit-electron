@@ -258,7 +258,7 @@ export default {
           // End of adding project to global config
 
           const git = require("../gitWrapper");
-          git.setPath(this.path, githubPath);
+          git.setPath();
           git.init();
           this.$router.push("/details");
         })

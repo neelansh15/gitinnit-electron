@@ -28,8 +28,10 @@ const getData = () => {
 };
 
 const setData = globalConfigData => {
+  console.log("SET DATA IN ACTION")
   if (fs.existsSync(getPathToGlobalConfig()))
-    fs.writeFileSync(getPathToGlobalConfig(), JSON.stringify(globalConfigData));
+  fs.writeFileSync(getPathToGlobalConfig(), JSON.stringify(globalConfigData));
+  console.log("SET DATA ENDED")
 };
 
 export { getPathToGlobalConfig, getData, setData };
