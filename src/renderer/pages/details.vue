@@ -155,7 +155,6 @@ export default {
       console.log(this.project.path);
     },
     push() {
-      this.dialog = false;
       const git = require("../gitWrapper");
       const message = this.commitMessage;
       console.log(this.commitMessage);
@@ -173,11 +172,11 @@ export default {
         });
         console.log(tfiles);
         git.addFiles(tfiles);
+
+
         console.log("commit");
         git.commit(message);
-        git.pull();
-        console.log("git pull");
-        git.push();
+
         this.dialog = false;
       });
     },

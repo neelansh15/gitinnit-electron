@@ -41,17 +41,25 @@ const addFiles = files => {
   });
 };
 
-const commit = text => {
-  git.commit(text);
-};
-const pull = async () => {
-  await git.pull("origin", "main");
-};
-const push = async () => {
-  await git.push(["-u", "origin", "main"], () => {
+const commit = async text => {
+  await git.commit(text);
+
+  console.log("Commit done. Pull next");
+  // await git.pull("origin", "master");
+  console.log("Pull done. Push next");
+
+  await git.push(["-u", "origin", "master"], () => {
     console.log("push done");
   });
 };
+const pull = async () => {
+  await git.pull("origin", "master");
+};
+// const push = async () => {
+//   await git.push(["-u", "origin", "master"], () => {
+//     console.log("push done");
+//   });
+// };
 const config = () => {
   console.log("config");
 };
@@ -87,7 +95,7 @@ export {
   branch,
   checkout,
   pull,
-  push,
+  // push,
   config,
   log,
   setPath,

@@ -46,7 +46,7 @@
               <v-form ref="form" v-model="valid">
                 <v-text-field
                   v-model="name"
-                  :counter="30"
+                  :counter="50"
                   :rules="nameRules"
                   label="Project name"
                   required
@@ -97,6 +97,10 @@
             </v-stepper-content>
 
             <v-stepper-content step="3">
+              <v-alert type="error" v-if="repoCreationErrorShow">
+                {{ repoCreationError }}
+              </v-alert>
+
               <div>
                 <h1>Project: {{ name }}</h1>
                 <h2>Author: {{ author }}</h2>
@@ -118,9 +122,7 @@
 </template>
 
 <script>
-// import pkg from "../../../package.json";
-// const { remote } = require("electron");
-// const { app } = remote;
+import axios from "axios";
 
 const fs = require("fs");
 import { getData, setData } from "../utils";
@@ -130,7 +132,6 @@ export default {
     return {
       repoExists: false,
       path: "none",
-      githubPath: "",
       folder: "none",
       message: "",
       e1: 1,
@@ -150,10 +151,12 @@ export default {
       genre: "",
       daw: "",
       checkbox: false,
+      repoCreationError: "",
+      repoCreationErrorShow: false,
 
       nameRules: [
         v => !!v || "Name is required",
-        v => (v && v.length < 30) || "Name must be less than 10 characters"
+        v => (v && v.length < 50) || "Name must be less than 50 characters"
       ],
       descriptionRules: [
         v => !!v || "Description is required",
@@ -180,53 +183,89 @@ export default {
       this.folder = pathToFile.slice(pathToFile.lastIndexOf("\\") + 1);
     },
     submit() {
-      const configPath = this.path + "\\projectConfig.json";
-      const configData = {
-        id: Math.floor(Math.random() * 10000),
+      //Optimize
+      this.name = this.name.trim();
+      //End Optimization
+
+      //Check if a remote Github repo with this project name exists. If it does, show error and return
+      let access_token = this.$store.state.access_token;
+      const data = {
         name: this.name,
-        author: this.author,
         description: this.description,
-        genre: this.genre,
-        daw: this.daw,
-        folder: this.folder,
-        path: this.path,
-        githubPath: this.githubPath
+        //Set to public in pre-release, release (Check README => Pre-release)
+        private: true,
+        auto_init: false
       };
-      //Required for project-level config
-      fs.writeFileSync(configPath, JSON.stringify(configData), function(e) {
-        console.log("Written to config file. e => " + e);
-      });
+      axios({
+        method: "post",
+        url: "https://api.github.com/user/repos",
+        data,
+        headers: {
+          accept: "application/vnd.github.v3+json",
+          Authorization: "token " + access_token
+        }
+      })
+        .then(res => {
+          console.log("New repo created!");
+          console.log("Response: ");
+          console.log(res);
 
-      // Also append the same config data to the global config
-      // const globalConfigPath =
-      //   app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
+          //Only if repo creation is a success
 
-      // const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath));
-      const globalConfigData = getData();
-      let projectsArray = globalConfigData.projects;
-      if (projectsArray == undefined) projectsArray = [];
+          // Also append the same config data to the global config
+          const globalConfigData = getData();
+          let githubPath =
+            "https://github.com/" +
+            globalConfigData.user.login +
+            "/" +
+            this.name +
+            ".git";
 
-      projectsArray.push(configData);
-      globalConfigData.projects = projectsArray;
-      globalConfigData.current_project = configData;
+          //Project config creation
+          const configPath = this.path + "\\projectConfig.json";
+          const configData = {
+            id: Math.floor(Math.random() * 10000),
+            name: this.name,
+            author: this.author,
+            description: this.description,
+            genre: this.genre,
+            daw: this.daw,
+            folder: this.folder,
+            path: this.path,
+            githubPath: githubPath
+          };
+          //Required for project-level config
+          fs.writeFileSync(configPath, JSON.stringify(configData), function(e) {
+            console.log("Written to config file. e => " + e);
+          });
+          //End of project config creation
 
-      setData(globalConfigData);
-      // fs.writeFileSync(
-      //   globalConfigPath,
-      //   JSON.stringify(globalConfigData),
-      //   () => {
-      //     console.log("Added project to global config");
-      //   }
-      // );
+          let projectsArray = globalConfigData.projects;
+          if (projectsArray == undefined) projectsArray = [];
 
-      console.log("Projects array: ");
-      console.log(projectsArray);
-      // End of adding project to global config
+          projectsArray.push(configData);
+          globalConfigData.projects = projectsArray;
+          globalConfigData.current_project = configData;
 
-      const git = require("../gitWrapper");
-      git.setPath(this.path, this.githubPath);
-      git.init();
-      this.$router.push("/details");
+          setData(globalConfigData);
+
+          console.log("Projects array: ");
+          console.log(projectsArray);
+          // End of adding project to global config
+
+          const git = require("../gitWrapper");
+          git.setPath();
+          git.init();
+          this.$router.push("/details");
+        })
+        .catch(e => {
+          console.error("Error while creating new repo omg");
+          console.log(e);
+          this.repoCreationError =
+            "Error while creating repository for project. Possibly the name already exists.";
+          this.repoCreationErrorShow = true;
+        });
+      //End of remote repo check and creation
     },
     projectExists() {
       this.repoExists = true;
