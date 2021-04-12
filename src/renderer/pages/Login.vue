@@ -6,7 +6,7 @@
           <h1 class="mb-3 text-h5">
             Request code and enter it in the Auth page
           </h1>
-          <v-btn depressed @click="login">Request code</v-btn>
+          <v-btn depressed @click="login" title="Request code to use in the next step: Authentication">Request code</v-btn>
 
           <v-icon> mdi-arrow-right </v-icon>
 
@@ -18,6 +18,7 @@
             "
             depressed
             @click="openURL"
+            title="This will open a new tab in your default browser"
           >
             Authenticate
           </v-btn>
@@ -29,6 +30,7 @@
             class="light-blue darken-1"
             depressed
             @click="verifyLogin"
+            title="Click after authentication through the browser"
           >
             Confirm and Login
           </v-btn>
