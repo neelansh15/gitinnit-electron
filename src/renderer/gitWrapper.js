@@ -1,6 +1,7 @@
 const simpleGit = require("simple-git");
 const { gitlogPromise } = require("gitlog");
 const globalConfig = require("../renderer/utils/index");
+const fs = require("fs");
 
 let path;
 let githubPath;
@@ -82,8 +83,14 @@ const log = () => {
     .catch(err => console.log(err));
 };
 
-const clone = () => {
-  git.clone(githubPath, path);
+const clone = async (IgithubPath, Ipath) => {
+  await fs.mkdir(Ipath, () => {
+    console.log("err");
+  });
+  git = simpleGit(Ipath);
+  console.log("clone start");
+  await git.clone(IgithubPath, Ipath);
+  console.log("clone end");
 };
 
 export {
