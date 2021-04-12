@@ -60,6 +60,12 @@ export default {
     }
   }
 };
+
+// clone using githubpath
+// fs.read ProjectConfig
+// Combine path and folder
+// add to projects array of global config
+// set current project in global config
 </script>
 
 <style></style>

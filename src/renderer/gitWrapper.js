@@ -16,9 +16,10 @@ const remote = () => {
   git.addRemote("origin", githubPath);
 };
 
-const init = () => {
-  git.init();
-  git.remote();
+const init = async () => {
+  await git.init();
+  await git.remote();
+  console.log("init success and check remote");
 };
 
 const add = new Promise(function(resolve, reject) {

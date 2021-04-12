@@ -123,7 +123,7 @@
 // const { app } = remote;
 
 const fs = require("fs");
-import { getData, setData } from '../utils'
+import { getData, setData } from "../utils";
 
 export default {
   data() {
@@ -202,7 +202,7 @@ export default {
       //   app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
 
       // const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath));
-      const globalConfigData = getData()
+      const globalConfigData = getData();
       let projectsArray = globalConfigData.projects;
       if (projectsArray == undefined) projectsArray = [];
 
@@ -210,7 +210,7 @@ export default {
       globalConfigData.projects = projectsArray;
       globalConfigData.current_project = configData;
 
-      setData(globalConfigData)
+      setData(globalConfigData);
       // fs.writeFileSync(
       //   globalConfigPath,
       //   JSON.stringify(globalConfigData),
