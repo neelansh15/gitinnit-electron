@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row justify="center">
-      <v-col md="6">
+      <v-col md="8">
         <v-card class="pa-5 mt-10">
           <h1 class="mb-3 text-h5">
             Request code and enter it in the Auth page
@@ -19,7 +19,7 @@
             depressed
             @click="openURL"
           >
-            Go to Auth page
+            Authenticate
           </v-btn>
 
           <v-icon> mdi-arrow-right </v-icon>
