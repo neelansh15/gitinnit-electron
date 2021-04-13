@@ -13,13 +13,14 @@ const setPath = () => {
   githubPath = globalConfig.getData().current_project.githubPath;
   git = simpleGit(path);
 };
-const remote = () => {
+const remote = async () => {
+  console.log("remote", githubPath);
   git.addRemote("origin", githubPath);
 };
 
 const init = async () => {
   await git.init();
-  await git.remote();
+  await remote();
   console.log("init success and check remote");
 };
 

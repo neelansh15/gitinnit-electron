@@ -18,9 +18,17 @@
                     By {{ project.author }}
                   </div>
                   <div class="mt-2 teal--text text--lighten-2">
-                    <v-chip class="teal lighten-2 teal--text text--darken-3 font-weight-bold" x-small>Local</v-chip>
+                    <v-chip
+                      class="teal lighten-2 teal--text text--darken-3 font-weight-bold"
+                      x-small
+                      >Local</v-chip
+                    >
                     {{ project.path }} <br />
-                    <v-chip class="teal lighten-2 teal--text text--darken-3 font-weight-bold" x-small>Remote</v-chip>
+                    <v-chip
+                      class="teal lighten-2 teal--text text--darken-3 font-weight-bold"
+                      x-small
+                      >Remote</v-chip
+                    >
                     {{ project.githubPath }}
                   </div>
                 </v-card-text>
@@ -155,6 +163,7 @@ export default {
       console.log(this.project.path);
     },
     push() {
+      this.dialog = false;
       const git = require("../gitWrapper");
       const message = this.commitMessage;
       console.log(this.commitMessage);
@@ -173,11 +182,8 @@ export default {
         console.log(tfiles);
         git.addFiles(tfiles);
 
-
         console.log("commit");
         git.commit(message);
-
-        this.dialog = false;
       });
     },
     async log() {
