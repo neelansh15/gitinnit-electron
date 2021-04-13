@@ -33,7 +33,9 @@
 </template>
 
 <script>
-// import { getData, setData } from "../utils";
+const fs = require("fs");
+import { getData, setData } from "../utils";
+
 export default {
   data() {
     return {
@@ -59,33 +61,8 @@ export default {
       this.path += "\\";
       this.folder = pathToFile.slice(pathToFile.lastIndexOf("\\") + 1);
     },
-    clone() {
+    async clone() {
       const git = require("../gitWrapper");
-
-      // const globalConfigData = getData();
-      // const configPath = this.path + "\\projectConfig.json";
-      // const configData = {
-      //   folder: this.folder,
-      //   path: this.path,
-      //   githubPath: this.githubPath
-      // };
-      // fs.writeFileSync(configPath, JSON.stringify(configData), function(e) {
-      //   console.log("Written to config file. e => " + e);
-      // });
-      // //End of project config creation
-
-      // let projectsArray = globalConfigData.projects;
-      // if (projectsArray == undefined) projectsArray = [];
-
-      // projectsArray.push(configData);
-      // globalConfigData.projects = projectsArray;
-      // globalConfigData.current_project = configData;
-
-      // setData(globalConfigData);
-
-      // console.log("Projects array: ");
-      // console.log(projectsArray);
-      // git.setPath();
       this.githubPath += ".git";
       var dir = this.githubPath.substr(this.githubPath.lastIndexOf("/") + 1);
       var index = dir.indexOf(".");
@@ -93,17 +70,25 @@ export default {
       this.path += dir;
       console.log(this.path);
 
-      git.clone(this.githubPath, this.path);
+      await git.clone(this.githubPath, this.path);
+
+      let config = this.path + "/projectConfig.json";
+      const data = fs.readFileSync(config, { encoding: "utf8", flag: "r" });
+      console.log(data);
+      const globalConfigData = getData();
+      let projectsArray = globalConfigData.projects;
+      if (projectsArray == undefined) projectsArray = [];
+
+      projectsArray.push(configData);
+      globalConfigData.projects = projectsArray;
+      globalConfigData.current_project = configData;
+
+      setData(globalConfigData);
+
       this.$router.push("/details");
     }
   }
 };
-
-// clone using githubpath
-// fs.read ProjectConfig
-// Combine path and folder
-// add to projects array of global config
-// set current project in global config
 </script>
 
 <style></style>
