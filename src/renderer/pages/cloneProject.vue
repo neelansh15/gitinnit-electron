@@ -1,6 +1,7 @@
 <template>
   <v-form v-model="valid">
     <v-container>
+      <v-card elevation="0" :loading="loading">
       <v-row>
         <v-col cols="12" md="4">
           <v-text-field
@@ -28,6 +29,7 @@
       <v-btn :disabled="!valid" color="primary" @click="clone">
         Continue
       </v-btn>
+      </v-card> 
     </v-container>
   </v-form>
 </template>
@@ -42,7 +44,8 @@ export default {
       githubPath: "",
       path: "",
       message: "",
-      valid: false
+      valid: false,
+      loading: false
     };
   },
   methods: {
@@ -62,6 +65,7 @@ export default {
       this.folder = pathToFile.slice(pathToFile.lastIndexOf("\\") + 1);
     },
     async clone() {
+      this.loading = true
       const git = require("../gitWrapper");
       this.githubPath += ".git";
       var dir = this.githubPath.substr(this.githubPath.lastIndexOf("/") + 1);
@@ -84,7 +88,7 @@ export default {
       globalConfigData.current_project = configData;
 
       setData(globalConfigData);
-
+      this.loading = false
       this.$router.push("/details");
     }
   }
