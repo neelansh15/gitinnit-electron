@@ -6,7 +6,6 @@ const fs = require("fs");
 let path;
 let githubPath;
 let git;
-let branchName;
 
 const setPath = () => {
   path = globalConfig.getData().current_project.path;
@@ -28,24 +27,23 @@ const init = async () => {
 
 const add = new Promise(function(resolve, reject) {
   console.log("add wrapper");
-
-  reject("cant add files");
   const i = 1;
   if (i === 1) {
     resolve("ok");
   }
 });
 
-const addFiles = files => {
+const addFiles = async files => {
   console.log("addfiles wrapper");
 
-  files.forEach(file => {
+  await files.forEach(file => {
     git.add(file);
     console.log(file);
   });
 };
 
-const commit = async text => {
+const commit = async (tfiles, text) => {
+  await addFiles(tfiles);
   await git.commit(text);
 
   console.log("Commit done. Pull next");
@@ -79,11 +77,11 @@ const branch = () => {
     console.log(data);
   });
 };
-const checkout = async (branchName, commitHash) => {
+const checkout = async commitHash => {
   path = globalConfig.getData().current_project.path;
   git = simpleGit(path);
-  await git.checkout(branchName, commitHash);
-  console.log("checkout", branchName);
+  await git.checkout(commitHash);
+  console.log("checkout", commitHash);
 };
 
 const log = () => {

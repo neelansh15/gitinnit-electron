@@ -232,7 +232,7 @@ export default {
             daw: this.daw,
             folder: this.folder,
             path: this.path,
-            githubPath: githubPath,
+            githubPath: githubPath
           };
           //Required for project-level config
           fs.writeFileSync(configPath, JSON.stringify(configData), function(e) {
@@ -243,7 +243,7 @@ export default {
           let projectsArray = globalConfigData.projects;
           if (projectsArray == undefined) projectsArray = [];
 
-          configData.branch_name = "master" //Only for globalConfig.
+          configData.branch_name = "master"; //Only for globalConfig.
           projectsArray.push(configData);
 
           globalConfigData.projects = projectsArray;
@@ -254,10 +254,8 @@ export default {
           console.log("Projects array: ");
           console.log(projectsArray);
           // End of adding project to global config
+          this.createGitFiles();
 
-          const git = require("../gitWrapper");
-          git.setPath();
-          git.init();
           this.$router.push("/details");
         })
         .catch(e => {
@@ -268,6 +266,11 @@ export default {
           this.repoCreationErrorShow = true;
         });
       //End of remote repo check and creation
+    },
+    async createGitFiles() {
+      const git = require("../gitWrapper");
+      git.setPath();
+      await git.init();
     },
     projectExists() {
       this.repoExists = true;
