@@ -79,11 +79,11 @@ const branch = () => {
     console.log(data);
   });
 };
-const checkout = async (branchName, commitHash) => {
+const checkout = async (commitHash) => {
   path = globalConfig.getData().current_project.path;
   git = simpleGit(path);
-  await git.checkout(branchName, commitHash);
-  console.log("checkout", branchName);
+  await git.checkout(commitHash);
+  console.log("checkout", commitHash);
 };
 
 const log = () => {

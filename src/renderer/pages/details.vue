@@ -203,7 +203,7 @@ export default {
     },
     test() {
       const git = require("../gitWrapper");
-      git.checkout("master", "5a45ac8ff2cb077ea0bd8f90a69c4dc568957128");
+      git.checkout("74aa4a176a7fac05d74b4c861c440ecf371a0698");
     }
   }
 };
