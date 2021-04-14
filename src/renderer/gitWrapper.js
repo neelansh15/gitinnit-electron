@@ -26,8 +26,6 @@ const init = async () => {
 
 const add = new Promise(function(resolve, reject) {
   console.log("add wrapper");
-
-  reject("cant add files");
   const i = 1;
   if (i === 1) {
     resolve("ok");
