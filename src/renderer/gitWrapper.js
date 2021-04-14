@@ -32,16 +32,17 @@ const add = new Promise(function(resolve, reject) {
   }
 });
 
-const addFiles = files => {
+const addFiles = async files => {
   console.log("addfiles wrapper");
 
-  files.forEach(file => {
+  await files.forEach(file => {
     git.add(file);
     console.log(file);
   });
 };
 
-const commit = async text => {
+const commit = async (tfiles, text) => {
+  await git.addFiles(tfiles);
   await git.commit(text);
 
   console.log("Commit done. Pull next");

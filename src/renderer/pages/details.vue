@@ -181,10 +181,9 @@ export default {
           tfiles.push(file);
         });
         console.log(tfiles);
-        git.addFiles(tfiles);
 
         console.log("commit");
-        git.commit(message);
+        git.commit(tfiles, message);
       });
     },
     async log() {
