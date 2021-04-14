@@ -69,11 +69,15 @@ const config = () => {
 };
 
 const branch = () => {
+  path = globalConfig.getData().current_project.path;
   git = simpleGit(path);
   let branchNames = git.branch(["-a"]);
   console.log(branchNames);
   let branches = git.branchLocal();
-  console.log(branches);
+  // console.log(branches);
+  branches.then((data) => {
+    console.log(data)
+  })
 };
 const checkout = async commitHash => {
   branchName = globalConfig.getData().current_project.branch_name;
