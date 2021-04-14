@@ -120,6 +120,7 @@
 
     <br />
     <timeline />
+    <v-btn @click="test">Click</v-btn>
   </div>
 </template>
 
@@ -199,6 +200,10 @@ export default {
       const git = require("../gitWrapper");
       git.setPath();
       git.pull();
+    },
+    test() {
+      const git = require("../gitWrapper");
+      git.branch();
     }
   }
 };

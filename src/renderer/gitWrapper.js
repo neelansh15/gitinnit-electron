@@ -6,11 +6,13 @@ const fs = require("fs");
 let path;
 let githubPath;
 let git;
+let branchName;
 
 const setPath = () => {
   path = globalConfig.getData().current_project.path;
   console.log(path);
   githubPath = globalConfig.getData().current_project.githubPath;
+
   git = simpleGit(path);
 };
 const remote = async () => {
@@ -67,10 +69,16 @@ const config = () => {
 };
 
 const branch = () => {
-  console.log("branch");
+  git = simpleGit(path);
+  let branchNames = git.branch(["-a"]);
+  console.log(branchNames);
+  let branches = git.branchLocal();
+  console.log(branches);
 };
-const checkout = () => {
-  console.log("checkout");
+const checkout = async commitHash => {
+  branchName = globalConfig.getData().current_project.branch_name;
+  await git.checkoutBranch(branchName, commitHash);
+  console.log("checkout", branchName);
 };
 
 const log = () => {
