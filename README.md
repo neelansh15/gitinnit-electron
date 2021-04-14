@@ -60,4 +60,18 @@
 
 ## Bugs:
 
-- [ ] Add a new id each time a repo is cloned
+- [ ] Add a new id each time a repo is cloned.
+
+## Wrapper **Vedant**
+
+- [ ] Config
+- [ ] Init
+- [ ] Add remote
+- [x] Add
+- [x] Commit
+- [x] Push
+- [x] Pull
+- [x] Clone
+- [ ] log
+- [ ] branch
+- [ ] checkout
