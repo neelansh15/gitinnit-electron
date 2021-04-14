@@ -182,7 +182,7 @@ export default {
       this.path = pathToFile;
       this.folder = pathToFile.slice(pathToFile.lastIndexOf("\\") + 1);
     },
-    submit() {
+    async submit() {
       //Optimize
       this.name = this.name.trim();
       //End Optimization
@@ -257,7 +257,7 @@ export default {
 
           const git = require("../gitWrapper");
           git.setPath();
-          git.init();
+          await git.init();
           this.$router.push("/details");
         })
         .catch(e => {
