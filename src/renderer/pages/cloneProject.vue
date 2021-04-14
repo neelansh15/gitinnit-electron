@@ -73,8 +73,8 @@ export default {
       await git.clone(this.githubPath, this.path);
 
       let config = this.path + "/projectConfig.json";
-      const data = fs.readFileSync(config, { encoding: "utf8", flag: "r" });
-      console.log(data);
+      const configData = JSON.parse(fs.readFileSync(config, { encoding: "utf8", flag: "r" }))
+      console.log(configData);
       const globalConfigData = getData();
       let projectsArray = globalConfigData.projects;
       if (projectsArray == undefined) projectsArray = [];
