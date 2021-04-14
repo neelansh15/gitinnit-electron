@@ -20,7 +20,8 @@ const remote = async () => {
 };
 
 const init = async () => {
-  await git.init().then(await remote());
+  await git.init();
+  await remote();
   console.log("init success and check remote");
 };
 
