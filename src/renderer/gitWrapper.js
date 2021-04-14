@@ -82,7 +82,7 @@ const branch = () => {
 const checkout = async (branchName, commitHash) => {
   path = globalConfig.getData().current_project.path;
   git = simpleGit(path);
-  await git.checkout(branchName, commitHash);
+  await git.checkoutBranch(branchName, commitHash);
   console.log("checkout", branchName);
 };
 
