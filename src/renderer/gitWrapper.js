@@ -42,7 +42,7 @@ const addFiles = async files => {
 };
 
 const commit = async (tfiles, text) => {
-  await git.addFiles(tfiles);
+  await addFiles(tfiles);
   await git.commit(text);
 
   console.log("Commit done. Pull next");
