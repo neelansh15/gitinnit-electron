@@ -6,7 +6,6 @@ const fs = require("fs");
 let path;
 let githubPath;
 let git;
-let branchName;
 
 const setPath = () => {
   path = globalConfig.getData().current_project.path;
@@ -21,8 +20,7 @@ const remote = async () => {
 };
 
 const init = async () => {
-  await git.init();
-  await remote();
+  await git.init().then(await remote());
   console.log("init success and check remote");
 };
 
@@ -79,7 +77,7 @@ const branch = () => {
     console.log(data);
   });
 };
-const checkout = async (commitHash) => {
+const checkout = async commitHash => {
   path = globalConfig.getData().current_project.path;
   git = simpleGit(path);
   await git.checkout(commitHash);
@@ -122,5 +120,3 @@ export {
   setPath,
   clone
 };
-
-
