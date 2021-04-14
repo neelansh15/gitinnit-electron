@@ -2,34 +2,34 @@
   <v-form v-model="valid">
     <v-container>
       <v-card elevation="0" :loading="loading">
-      <v-row>
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="githubPath"
-            label="Github Path"
-            required
-          ></v-text-field>
-        </v-col>
+        <v-row>
+          <v-col cols="12" md="4">
+            <v-text-field
+              v-model="githubPath"
+              label="Github Path"
+              required
+            ></v-text-field>
+          </v-col>
 
-        <v-col cols="12" md="4">
-          <v-file-input
-            label="Select file to get path"
-            @change="handleFileChange"
-          >
-            Select Folder
-          </v-file-input>
-        </v-col>
-      </v-row>
-      <div class="path">
-        <h5>Path:</h5>
-        <p>{{ path }}</p>
-      </div>
-      <p>{{ message }}</p>
+          <v-col cols="12" md="4">
+            <v-file-input
+              label="Select file to get path"
+              @change="handleFileChange"
+            >
+              Select Folder
+            </v-file-input>
+          </v-col>
+        </v-row>
+        <div class="path">
+          <h5>Path:</h5>
+          <p>{{ path }}</p>
+        </div>
+        <p>{{ message }}</p>
 
-      <v-btn :disabled="!valid" color="primary" @click="clone">
-        Continue
-      </v-btn>
-      </v-card> 
+        <v-btn :disabled="!valid" color="primary" @click="clone">
+          Continue
+        </v-btn>
+      </v-card>
     </v-container>
   </v-form>
 </template>
@@ -65,7 +65,7 @@ export default {
       this.folder = pathToFile.slice(pathToFile.lastIndexOf("\\") + 1);
     },
     async clone() {
-      this.loading = true
+      this.loading = true;
       const git = require("../gitWrapper");
       this.githubPath += ".git";
       var dir = this.githubPath.substr(this.githubPath.lastIndexOf("/") + 1);
@@ -77,7 +77,9 @@ export default {
       await git.clone(this.githubPath, this.path);
 
       let config = this.path + "/projectConfig.json";
-      const configData = JSON.parse(fs.readFileSync(config, { encoding: "utf8", flag: "r" }))
+      const configData = JSON.parse(
+        fs.readFileSync(config, { encoding: "utf8", flag: "r" })
+      );
       console.log(configData);
       const globalConfigData = getData();
       let projectsArray = globalConfigData.projects;
@@ -88,7 +90,7 @@ export default {
       globalConfigData.current_project = configData;
 
       setData(globalConfigData);
-      this.loading = false
+      this.loading = false;
       this.$router.push("/details");
     }
   }

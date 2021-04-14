@@ -23,7 +23,7 @@
   - [x] startProject.vue: **Vedant**
     - [ ] Check if a repo with the project name already exists before creating a new repo, or use error while creating repo **Neelansh**
     - [ ] Stepper 2: ~~New project / Fetch from Github (clone) and~~ add projectConfig to globalConfig: with _Tutorial_ on how to add user to a repository.  
-    Routing + Put in project config **Vedant** : **10th April**
+           Routing + Put in project config **Vedant** : **10th April**
     - [ ] After git init, CREATE a new repo (probably org repo) and set as remote **Neelansh**
     - [x] Validation
     - [x] git init (through wrapper)
@@ -43,15 +43,21 @@
 - [ ] commit function explicitly **Vedant**
 - [ ] Checkout function **Vedant**
 - [ ] Pagination in index.vue for projects **Vedant**
-- [ ] cloneProject.vue -> setPath for git wrapper **Vedant**
+- [x] cloneProject.vue -> setPath for git wrapper **Vedant**
 - [ ] Add branch attribute to config for checkout **Neelansh**
 
 ## Pre-release
-1) startProject.vue: 
+
+1. startProject.vue:
    - Set private to false by default while creating repo, or even ask user
    - Alter project name used in repo creation for fitting github repo name standards
 
 ## Caveats
-1) Github api repo listing limit is max 100 per page. For more than 100 repos, would need pagination (api does provide page by page)
 
-2) Again in repo listing, we are using "owner" affiliation for user-owned repos. For repos the user has been added as a collaborator to, we need to lock the repo in the combobox/dropdown.
+1. Github api repo listing limit is max 100 per page. For more than 100 repos, would need pagination (api does provide page by page)
+
+2. Again in repo listing, we are using "owner" affiliation for user-owned repos. For repos the user has been added as a collaborator to, we need to lock the repo in the combobox/dropdown.
+
+## Bugs:
+
+- [ ] Add a new id each time a repo is cloned
