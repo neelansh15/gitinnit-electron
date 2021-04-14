@@ -232,7 +232,7 @@ export default {
             daw: this.daw,
             folder: this.folder,
             path: this.path,
-            githubPath: githubPath
+            githubPath: githubPath,
           };
           //Required for project-level config
           fs.writeFileSync(configPath, JSON.stringify(configData), function(e) {
@@ -243,7 +243,9 @@ export default {
           let projectsArray = globalConfigData.projects;
           if (projectsArray == undefined) projectsArray = [];
 
+          configData.branch_name = "master" //Only for globalConfig.
           projectsArray.push(configData);
+
           globalConfigData.projects = projectsArray;
           globalConfigData.current_project = configData;
 
