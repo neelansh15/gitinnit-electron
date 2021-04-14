@@ -75,9 +75,9 @@ const branch = () => {
   console.log(branchNames);
   let branches = git.branchLocal();
   // console.log(branches);
-  branches.then((data) => {
-    console.log(data)
-  })
+  branches.then(data => {
+    console.log(data);
+  });
 };
 const checkout = async (branchName, commitHash) => {
   path = globalConfig.getData().current_project.path;
