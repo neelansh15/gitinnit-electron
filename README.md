@@ -55,6 +55,7 @@
    - Alter project name used in repo creation for fitting github repo name standards
 2. globalConfig.json:
    - Need to encrypt the access_token to prevent leaks to other applications who might misuse it
+3. If it is the user's first time running the app, show "No project selected" or "Go to create project" link when no projects found.
 
 ## Caveats
 
