@@ -10,6 +10,7 @@
       <v-row class="mt-n5">
         <v-col>
           <v-tooltip
+            color="blue-grey darken-4"
             v-for="collaborator in collaborators.data"
             :key="collaborator.id"
             top
@@ -60,8 +61,16 @@
                   <span>{{ collaborator.login }}</span>
                 </v-col>
                 <v-col cols="4">
-                  <v-chip v-if="collaborator.login == loggedInUserName">You</v-chip>
-                  <v-btn v-else class="ml-4" color="red" :title="'Remove ' + collaborator.login + ' as collaborator'" icon>
+                  <v-chip v-if="collaborator.login == loggedInUserName"
+                    >You</v-chip
+                  >
+                  <v-btn
+                    v-else
+                    class="ml-4"
+                    color="red"
+                    :title="'Remove ' + collaborator.login + ' as collaborator'"
+                    icon
+                  >
                     <v-icon>mdi-close-circle</v-icon>
                   </v-btn>
                 </v-col>
@@ -82,7 +91,7 @@ export default {
     show_dialog: false,
     collaborators: [],
     usernameToAdd: "",
-    loggedInUserName: '',
+    loggedInUserName: "",
     loading: false,
   }),
   methods: {
