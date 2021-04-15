@@ -46,9 +46,27 @@
 
           <!-- List collaborators -->
           <v-list style="max-height: 300px" class="overflow-y-auto">
-            <v-list-item v-for="n in 10" :key="n"
-              >Collaborator {{ n }}</v-list-item
+            <v-list-item
+              v-for="collaborator in collaborators.data"
+              :key="collaborator.id"
             >
+              <v-row align="center">
+                <v-col cols="2">
+                  <v-avatar v-bind="attrs" v-on="on" class="mr-1">
+                    <v-img :src="collaborator.avatar_url" />
+                  </v-avatar>
+                </v-col>
+                <v-col cols="6">
+                  <span>{{ collaborator.login }}</span>
+                </v-col>
+                <v-col cols="4">
+                  <v-chip v-if="collaborator.login == loggedInUserName">You</v-chip>
+                  <v-btn v-else class="ml-4" color="red" :title="'Remove ' + collaborator.login + ' as collaborator'" icon>
+                    <v-icon>mdi-close-circle</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-list-item>
           </v-list>
         </v-card-text>
       </v-card>
@@ -57,13 +75,14 @@
 </template>
 
 <script>
-import { getCollaborators } from "../utils";
+import { getCollaborators, getData } from "../utils";
 
 export default {
   data: () => ({
     show_dialog: false,
     collaborators: [],
     usernameToAdd: "",
+    loggedInUserName: '',
     loading: false,
   }),
   methods: {
@@ -73,6 +92,7 @@ export default {
   },
   async mounted() {
     this.collaborators = await getCollaborators();
+    this.loggedInUserName = getData().user.login;
     if (this.collaborators[0] == false) {
       this.collaborators = [];
       console.log("Collaborators.vue: Got false from utils getCollaborators");
