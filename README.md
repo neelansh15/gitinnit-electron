@@ -2,6 +2,8 @@
 
 ## ToDo
 
+- [ ] Collaborators: List, Add & Remove via Github API **Neelansh**
+
 - [ ] **Important** In the simple-git plugin source code, change branch on init from master to main
 - [ ] Change design of Timeline
 - [ ] Toggle Terminology switch (Optional) **Neelansh**
@@ -22,9 +24,9 @@
   - [x] index.vue: Latest 3 projects
   - [x] startProject.vue: **Vedant**
     - [ ] Check if a repo with the project name already exists before creating a new repo, or use error while creating repo **Neelansh**
-    - [ ] Stepper 2: ~~New project / Fetch from Github (clone) and~~ add projectConfig to globalConfig: with _Tutorial_ on how to add user to a repository.  
+    - [x] Stepper 2: ~~New project / Fetch from Github (clone) and~~ add projectConfig to globalConfig: with _Tutorial_ on how to add user to a repository.  
            Routing + Put in project config **Vedant** : **10th April**
-    - [ ] After git init, CREATE a new repo (probably org repo) and set as remote **Neelansh**
+    - [x] After git init, CREATE a new repo (probably org repo) and set as remote **Neelansh**
     - [x] Validation
     - [x] git init (through wrapper)
     - [x] Generate project config file
@@ -39,7 +41,7 @@
       - [ ] Create new Timeline (New branch)
     - [ ] Commit message, Go to this place in time **Parth** **Important**
 
-- [ ] Username in sidebar **Neelansh**
+- [x] Username in sidebar **Neelansh**
 - [ ] commit function explicitly **Vedant**
 - [ ] Checkout function **Vedant**
 - [ ] Pagination in index.vue for projects **Vedant**
@@ -51,6 +53,8 @@
 1. startProject.vue:
    - Set private to false by default while creating repo, or even ask user
    - Alter project name used in repo creation for fitting github repo name standards
+2. globalConfig.json:
+  - Need to encrypt the access_token to prevent leaks to other applications who might misuse it
 
 ## Caveats
 
@@ -60,7 +64,7 @@
 
 ## Bugs:
 
-- [ ] Add a new id each time a repo is cloned.
+- [ ] Add a new id each time a repo is cloned. Reason: If the same new project is cloned, then two projects with the same ids will exist.
 
 ## Wrapper **Vedant**
 
