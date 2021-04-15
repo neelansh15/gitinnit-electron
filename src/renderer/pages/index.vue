@@ -15,9 +15,7 @@
                 </v-card-text>
                 <v-card-actions class="justify-center">
                   <nuxt-link to="/details" exact>
-                    <v-btn>
-                      Retrive previous version
-                    </v-btn>
+                    <v-btn> Retrive previous version </v-btn>
                   </nuxt-link>
                 </v-card-actions>
               </v-card>
@@ -32,9 +30,7 @@
                 </v-card-text>
                 <v-card-actions class="justify-center">
                   <nuxt-link to="/details" exact>
-                    <v-btn>
-                      Confirm new changes
-                    </v-btn>
+                    <v-btn> Confirm new changes </v-btn>
                   </nuxt-link>
                 </v-card-actions>
               </v-card>
@@ -42,37 +38,31 @@
           </v-row>
         </v-flex>
         <v-flex xs12 sm12>
-          <h2>Recent Projects:</h2>
-          <div>
+          <h2>Recent Projects</h2>
+          <div class="mt-5">
             <v-card
               v-for="project in projects"
+              :key="project.id"
               class="mx-auto"
               max-width="1000"
               outlined
             >
-              <v-list-item three-line>
-                <v-list-item-content>
-                  <v-list-item-title class="headline mb-1">
-                    Project Name: {{ project.name }}
-                  </v-list-item-title>
-                  <v-list-item-subtitle
-                    >Author: {{ project.author }}</v-list-item-subtitle
-                  >
-                </v-list-item-content>
-
-                <v-list-item-avatar
-                  tile
-                  size="80"
-                  color="grey"
-                ></v-list-item-avatar>
-              </v-list-item>
-
+              <v-card-title>{{ project.name }}</v-card-title>
+              <v-card-subtitle>
+                {{ project.author }} &middot;&nbsp;
+                <span class="teal--text text-darken-3">{{
+                  project.genre
+                }}</span>
+                &middot;&nbsp;
+                <span class="brown--text text-darken-1">{{
+                  project.path
+                }}</span></v-card-subtitle
+              >
               <v-card-actions>
-                <v-btn outlined rounded text>
-                  <nuxt-link to="/details" exact>
-                    View Details
-                  </nuxt-link>
+                <v-btn @click="setCurrentProject(project)" v-if="project.id != current_project.id" text>
+                  Set as current project
                 </v-btn>
+                <v-chip color="primary" class="ml-1" small v-else>Current project</v-chip>
               </v-card-actions>
             </v-card>
           </div>
@@ -86,24 +76,32 @@
 </template>
 
 <script>
+const {getData, setData} = require("../utils");
+
 export default {
   data() {
     return {
-      projects: [
-        {
-          name: "First Project",
-          author: "Vedant"
-        },
-        {
-          name: "First Project",
-          author: "Parth"
-        },
-        {
-          name: "First Project",
-          author: "Neelansh"
-        }
-      ]
+      projects: [],
+      current_project: {}
     };
+  },
+  methods:{
+    setCurrentProject(project){
+      let globalConfigObj = getData()
+      globalConfigObj.current_project = project
+      setData(globalConfigObj)
+
+      this.current_project = getData().current_project
+      this.$store.commit('setCurrentProject', project)
+
+      // console.log("TRIGGERED change project ")
+      // console.log(getData().current_project)
+    }
+  },
+  mounted() {
+    // Fetch projects if globalConfig exists
+    this.projects = getData().projects.reverse();
+    this.current_project = getData().current_project
   }
 };
 </script>

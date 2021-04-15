@@ -52,6 +52,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "electron-oauth2": "^3.0.0",
+    "gitlog": "^4.0.4",
     "simple-git": "^2.37.0"
   }
 }
