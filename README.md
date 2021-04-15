@@ -54,7 +54,7 @@
    - Set private to false by default while creating repo, or even ask user
    - Alter project name used in repo creation for fitting github repo name standards
 2. globalConfig.json:
-  - Need to encrypt the access_token to prevent leaks to other applications who might misuse it
+   - Need to encrypt the access_token to prevent leaks to other applications who might misuse it
 
 ## Caveats
 
