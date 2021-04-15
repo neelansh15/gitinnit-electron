@@ -4,6 +4,8 @@ const { remote } = require("electron");
 const { app } = remote;
 const fs = require("fs");
 
+import axios from 'axios'
+
 const getPathToGlobalConfig = () => {
   const appDataPath = app.getPath("appData") + "\\" + pkg.name;
   const appDataGlobalConfigPath = appDataPath + "\\globalConfig.json";
@@ -33,5 +35,9 @@ const setData = globalConfigData => {
   fs.writeFileSync(getPathToGlobalConfig(), JSON.stringify(globalConfigData));
   console.log("SET DATA ENDED")
 };
+
+const getCollaborators = async () => {
+  
+}
 
 export { getPathToGlobalConfig, getData, setData };

@@ -78,42 +78,8 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-
-          <!-- <v-row align="center" justify="space-around">
-            <v-col>
-              <v-dialog v-model="dialog" width="500">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn v-bind="attrs" v-on="on"> Push Files finally</v-btn>
-                </template>
-
-                <v-card max-width="475" class="mx-auto">
-                  <v-card-title>Select files to push to repo</v-card-title>
-                  <v-list subheader two-line flat>
-                    <v-list-item-group multiple>
-                      <pushComponent
-                        v-for="(file, index) in files.length"
-                        :key="file.name"
-                        :index="index"
-                        :names-array="files.map((a) => a.name)"
-                      />
-                    </v-list-item-group>
-                  </v-list>
-                  <v-spacer />
-                  <v-text-field
-                    label="Commit message"
-                    v-model="commitMessage"
-                  ></v-text-field>
-                  <v-card-actions>
-                    <v-btn @click="push">Push files</v-btn>
-                    <v-btn @click="dialog = false">Close</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </v-col>
-            <v-col>
-              <v-btn @click="pull">Pull Files</v-btn>
-            </v-col>
-          </v-row> -->
+          
+          <collaborators />
         </v-flex>
       </v-layout>
     </v-container>
@@ -127,6 +93,7 @@
 <script>
 import pushComponent from "@/components/push.vue";
 import timeline from "@/components/timeline.vue";
+import Collaborators from '../components/Collaborators.vue';
 const globalConfig = require("../utils/index");
 
 const fs = require("fs");
@@ -134,7 +101,8 @@ const fs = require("fs");
 export default {
   components: {
     timeline,
-    pushComponent
+    pushComponent,
+    Collaborators
   },
   data() {
     return {
