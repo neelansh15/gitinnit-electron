@@ -61,7 +61,7 @@
                   <span>{{ collaborator.login }}</span>
                 </v-col>
                 <v-col cols="4">
-                  <v-chip v-if="collaborator.login == loggedInUserName"
+                  <v-chip color="blue" outlined  v-if="collaborator.login == loggedInUserName"
                     >You</v-chip
                   >
                   <v-btn

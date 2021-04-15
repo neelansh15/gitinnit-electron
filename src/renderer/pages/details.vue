@@ -51,18 +51,21 @@
             </v-col>
           </v-row>
 
-          <v-dialog v-model="dialog" max-width="320">
+          <v-dialog v-model="dialog" max-width="400">
             <v-card>
-              <v-card-title class="headline">
+              <v-card-title>
                 Commit Message
               </v-card-title>
+              <v-card-subtitle>
+                Describe the modifications in short
+              </v-card-subtitle>
 
               <v-card-text>
                 <v-text-field
                   label="Message"
                   v-model="commitMessage"
                   counter="50"
-                  filled
+                  outlined
                 />
               </v-card-text>
 
@@ -72,7 +75,7 @@
                 <v-btn color="red darken-1" text @click="dialog = false">
                   Cancel
                 </v-btn>
-                <v-btn color="green darken-1" text @click="push">
+                <v-btn color="teal darken-1" text @click="push">
                   Push
                 </v-btn>
               </v-card-actions>
