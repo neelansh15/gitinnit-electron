@@ -44,7 +44,7 @@ export default {
       if (file == null) {
         this.path = "none";
         this.folder = "No folder choosen";
-        this.valid = true;
+        this.valid = false;
         return;
       }
 
@@ -54,7 +54,7 @@ export default {
       this.path = pathToFile;
       this.path += "\\";
       this.folder = pathToFile.slice(pathToFile.lastIndexOf("\\") + 1);
-      this.valid = false;
+      this.valid = true;
     },
     async clone() {
       this.loading = true;
