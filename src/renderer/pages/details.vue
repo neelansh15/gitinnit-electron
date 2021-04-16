@@ -75,14 +75,14 @@
                 <v-btn color="red darken-1" text @click="dialog = false">
                   Cancel
                 </v-btn>
-                <v-btn color="teal darken-1" text @click="push">
+                <v-btn color="teal darken-1" text @click="push" :disabled="commitMessage.length > 50">
                   Push
                 </v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
 
-          <!-- <collaborators /> -->
+          <collaborators />
         </v-flex>
       </v-layout>
     </v-container>
@@ -141,7 +141,6 @@ export default {
       this.dialog = false;
       const git = require("../gitWrapper");
       const message = this.commitMessage;
-      console.log(this.commitMessage);
       console.log(message);
       git.setPath();
       const tfiles = [];
@@ -158,6 +157,8 @@ export default {
 
         console.log("commit");
         git.commit(tfiles, message);
+
+        this.commitMessage = ""
       });
     },
     async log() {
