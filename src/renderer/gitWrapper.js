@@ -67,12 +67,29 @@ const config = async (username, email) => {
   await git.addConfig("user.email", email);
 };
 
-const branch = () => {
+const fetch = async () => {
+  path = globalConfig.getData().current_project.path;
+  git = simpleGit(path);
+  console.log("fetch start");
+  git.fetch("origin").then(data => {
+    let i;
+    for (i in data.branches) {
+      console.log(data.branches[i].name);
+    }
+  });
+  // console.log("test", git.fetch("origin"));
+  console.log("fetch end");
+};
+
+const branch = async () => {
+  console.log("branch start");
+  await fetch();
+  console.log("branch fetch end");
   path = globalConfig.getData().current_project.path;
   git = simpleGit(path);
   // let branchNames = git.branch(["-a"]);
   // console.log(branchNames);
-  let branches = git.branchLocal();
+  let branches = git.branch();
   // console.log(branches);
 
   return branches.then(data => {
@@ -123,5 +140,6 @@ export {
   config,
   log,
   setPath,
-  clone
+  clone,
+  fetch
 };
