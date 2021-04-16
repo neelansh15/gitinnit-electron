@@ -62,20 +62,22 @@ const pull = async () => {
 //     console.log("push done");
 //   });
 // };
-const config = (username, email) => {
-  await git.addConfig("user.name", username)
-  await git.addConfig("user.email", email)
+const config = async (username, email) => {
+  await git.addConfig("user.name", username);
+  await git.addConfig("user.email", email);
 };
 
 const branch = () => {
   path = globalConfig.getData().current_project.path;
   git = simpleGit(path);
-  let branchNames = git.branch(["-a"]);
-  console.log(branchNames);
+  // let branchNames = git.branch(["-a"]);
+  // console.log(branchNames);
   let branches = git.branchLocal();
-  console.log(branches);
-  branches.then(data => {
-    console.log(data);
+  // console.log(branches);
+
+  return branches.then(data => {
+    console.log("Branch Names: ", data.all);
+    return data.all;
   });
 };
 const checkout = async commitHash => {
