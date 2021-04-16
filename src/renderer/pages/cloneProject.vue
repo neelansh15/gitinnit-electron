@@ -35,7 +35,7 @@ export default {
       githubPath: "",
       path: "No folder selected",
       message: "",
-      valid: true,
+      valid: false,
       loading: false
     };
   },
