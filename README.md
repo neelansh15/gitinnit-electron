@@ -2,6 +2,7 @@
 
 ## ToDo
 
+- [ ] Accessibility: Add titles to as many components as possible
 - [ ] Collaborators: List, Add & Remove via Github API **Neelansh**
   - [x] List collaborators
   - [x] Add collaborators

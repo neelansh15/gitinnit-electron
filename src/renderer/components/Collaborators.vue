@@ -142,7 +142,7 @@ export default {
       if (this.usernameToAdd.length > 0) {
         axios({
           method: "PUT",
-          url: `https://api.github.com/repos/${this.loggedInUserName}/${this.repo_name}/collaborators/${this.usernameToAdd}?permissions=admin`,
+          url: `https://api.github.com/repos/${getData().current_project.repo_owner}/${this.repo_name}/collaborators/${this.usernameToAdd}?permissions=admin`,
           headers: {
             Accept: "application/vnd.github.v3+json",
             Authorization: "token " + this.$store.state.access_token,
@@ -171,14 +171,16 @@ export default {
     },
 
     async removeUserAsCollaborator(username) {
+      const globalConfig = getData()
       //Confirm first
       const confirm_delete = confirm(
         `Confirm removal of ${username} as collaborator?`
       );
+      
       if (confirm_delete) {
         axios({
           method: "DELETE",
-          url: `https://api.github.com/repos/${this.loggedInUserName}/${this.repo_name}/collaborators/${username}`,
+          url: `https://api.github.com/repos/${getData().current_project.repo_owner}/${this.repo_name}/collaborators/${username}`,
           headers: {
             Accept: "application/vnd.github.v3+json",
             Authorization: "token " + this.$store.state.access_token,
