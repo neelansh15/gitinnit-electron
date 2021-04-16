@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="pt-10">
+    <h1 align="center">Start a project</h1>
     <v-layout row wrap align-center justify-center>
       <v-card class="elevation-0 mt-10" width="60vw">
         <v-stepper v-if="!repoExists" v-model="e1">
