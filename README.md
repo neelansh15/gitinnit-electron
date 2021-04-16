@@ -3,6 +3,7 @@
 ## ToDo
 
 - [ ] Collaborators: List, Add & Remove via Github API **Neelansh**
+
   - [ ] Check permissions, maybe only the owner or user with admin permission can add/remove collaborators. Also disallow removing owner as collaborator
 
 - [ ] **Important** In the simple-git plugin source code, change branch on init from master to main
@@ -25,8 +26,8 @@
   - [x] index.vue: Latest 3 projects
   - [x] startProject.vue: **Vedant**
     - [ ] Check if a repo with the project name already exists before creating a new repo, or use error while creating repo **Neelansh**
-    - [x] Stepper 2: ~~New project / Fetch from Github (clone) and~~ add projectConfig to globalConfig: with _Tutorial_ on how to add user to a repository.  
-           Routing + Put in project config **Vedant** : **10th April**
+    - [x] Stepper 2: ~~New project / Fetch from Github (clone) and~~ add projectConfig to globalConfig: with _Tutorial_ on how to add user to a repository.
+      - [x]Routing + Put in project config **Vedant** : **10th April**
     - [x] After git init, CREATE a new repo (probably org repo) and set as remote **Neelansh**
     - [x] Validation
     - [x] git init (through wrapper)
@@ -44,7 +45,7 @@
 
 - [x] Username in sidebar **Neelansh**
 - [ ] commit function explicitly **Vedant**
-- [ ] Checkout function **Vedant**
+- [x] Checkout function **Vedant**
 - [ ] Pagination in index.vue for projects **Vedant**
 - [x] cloneProject.vue -> setPath for git wrapper **Vedant**
 - [ ] Add branch attribute to config for checkout **Neelansh**
