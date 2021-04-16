@@ -52,7 +52,7 @@
           </div>
 
           <!-- List collaborators -->
-          <v-list style="max-height: 300px" class="overflow-y-auto">
+          <v-list style="max-height: 350px" class="overflow-y-auto">
             <v-list-item
               v-for="collaborator in collaborators.data"
               :key="collaborator.id"
@@ -78,6 +78,7 @@
                     class="ml-4"
                     color="red"
                     :title="'Remove ' + collaborator.login + ' as collaborator'"
+                    @click="removeUserAsCollaborator(collaborator.login)"
                     icon
                   >
                     <v-icon>mdi-close-circle</v-icon>
@@ -92,14 +93,21 @@
       <v-dialog max-width="400" v-model="show_dialog_2">
         <v-card :color="dialog_2_color">
           <v-card-title v-if="dialog_2_color == 'teal'">Success</v-card-title>
-          <v-card-title v-else-if="dialog_2_color == 'yellow'">Already a collaborator</v-card-title>
+          <v-card-title v-else-if="dialog_2_color == 'yellow'"
+            >Already a collaborator</v-card-title
+          >
           <v-card-title v-else-if="dialog_2_color == 'red'">Error</v-card-title>
           <v-card-text>
             {{ dialog_2_text }}
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn :color="dialog_2_color" @click="show_dialog_2 = false" depressed>OK</v-btn>
+            <v-btn
+              :color="dialog_2_color"
+              @click="show_dialog_2 = false"
+              depressed
+              >OK</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -108,7 +116,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 import { getCollaborators, getData } from "../utils";
 
 export default {
@@ -120,8 +128,8 @@ export default {
     show_dialog: false,
 
     show_dialog_2: false,
-    dialog_2_color: 'success',
-    dialog_2_text: '',
+    dialog_2_color: "success",
+    dialog_2_text: "",
 
     collaborators: [],
     usernameToAdd: "",
@@ -134,36 +142,77 @@ export default {
       if (this.usernameToAdd.length > 0) {
         axios({
           method: "PUT",
-          url: `https://api.github.com/repos/${this.loggedInUserName}/${this.repo_name}/collaborators/${this.usernameToAdd}?permissions=admin`,
+          url: `https://api.github.com/repos/${getData().current_project.repo_owner}/${this.repo_name}/collaborators/${this.usernameToAdd}?permissions=admin`,
           headers: {
             Accept: "application/vnd.github.v3+json",
             Authorization: "token " + this.$store.state.access_token,
           },
         })
-        .then((res) => {
-          console.log("Adding user as collaborator")
-          console.log(res)
-          if(res.status == 201){
-            this.dialog_2_color = 'teal'
-            this.dialog_2_text = `Request sent to ${this.usernameToAdd}. Ask them to check their email linked with their Github account! They can accept the invite from there.`
-            this.show_dialog_2 = true
-          }
-          else if(res.status == 204){
-            this.dialog_2_color = 'yellow'
-            this.dialog_2_text = `${this.usernameToAdd} is already a collaborator`
-            this.show_dialog_2 = true
-          }
-          else{
-            this.dialog_2_color = 'red'
-            this.dialog_2_text = 'Unable to add user as collaborator. Reason: '
-            this.show_dialog_2 = true
-          }
+          .then((res) => {
+            console.log("Adding user as collaborator");
+            console.log(res);
+            if (res.status == 201) {
+              this.dialog_2_color = "teal";
+              this.dialog_2_text = `Request sent to ${this.usernameToAdd}. Ask them to check their email linked with their Github account! They can accept the invite from there.`;
+              this.show_dialog_2 = true;
+              this.usernameToAdd = "";
+            } else if (res.status == 204) {
+              this.dialog_2_color = "yellow";
+              this.dialog_2_text = `${this.usernameToAdd} is already a collaborator`;
+              this.show_dialog_2 = true;
+            }
+          })
+          .catch((e) => {
+            this.dialog_2_color = "red";
+            this.dialog_2_text = `Unable to add user as collaborator. Make sure the username exists. Reason => ${e}`;
+            this.show_dialog_2 = true;
+          });
+      }
+    },
+
+    async removeUserAsCollaborator(username) {
+      const globalConfig = getData()
+      //Confirm first
+      const confirm_delete = confirm(
+        `Confirm removal of ${username} as collaborator?`
+      );
+      
+      if (confirm_delete) {
+        axios({
+          method: "DELETE",
+          url: `https://api.github.com/repos/${getData().current_project.repo_owner}/${this.repo_name}/collaborators/${username}`,
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+            Authorization: "token " + this.$store.state.access_token,
+          },
         })
-        .catch((e) => {
-          this.dialog_2_color = 'red'
-            this.dialog_2_text = `Unable to add user as collaborator. Make sure the username exists. Reason: ${e}`
-            this.show_dialog_2 = true
-        })
+          .then((res) => {
+            if (res.status == 204) {
+              this.dialog_2_color = "teal";
+              this.dialog_2_text = `Successfully removed ${username} as collaborator`;
+              this.show_dialog_2 = true;
+
+              return getCollaborators(); //Can't use await because this is not an async function. But should work fine
+            } else {
+              console.error(
+                "Mysterious error in removeUserAsCollaborator. Response: " +
+                  res.data
+              );
+            }
+          })
+          .then((collabs) => {
+            if(collabs){
+              this.collaborators = collabs
+            }
+          })
+          .catch((e) => {
+            this.dialog_2_color = "red";
+            this.dialog_2_text = `Unable to remove ${username} as collaborator. Reason => ${e}`;
+            this.show_dialog_2 = true;
+
+            console.log("Upcoming error is from removeUserAsCollaborator()")
+            console.error(e)
+          });
       }
     },
   },

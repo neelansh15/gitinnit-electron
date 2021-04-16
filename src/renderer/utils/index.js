@@ -40,7 +40,7 @@ const getCollaborators = async () => {
   let globalConfigData = getData();
   if (globalConfigData) {
     const data = axios({
-      url: `https://api.github.com/repos/${globalConfigData.user.login}/${globalConfigData.current_project.name}/collaborators`,
+      url: `https://api.github.com/repos/${globalConfigData.current_project.repo_owner}/${globalConfigData.current_project.name}/collaborators`,
       method: "GET",
       headers: {
         Accept: "application/vnd.github.v3+json",

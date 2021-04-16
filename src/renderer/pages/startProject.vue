@@ -233,7 +233,8 @@ export default {
             daw: this.daw,
             folder: this.folder,
             path: this.path,
-            githubPath: githubPath
+            githubPath: githubPath,
+            repo_owner: getData().user.login
           };
           //Required for project-level config
           fs.writeFileSync(configPath, JSON.stringify(configData), function(e) {
