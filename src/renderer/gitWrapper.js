@@ -62,8 +62,9 @@ const pull = async () => {
 //     console.log("push done");
 //   });
 // };
-const config = () => {
-  console.log("config");
+const config = (username, email) => {
+  await git.addConfig("user.name", username)
+  await git.addConfig("user.email", email)
 };
 
 const branch = () => {
