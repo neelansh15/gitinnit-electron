@@ -3,7 +3,12 @@
     <h1 class="pb-10" align="center">Clone a project</h1>
     <v-card elevation="10" :loading="loading">
       <v-form ref="form" v-model="valid" class="pa-11">
-        <v-text-field v-model="githubPath" label="Github Path" :rules="rules.path_field" required />
+        <v-text-field
+          v-model="githubPath"
+          label="Github Path"
+          :rules="rules.path_field"
+          required
+        />
 
         <v-file-input
           label="Select file to get path"
@@ -38,13 +43,9 @@ export default {
       message: "",
       valid: false,
       loading: false,
-      rules:{
-        file_input:[
-          (v) => !!v || 'File path is required'
-        ],
-        path_field:[
-          (v) => !!v || 'Github path is required'
-        ]
+      rules: {
+        file_input: [v => !!v || "File path is required"],
+        path_field: [v => !!v || "Github path is required"]
       }
     };
   },
