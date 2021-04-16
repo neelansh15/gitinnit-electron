@@ -76,8 +76,10 @@ const branch = () => {
   // console.log(branches);
 
   return branches.then(data => {
+    console.log(data);
+    console.log(data.current);
     console.log("Branch Names: ", data.all);
-    return data.all;
+    return data;
   });
 };
 const checkout = async commitHash => {

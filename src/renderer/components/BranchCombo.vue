@@ -1,6 +1,7 @@
 <template>
   <v-container fluid>
     <v-btn @click="branchNames">Branch</v-btn>
+    <v-btn @click="test">Branchsadsa</v-btn>
     <v-combobox
       v-if="isLoaded"
       v-model="selected"
@@ -31,6 +32,7 @@ export default {
   data() {
     return {
       branches: [],
+      current_branch: "",
       selected: "",
       search: "",
       isLoaded: false
@@ -49,7 +51,10 @@ export default {
   methods: {
     async branchNames() {
       const git = require("../gitWrapper");
-      this.branches = await git.branch();
+      let branchObject = await git.branch();
+      // this.branches = Object.keys(branchObject);
+      this.branches = branchObject.all;
+      this.current_branch = branchObject.current;
       this.isLoaded = true;
     }
   }
