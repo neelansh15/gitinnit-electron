@@ -3,6 +3,9 @@
 ## ToDo
 
 - [ ] Collaborators: List, Add & Remove via Github API **Neelansh**
+  - [x] List collaborators
+  - [x] Add collaborators
+  - [x] Remove collaborators
   - [ ] Check permissions, maybe only the owner or user with admin permission can add/remove collaborators. Also disallow removing owner as collaborator
 
 - [ ] **Important** In the simple-git plugin source code, change branch on init from master to main
