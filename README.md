@@ -3,6 +3,7 @@
 ## ToDo
 
 - [ ] Collaborators: List, Add & Remove via Github API **Neelansh**
+  - [ ] Check permissions, maybe only the owner can add/remove collaborators
 
 - [ ] **Important** In the simple-git plugin source code, change branch on init from master to main
 - [ ] Change design of Timeline
