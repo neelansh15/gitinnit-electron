@@ -1,7 +1,6 @@
 <template>
   <v-container fluid>
     <v-btn @click="branchNames">Branch</v-btn>
-    <v-btn @click="test">Branchsadsa</v-btn>
     <v-combobox
       v-if="isLoaded"
       v-model="selected"
