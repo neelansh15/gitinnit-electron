@@ -4,6 +4,8 @@ const { remote } = require("electron");
 const { app } = remote;
 const fs = require("fs");
 
+import axios from "axios";
+
 const getPathToGlobalConfig = () => {
   const appDataPath = app.getPath("appData") + "\\" + pkg.name;
   const appDataGlobalConfigPath = appDataPath + "\\globalConfig.json";
@@ -28,10 +30,31 @@ const getData = () => {
 };
 
 const setData = globalConfigData => {
-  console.log("SET DATA IN ACTION")
+  console.log("SET DATA IN ACTION");
   if (fs.existsSync(getPathToGlobalConfig()))
-  fs.writeFileSync(getPathToGlobalConfig(), JSON.stringify(globalConfigData));
-  console.log("SET DATA ENDED")
+    fs.writeFileSync(getPathToGlobalConfig(), JSON.stringify(globalConfigData));
+  console.log("SET DATA ENDED");
 };
 
-export { getPathToGlobalConfig, getData, setData };
+const getCollaborators = async () => {
+  let globalConfigData = getData();
+  if (globalConfigData) {
+    const data = axios({
+      url: `https://api.github.com/repos/${globalConfigData.user.login}/${globalConfigData.current_project.name}/collaborators`,
+      method: "GET",
+      headers: {
+        Accept: "application/vnd.github.v3+json",
+        Authorization: "token " + globalConfigData.access_token
+      }
+    })
+    console.log("Data from utils getCollaborators:")
+    console.log(data)
+    return data
+  }
+  else{
+    console.error("Async issue in getCollaborators in utils/index.js. config data not set")
+    return [false]
+  }
+};
+
+export { getPathToGlobalConfig, getData, setData, getCollaborators };
