@@ -83,6 +83,7 @@ export default {
         fs.readFileSync(config, { encoding: "utf8", flag: "r" })
       );
       console.log(configData);
+      configData.path = this.path;
       const globalConfigData = getData();
       let projectsArray = globalConfigData.projects;
       if (projectsArray == undefined) projectsArray = [];

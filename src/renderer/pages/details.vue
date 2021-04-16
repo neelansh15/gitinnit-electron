@@ -75,7 +75,12 @@
                 <v-btn color="red darken-1" text @click="dialog = false">
                   Cancel
                 </v-btn>
-                <v-btn color="teal darken-1" text @click="push" :disabled="commitMessage.length > 50">
+                <v-btn
+                  color="teal darken-1"
+                  text
+                  @click="push"
+                  :disabled="commitMessage.length > 50"
+                >
                   Push
                 </v-btn>
               </v-card-actions>
@@ -158,7 +163,7 @@ export default {
         console.log("commit");
         git.commit(tfiles, message);
 
-        this.commitMessage = ""
+        this.commitMessage = "";
       });
     },
     async log() {
