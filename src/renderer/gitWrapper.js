@@ -72,7 +72,7 @@ const branch = () => {
   let branchNames = git.branch(["-a"]);
   console.log(branchNames);
   let branches = git.branchLocal();
-  // console.log(branches);
+  console.log(branches);
   branches.then(data => {
     console.log(data);
   });

@@ -119,6 +119,7 @@
     </v-container>
 
     <br />
+    <combobranch></combobranch>
     <timeline />
     <v-btn @click="test">Click</v-btn>
   </div>
@@ -127,6 +128,7 @@
 <script>
 import pushComponent from "@/components/push.vue";
 import timeline from "@/components/timeline.vue";
+import combobranch from "@/components/BranchCombo.vue"
 const globalConfig = require("../utils/index");
 
 const fs = require("fs");
@@ -134,7 +136,8 @@ const fs = require("fs");
 export default {
   components: {
     timeline,
-    pushComponent
+    pushComponent,
+    combobranch
   },
   data() {
     return {
@@ -193,7 +196,8 @@ export default {
         temp = value;
       });
       console.log(temp);
-    },
+    }
+    ,
     pull() {
       console.log("git pull");
       const git = require("../gitWrapper");
