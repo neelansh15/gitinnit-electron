@@ -81,13 +81,14 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-          
-          <collaborators />
+
+          <!-- <collaborators /> -->
         </v-flex>
       </v-layout>
     </v-container>
 
     <br />
+    <combobranch></combobranch>
     <timeline />
     <v-btn @click="test">Click</v-btn>
   </div>
@@ -96,7 +97,8 @@
 <script>
 import pushComponent from "@/components/push.vue";
 import timeline from "@/components/timeline.vue";
-import Collaborators from '../components/Collaborators.vue';
+import Collaborators from "../components/Collaborators.vue";
+import combobranch from "@/components/BranchCombo.vue";
 const globalConfig = require("../utils/index");
 
 const fs = require("fs");
@@ -105,7 +107,8 @@ export default {
   components: {
     timeline,
     pushComponent,
-    Collaborators
+    Collaborators,
+    combobranch
   },
   data() {
     return {
@@ -173,7 +176,7 @@ export default {
     },
     test() {
       const git = require("../gitWrapper");
-      git.checkout("74aa4a176a7fac05d74b4c861c440ecf371a0698");
+      git.branch();
     }
   }
 };
