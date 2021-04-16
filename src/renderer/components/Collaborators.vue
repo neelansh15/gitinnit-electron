@@ -164,7 +164,7 @@ export default {
           })
           .catch((e) => {
             this.dialog_2_color = "red";
-            this.dialog_2_text = `Unable to add user as collaborator. Make sure the username exists. Reason => ${e}`;
+            this.dialog_2_text = `Unable to add user as collaborator. Make sure the username exists and that you have the necessary owner permissions. Reason => ${e}`;
             this.show_dialog_2 = true;
           });
       }
@@ -207,7 +207,7 @@ export default {
           })
           .catch((e) => {
             this.dialog_2_color = "red";
-            this.dialog_2_text = `Unable to remove ${username} as collaborator. Reason => ${e}`;
+            this.dialog_2_text = `Unable to remove ${username} as collaborator. Make sure that you have the necessary owner permissions. Reason => ${e}`;
             this.show_dialog_2 = true;
 
             console.log("Upcoming error is from removeUserAsCollaborator()")
