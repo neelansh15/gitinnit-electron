@@ -103,6 +103,19 @@ const checkout = async commitHash => {
   path = globalConfig.getData().current_project.path;
   git = simpleGit(path);
   await git.checkout(commitHash);
+
+  //Update in global config too
+  const globalConfigData = globalConfig.getData()
+  globalConfigData.current_project.branch_name = commitHash
+  let projects = globalConfigData.projects
+  projects.forEach(project => {
+    if(project.id == globalConfigData.current_project.id){
+      project.branch_name = commitHash
+    }
+  })
+  globalConfigData.projects = projects
+  globalConfig.setData(globalConfigData)
+
   console.log("checkout", commitHash);
 };
 

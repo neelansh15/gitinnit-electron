@@ -69,6 +69,8 @@
 
 2. Again in repo listing, we are using "owner" affiliation for user-owned repos. For repos the user has been added as a collaborator to, we need to lock the repo in the combobox/dropdown.
 
+3. In Timeline.vue, if we reload timeline after switching to a commit then there is no way to access the upper commits. For that added a "Back to master branch" button. But unless the BranchCombo.vue works, users are stuck with just the master branch fallback.
+
 ## Bugs:
 
 - [ ] Add a new id each time a repo is cloned. Reason: If the same new project is cloned, then two projects with the same ids will exist.

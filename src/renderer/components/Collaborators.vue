@@ -74,7 +74,7 @@
                     >You</v-chip
                   >
                   <v-btn
-                    v-else
+                    v-else-if="collaborator.login != loggedInUserName && loggedInUserName == repo_owner"
                     class="ml-4"
                     color="red"
                     :title="'Remove ' + collaborator.login + ' as collaborator'"
@@ -135,6 +135,7 @@ export default {
     usernameToAdd: "",
     loggedInUserName: "",
     repo_name: "",
+    repo_owner: "",
     loading: false,
   }),
   methods: {
@@ -142,7 +143,7 @@ export default {
       if (this.usernameToAdd.length > 0) {
         axios({
           method: "PUT",
-          url: `https://api.github.com/repos/${getData().current_project.repo_owner}/${this.repo_name}/collaborators/${this.usernameToAdd}?permissions=admin`,
+          url: `https://api.github.com/repos/${this.repo_owner}/${this.repo_name}/collaborators/${this.usernameToAdd}?permissions=admin`,
           headers: {
             Accept: "application/vnd.github.v3+json",
             Authorization: "token " + this.$store.state.access_token,
@@ -180,7 +181,7 @@ export default {
       if (confirm_delete) {
         axios({
           method: "DELETE",
-          url: `https://api.github.com/repos/${getData().current_project.repo_owner}/${this.repo_name}/collaborators/${username}`,
+          url: `https://api.github.com/repos/${this.repo_owner}/${this.repo_name}/collaborators/${username}`,
           headers: {
             Accept: "application/vnd.github.v3+json",
             Authorization: "token " + this.$store.state.access_token,
@@ -219,6 +220,7 @@ export default {
   async mounted() {
     this.collaborators = await getCollaborators();
     this.loggedInUserName = getData().user.login;
+    this.repo_owner = getData().current_project.repo_owner
 
     this.repo_name = getData().current_project.name;
     // this.repo_name = getData().current_project.githubPath //For later use in adding user as collaborator
