@@ -57,4 +57,13 @@ const getCollaborators = async () => {
   }
 };
 
-export { getPathToGlobalConfig, getData, setData, getCollaborators };
+const getOutputFilePath = () => {
+  console.log("getOutputFilePath function CALLED")
+  let path = getData().current_project.output_file
+  if(fs.existsSync(path)){
+    return path
+  }
+  return null
+}
+
+export { getPathToGlobalConfig, getData, setData, getCollaborators, getOutputFilePath };
