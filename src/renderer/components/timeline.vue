@@ -1,15 +1,10 @@
 <template>
   <div>
-    <!-- <p>{{ playing }}</p> -->
-    <!-- <p>is_stopped: {{ is_stopped }}</p> -->
-    <p>
-      {{
-        $store.state.music_file_path == null
-          ? "NULL"
-          : $store.state.music_file_path
-      }}
-    </p>
-    <p>{{ output_file == null ? "NULL" : output_file }}</p>
+    <v-alert class="mx-11" type="success" v-if="$store.state.music_file_path != null">
+      Output file detected: {{$store.state.music_file_path}}
+    </v-alert>
+
+    <v-btn @click="$store.commit('setMusicFilePath', null)">Set music_file_path to null</v-btn>
 
     <p>Current selected timeline/commit: {{ branch_name }}</p>
     <v-btn class="ml-10" depressed @click="log">{{ buttonText }}</v-btn>
@@ -73,34 +68,17 @@ export default {
     items() {
       return this.launches;
     },
-    // playing() {
-    //   return this.$store.state.playing;
-    // },
-    // is_stopped(){
-    //   return this.$store.state.is_stopped
-    // }
   },
   mounted() {
     this.branch_name = getData().current_project.branch_name;
     this.updateOutputFile();
-
-    // this.$root.$on("stopped", function () {
-    //   console.log("ON Stopped! ($root.$on)")
-    //   this.$store.commit('setStopState', true)
-    // });
-    // this.$root.$on("played", function () {
-    //   console.log("ON played! ($root.$on)")
-    //   this.$store.commit('setStopState', false)
-    // });
-  },
-  updated() {
-    this.updateOutputFile();
   },
   methods: {
-    // sleep: (milliseconds) => {
-    //   return new Promise((resolve) => setTimeout(resolve, milliseconds));
-    // },
-    updateOutputFile() {
+    sleep: (milliseconds) => {
+      return new Promise((resolve) => setTimeout(resolve, milliseconds));
+    },
+    async updateOutputFile() {
+      await this.sleep(200) //Wait for output file/folder to be deleted during commit change
       const output_file_path = getOutputFilePath();
       console.log("OUTPUT FILE PATH: ", output_file_path);
       if (output_file_path) {
@@ -122,6 +100,7 @@ export default {
     async checkout_commit(hash) {
       //Before checkout, clear the player so that the output file won't be locked
       this.$store.commit("setMusicFilePath", null);
+      await this.sleep(100); //Wait for state to change (just in case, and it works)
       //Also STOP the player from playing state since that is another thing that locks the file
       //Note: This is being done in separate file using $parent.$on and $emit, but still has issues maybe
       //due to the time delay in Vuex updating the state and the components recieving the state, during which
@@ -140,6 +119,8 @@ export default {
         const git = require("../gitWrapper");
         await git.checkout(hash);
         this.branch_name = getData().current_project.branch_name;
+
+        this.updateOutputFile();
       // }
       // else{
       //   console.log("WARNING: Music has NOT stopped: timeline.vue")

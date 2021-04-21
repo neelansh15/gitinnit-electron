@@ -75,7 +75,9 @@
 
 - [ ] Add a new id each time a repo is cloned. Reason: If the same new project is cloned, then two projects with the same ids will exist.
 
-- [ ] **Severe** If user does not stop the music before git checkout, then the output files and folders don't change since they are in use by the audio player program.
+- [ ] **Severe** If the music is playing or has been played in this session and the user tries to git checkout, then the output files and folders don't change since they are in use by the audio player program and thus the checkout gives an error.  
+*Solution:* Core issue is that state's music_file_path is not being set to null in details.vue which would trigger v-if and remove 
+the audio player component and with it, the file lock.
 
 ## Wrapper **Vedant**
 

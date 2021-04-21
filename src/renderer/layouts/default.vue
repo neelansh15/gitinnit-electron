@@ -58,6 +58,7 @@
 
       <template v-slot:append>
         <!-- Music Player -->
+        {{ $store.state.music_file_path }}
         <v-slide-y-reverse-transition>
           <v-row
             justify="center"

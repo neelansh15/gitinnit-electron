@@ -124,42 +124,28 @@ export default {
       isMuted: false,
       loaded: false,
       playing: false,
-    //   paused: false,
       percentage: 0,
       currentTime: "00:00:00",
       audio: undefined,
       totalDuration: 0,
     };
   },
-//   watch: {
-//     paused: function (newVal) {
-//       this.$store.commit("setPauseState", newVal);
-//       this.$root.$emit("played");
-//     },
-//   },
   methods: {
     setPosition() {
-    //   if (this.audio != undefined) {
         this.audio.currentTime = parseInt(
           (this.audio.duration / 100) * this.percentage
         );
-    //   }
     },
     stop() {
-    //   if (this.audio != undefined) {
         this.audio.pause();
         this.paused = true;
         this.playing = false;
         this.audio.currentTime = 0;
-    //   }
     },
     play() {
-    //   if (this.audio != undefined) {
         if (this.playing) return;
         this.audio.play().then((_) => (this.playing = true));
         this.paused = false;
-        this.$root.$emit("played");
-    //   }
     },
     pause() {
       this.paused = !this.paused;
@@ -235,12 +221,6 @@ export default {
     this.audio = this.$refs.player;
     this.init();
 
-    //Fix issue of file locking on git checkout
-    // this.$root.$on("stop", () => {
-    //   this.stop();
-    //   this.audio = this.$refs.player;
-    //   this.$root.$emit("stopped");
-    // });
   },
   beforeDestroy() {
     this.audio.removeEventListener("timeupdate", this._handlePlayingUI);
