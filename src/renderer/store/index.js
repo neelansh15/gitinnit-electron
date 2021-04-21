@@ -10,6 +10,7 @@ if (temp_access_token != undefined && temp_access_token != '') {
 export const state = () => ({
   access_token,
   music_file_path: null,
+  playing: false,
   current_project: getData().current_project // Needed for reactivity in the sidebar
 })
 
@@ -22,5 +23,8 @@ export const mutations = {
   },
   setMusicFilePath (state, payload) {
     state.music_file_path = payload
+  },
+  setPlayingState(state, payload){
+    state.playing = payload
   }
 }

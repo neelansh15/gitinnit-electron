@@ -55,21 +55,29 @@
           </v-list-item>
         </v-list-item>
       </v-list>
+
+      <template v-slot:append>
+        <!-- Music Player -->
+        <v-slide-y-reverse-transition>
+          <v-row
+            justify="center"
+            align="center"
+            style="margin-top: auto"
+            v-if="music_file_path != null"
+          >
+            <v-col>
+              <vuetify-audio :file="music_file_path" color="teal" ref="vuetifyaudio" flat />
+            </v-col>
+          </v-row>
+        </v-slide-y-reverse-transition>
+        <!-- End of Music Player -->
+      </template>
     </v-navigation-drawer>
     <v-main>
       <v-slide-x-transition>
         <nuxt />
       </v-slide-x-transition>
     </v-main>
-
-    <v-footer color="teal" app>
-      <!-- {{ music_file_path == null ? "NULL" : music_file_path }} -->
-      <v-row justify="center" align="center" v-if="music_file_path != null">
-        <v-col>
-          <vuetify-audio :file="music_file_path" color="white" flat />
-        </v-col>
-      </v-row>
-    </v-footer>
   </v-app>
 </template>
 
@@ -133,8 +141,14 @@ export default {
         this.$store.commit("setCurrentProject", val);
       },
     },
-    music_file_path(){
-      return this.$store.state.music_file_path
+    music_file_path() {
+      //Fix file lock issues during git checkout
+      if(this.$store.state.music_file_path == null){
+        this.$emit('pause')
+        this.$emit('stop')
+      }
+
+      return this.$store.state.music_file_path;
     },
   },
   mounted() {

@@ -2,7 +2,6 @@
   <v-card
     style="text-align: center"
     :flat="flat == undefined || flat == false ? false : true"
-    color="teal"
   >
     <v-card-text>
       <v-btn
@@ -60,7 +59,7 @@
       <v-progress-linear
         v-model="percentage"
         height="5"
-        style="cursor:pointer"
+        style="cursor: pointer"
         class="mb-2 mt-2"
         @click.native="setPosition()"
         :disabled="!loaded"
@@ -69,6 +68,7 @@
       <p>{{ currentTime }} / {{ duration }}</p>
     </v-card-text>
     <audio
+      v-if="file"
       id="player"
       ref="player"
       v-on:ended="ended"
@@ -131,8 +131,13 @@ export default {
       totalDuration: 0,
     };
   },
-
+//   watch: {
+//     playing: "setPlayingState",
+//   },
   methods: {
+    // setPlayingState(newVal) {
+    //   this.$store.commit("setPlayingState", newVal);
+    // },
     setPosition() {
       this.audio.currentTime = parseInt(
         (this.audio.duration / 100) * this.percentage
@@ -222,6 +227,10 @@ export default {
   mounted() {
     this.audio = this.$refs.player;
     this.init();
+
+    //Fix issue of file locking on git checkout
+    this.$parent.$on("pause", this.pause());
+    this.$parent.$on("stop", this.stop());
   },
   beforeDestroy() {
     this.audio.removeEventListener("timeupdate", this._handlePlayingUI);
