@@ -4,8 +4,6 @@
       Output file detected: {{$store.state.music_file_path}}
     </v-alert>
 
-    <v-btn @click="$store.commit('setMusicFilePath', null)">Set music_file_path to null</v-btn>
-
     <p>Current selected timeline/commit: {{ branch_name }}</p>
     <v-btn class="ml-10" depressed @click="log">{{ buttonText }}</v-btn>
     <v-btn depressed @click="checkout_commit('master')">
