@@ -3,6 +3,7 @@
     style="text-align: center"
     :flat="flat == undefined || flat == false ? false : true"
   >
+  {{ paused }}
     <v-card-text>
       <v-btn
         outlined
@@ -131,13 +132,13 @@ export default {
       totalDuration: 0,
     };
   },
-//   watch: {
-//     playing: "setPlayingState",
-//   },
+  watch: {
+    paused: function(newVal){
+        this.$store.commit("setPauseState", newVal);
+        this.$root.$emit('played')
+    },
+  },
   methods: {
-    // setPlayingState(newVal) {
-    //   this.$store.commit("setPlayingState", newVal);
-    // },
     setPosition() {
       this.audio.currentTime = parseInt(
         (this.audio.duration / 100) * this.percentage
@@ -148,6 +149,8 @@ export default {
       this.paused = true;
       this.playing = false;
       this.audio.currentTime = 0;
+
+      this.$root.$emit('stopped')
     },
     play() {
       if (this.playing) return;
@@ -229,8 +232,7 @@ export default {
     this.init();
 
     //Fix issue of file locking on git checkout
-    this.$parent.$on("pause", this.pause());
-    this.$parent.$on("stop", this.stop());
+    this.$root.$on("stop", this.stop);
   },
   beforeDestroy() {
     this.audio.removeEventListener("timeupdate", this._handlePlayingUI);

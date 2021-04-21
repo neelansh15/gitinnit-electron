@@ -66,7 +66,7 @@
             v-if="music_file_path != null"
           >
             <v-col>
-              <vuetify-audio :file="music_file_path" color="teal" ref="vuetifyaudio" flat />
+              <vuetify-audio :file="music_file_path" color="teal" flat />
             </v-col>
           </v-row>
         </v-slide-y-reverse-transition>
@@ -142,12 +142,6 @@ export default {
       },
     },
     music_file_path() {
-      //Fix file lock issues during git checkout
-      if(this.$store.state.music_file_path == null){
-        this.$emit('pause')
-        this.$emit('stop')
-      }
-
       return this.$store.state.music_file_path;
     },
   },
