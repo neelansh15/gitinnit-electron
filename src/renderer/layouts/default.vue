@@ -146,8 +146,6 @@ export default {
     },
   },
   mounted() {
-    // NOTE: NOT REACTIVE AT THE MOMENT. DO SOMETHING ABOUT THIS, USE VUEX TO TRIGGER
-
     // Fetch current project if exists
     const globalConfigPath =
       app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
@@ -158,7 +156,6 @@ export default {
       }
     }
 
-    console.log("SIDEBAR: current_project = ");
     console.log(this.current_project);
   },
 };

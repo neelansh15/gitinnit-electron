@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>{{ playing }}</p>
-    <p>is_stopped: {{ is_stopped }}</p>
+    <!-- <p>{{ playing }}</p> -->
+    <!-- <p>is_stopped: {{ is_stopped }}</p> -->
     <p>
       {{
         $store.state.music_file_path == null
@@ -73,33 +73,33 @@ export default {
     items() {
       return this.launches;
     },
-    playing() {
-      return this.$store.state.playing;
-    },
-    is_stopped(){
-      return this.$store.state.is_stopped
-    }
+    // playing() {
+    //   return this.$store.state.playing;
+    // },
+    // is_stopped(){
+    //   return this.$store.state.is_stopped
+    // }
   },
   mounted() {
     this.branch_name = getData().current_project.branch_name;
     this.updateOutputFile();
 
-    this.$root.$on("stopped", function () {
-      console.log("ON Stopped! ($root.$on)")
-      this.$store.commit('setStopState', true)
-    });
-    this.$root.$on("played", function () {
-      console.log("ON played! ($root.$on)")
-      this.$store.commit('setStopState', false)
-    });
+    // this.$root.$on("stopped", function () {
+    //   console.log("ON Stopped! ($root.$on)")
+    //   this.$store.commit('setStopState', true)
+    // });
+    // this.$root.$on("played", function () {
+    //   console.log("ON played! ($root.$on)")
+    //   this.$store.commit('setStopState', false)
+    // });
   },
   updated() {
     this.updateOutputFile();
   },
   methods: {
-    sleep: (milliseconds) => {
-      return new Promise((resolve) => setTimeout(resolve, milliseconds));
-    },
+    // sleep: (milliseconds) => {
+    //   return new Promise((resolve) => setTimeout(resolve, milliseconds));
+    // },
     updateOutputFile() {
       const output_file_path = getOutputFilePath();
       console.log("OUTPUT FILE PATH: ", output_file_path);
@@ -127,23 +127,23 @@ export default {
       //due to the time delay in Vuex updating the state and the components recieving the state, during which
       //this async git.checkout function is already under way.
 
-      this.$root.$emit("stop");
+      // this.$root.$emit("stop");
 
-      while (!this.is_stopped) {
-        console.log("Awaiting stop() of music")
-        await this.sleep(100);
-      }
+      // while (!this.is_stopped) {
+      //   console.log("Awaiting stop() of music")
+      //   await this.sleep(100);
+      // }
 
       //Finally checkout if music is stopped. The if condition is just to make sure
-      if (this.is_stopped) {
-        console.log("GIT CHECKOUT after is_stopped")
+      // if (this.is_stopped) {
+      //   console.log("GIT CHECKOUT after is_stopped")
         const git = require("../gitWrapper");
         await git.checkout(hash);
         this.branch_name = getData().current_project.branch_name;
-      }
-      else{
-        console.log("WARNING: Music has NOT stopped: timeline.vue")
-      }
+      // }
+      // else{
+      //   console.log("WARNING: Music has NOT stopped: timeline.vue")
+      // }
     },
   },
 };

@@ -75,6 +75,8 @@
 
 - [ ] Add a new id each time a repo is cloned. Reason: If the same new project is cloned, then two projects with the same ids will exist.
 
+- [ ] **Severe** If user does not stop the music before git checkout, then the output files and folders don't change since they are in use by the audio player program.
+
 ## Wrapper **Vedant**
 
 - [ ] Config
