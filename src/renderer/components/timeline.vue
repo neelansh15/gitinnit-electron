@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>{{ $store.state.music_file_path == null ? "NULL" : $store.state.music_file_path }}</p>
     <p>{{ output_file == null ? "NULL" : output_file }}</p>
 
     <p>Current selected timeline/commit: {{ branch_name }}</p>
@@ -48,56 +49,56 @@
 </template>
 
 <script>
-import { getData, getOutputFilePath } from '../utils'
+import { getData, getOutputFilePath } from "../utils";
 
 export default {
-  data () {
+  data() {
     return {
       launches: [],
-      buttonText: 'Load Timeline',
-      branch_name: '',
-      output_file: null
-    }
+      buttonText: "Load Timeline",
+      branch_name: "",
+      output_file: null,
+    };
   },
   computed: {
-    items () {
-      return this.launches
-    }
+    items() {
+      return this.launches;
+    },
   },
-  mounted () {
-    this.branch_name = getData().current_project.branch_name
-    const output_file_path = getOutputFilePath()
-    console.log('OUTPUT FILE PATH: ', output_file_path)
-    if (output_file_path) {
-      this.output_file = output_file_path
-    }
+  mounted() {
+    this.branch_name = getData().current_project.branch_name;
+    this.updateOutputFile();
   },
-  updated () {
-    // Update the output file path
-    const output_file_path = getOutputFilePath()
-    console.log('OUTPUT FILE PATH: ', output_file_path)
-    if (output_file_path) {
-      this.output_file = output_file_path
-    } else {
-      this.output_file = null
-    }
+  updated() {
+    this.updateOutputFile();
   },
   methods: {
-    async log () {
-      const git = require('../gitWrapper')
-      await git.log().then(value => {
-        this.launches = value
-        console.log(this.launches)
-        this.buttonText = 'Reload timeline'
-      })
+    updateOutputFile() {
+      const output_file_path = getOutputFilePath();
+      console.log("OUTPUT FILE PATH: ", output_file_path);
+      if (output_file_path) {
+        this.output_file = output_file_path;
+        this.$store.commit('setMusicFilePath', output_file_path)
+      } else {
+        this.output_file = null;
+        this.$store.commit('setMusicFilePath', null)
+      }
     },
-    async checkout_commit (hash) {
-      const git = require('../gitWrapper')
-      await git.checkout(hash)
-      this.branch_name = getData().current_project.branch_name
-    }
-  }
-}
+    async log() {
+      const git = require("../gitWrapper");
+      await git.log().then((value) => {
+        this.launches = value;
+        console.log(this.launches);
+        this.buttonText = "Reload timeline";
+      });
+    },
+    async checkout_commit(hash) {
+      const git = require("../gitWrapper");
+      await git.checkout(hash);
+      this.branch_name = getData().current_project.branch_name;
+    },
+  },
+};
 </script>
 
 <style></style>

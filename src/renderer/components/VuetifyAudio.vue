@@ -60,7 +60,8 @@
       <v-progress-linear
         v-model="percentage"
         height="5"
-        style="margin-top: 15px; margin-bottom: 15px; cursor:pointer"
+        style="cursor:pointer"
+        class="mb-2 mt-2"
         @click.native="setPosition()"
         :disabled="!loaded"
         color="teal darken-3"

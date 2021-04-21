@@ -63,9 +63,10 @@
     </v-main>
 
     <v-footer color="teal" app>
-      <v-row justify="center" align="center">
+      <!-- {{ music_file_path == null ? "NULL" : music_file_path }} -->
+      <v-row justify="center" align="center" v-if="music_file_path != null">
         <v-col>
-          <vuetify-audio :file="file" color="white" flat />
+          <vuetify-audio :file="music_file_path" color="white" flat />
         </v-col>
       </v-row>
     </v-footer>
@@ -86,7 +87,6 @@ export default {
   },
   data() {
     return {
-      file: "http://www.hochmuth.com/mp3/Boccherini_Concerto_478-1.mp3",
       items: [
         {
           title: "Dashboard",
@@ -132,6 +132,9 @@ export default {
         // Not really needed but strange error without set()
         this.$store.commit("setCurrentProject", val);
       },
+    },
+    music_file_path(){
+      return this.$store.state.music_file_path
     },
   },
   mounted() {
