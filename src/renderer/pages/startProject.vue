@@ -25,8 +25,8 @@
               <v-form ref="form" v-model="invalid">
                 <v-file-input
                   label="Select file to get path"
-                  @change="handleFileChange"
                   required
+                  @change="handleFileChange"
                 />
 
                 <div class="path">
@@ -98,7 +98,7 @@
             </v-stepper-content>
 
             <v-stepper-content step="3">
-              <v-alert type="error" v-if="repoCreationErrorShow">
+              <v-alert v-if="repoCreationErrorShow" type="error">
                 {{ repoCreationError }}
               </v-alert>
 
@@ -123,107 +123,107 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
+import { getData, setData } from '../utils'
 
-const fs = require("fs");
-import { getData, setData } from "../utils";
+const fs = require('fs')
 
 export default {
-  data() {
+  data () {
     return {
       repoExists: false,
-      path: "none",
-      folder: "none",
-      message: "",
+      path: 'none',
+      folder: 'none',
+      message: '',
       e1: 1,
       valid: false,
       invalid: true,
       dawItems: [
-        "FL Studio",
-        "Ableton Live",
-        "Reason",
-        "Logic Pro X",
-        "Cubase"
+        'FL Studio',
+        'Ableton Live',
+        'Reason',
+        'Logic Pro X',
+        'Cubase'
       ],
       // reveal='false',
-      name: "",
-      author: "",
-      description: "",
-      genre: "",
-      daw: "",
+      name: '',
+      author: '',
+      description: '',
+      genre: '',
+      daw: '',
       checkbox: false,
-      repoCreationError: "",
+      repoCreationError: '',
       repoCreationErrorShow: false,
 
       nameRules: [
-        v => !!v || "Name is required",
-        v => (v && v.length < 50) || "Name must be less than 50 characters"
+        v => !!v || 'Name is required',
+        v => (v && v.length < 50) || 'Name must be less than 50 characters'
       ],
       descriptionRules: [
-        v => !!v || "Description is required",
+        v => !!v || 'Description is required',
         v =>
-          (v && v.length < 50) || "Description must be less than 50 characters"
+          (v && v.length < 50) || 'Description must be less than 50 characters'
       ]
-    };
+    }
   },
-  mounted() {},
+  mounted () {},
   methods: {
-    handleFileChange(file) {
-      console.log("file changes");
+    handleFileChange (file) {
+      console.log('file changes')
       if (file == null) {
-        this.path = "none";
-        this.folder = "No folder choosen";
-        this.invalid = true;
-        return;
+        this.path = 'none'
+        this.folder = 'No folder choosen'
+        this.invalid = true
+        return
       }
 
-      let pathToFile = file.path;
-      const index = pathToFile.lastIndexOf("\\");
-      pathToFile = pathToFile.slice(0, index);
-      this.path = pathToFile;
-      this.folder = pathToFile.slice(pathToFile.lastIndexOf("\\") + 1);
+      let pathToFile = file.path
+      const index = pathToFile.lastIndexOf('\\')
+      pathToFile = pathToFile.slice(0, index)
+      this.path = pathToFile
+      this.folder = pathToFile.slice(pathToFile.lastIndexOf('\\') + 1)
     },
-    submit() {
-      //Optimize
-      this.name = this.name.trim();
-      //End Optimization
+    submit () {
+      // Optimize
+      this.name = this.name.trim()
+      // End Optimization
 
-      //Check if a remote Github repo with this project name exists. If it does, show error and return
-      let access_token = this.$store.state.access_token;
+      // Check if a remote Github repo with this project name exists. If it does, show error and return
+      const access_token = this.$store.state.access_token
       const data = {
         name: this.name,
         description: this.description,
-        //Set to public in pre-release, release (Check README => Pre-release)
+        // Set to public in pre-release, release (Check README => Pre-release)
         private: true,
         auto_init: false
-      };
+      }
       axios({
-        method: "post",
-        url: "https://api.github.com/user/repos",
+        method: 'post',
+        url: 'https://api.github.com/user/repos',
         data,
         headers: {
-          accept: "application/vnd.github.v3+json",
-          Authorization: "token " + access_token
+          accept: 'application/vnd.github.v3+json',
+          Authorization: 'token ' + access_token
         }
       })
         .then(res => {
-          console.log("New repo created!");
-          console.log("Response: ");
-          console.log(res);
+          console.log('New repo created!')
+          console.log('Response: ')
+          console.log(res)
 
-          //Only if repo creation is a success
+          // Only if repo creation is a success
 
           // Also append the same config data to the global config
-          const globalConfigData = getData();
-          let githubPath =
-            "https://github.com/" +
+          const globalConfigData = getData()
+          const githubPath =
+            'https://github.com/' +
             globalConfigData.user.login +
-            "/" +
+            '/' +
             this.name +
-            ".git";
+            '.git'
 
-          //Project config creation
-          const configPath = this.path + "\\projectConfig.json";
+          // Project config creation
+          const configPath = this.path + '\\projectConfig.json'
           const configData = {
             id: Math.floor(Math.random() * 10000),
             name: this.name,
@@ -233,55 +233,55 @@ export default {
             daw: this.daw,
             folder: this.folder,
             path: this.path,
-            githubPath: githubPath,
+            githubPath,
             repo_owner: getData().user.login
-          };
-          //Required for project-level config
-          fs.writeFileSync(configPath, JSON.stringify(configData), function(e) {
-            console.log("Written to config file. e => " + e);
-          });
-          //End of project config creation
+          }
+          // Required for project-level config
+          fs.writeFileSync(configPath, JSON.stringify(configData), function (e) {
+            console.log('Written to config file. e => ' + e)
+          })
+          // End of project config creation
 
-          let projectsArray = globalConfigData.projects;
-          if (projectsArray == undefined) projectsArray = [];
+          let projectsArray = globalConfigData.projects
+          if (projectsArray == undefined) projectsArray = []
 
-          configData.branch_name = "master"; //Only for globalConfig.
-          projectsArray.push(configData);
+          configData.branch_name = 'master' // Only for globalConfig.
+          projectsArray.push(configData)
 
-          globalConfigData.projects = projectsArray;
-          globalConfigData.current_project = configData;
+          globalConfigData.projects = projectsArray
+          globalConfigData.current_project = configData
 
-          setData(globalConfigData);
+          setData(globalConfigData)
 
-          console.log("Projects array: ");
-          console.log(projectsArray);
+          console.log('Projects array: ')
+          console.log(projectsArray)
           // End of adding project to global config
-          this.createGitFiles();
+          this.createGitFiles()
 
-          this.$router.push("/details");
+          this.$router.push('/details')
         })
         .catch(e => {
-          console.error("Error while creating new repo omg");
-          console.log(e);
+          console.error('Error while creating new repo omg')
+          console.log(e)
           this.repoCreationError =
-            "Error while creating repository for project. Possibly the name already exists.";
-          this.repoCreationErrorShow = true;
-        });
-      //End of remote repo check and creation
+            'Error while creating repository for project. Possibly the name already exists.'
+          this.repoCreationErrorShow = true
+        })
+      // End of remote repo check and creation
     },
-    async createGitFiles() {
-      const git = require("../gitWrapper");
-      git.setPath();
-      await git.init();
+    async createGitFiles () {
+      const git = require('../gitWrapper')
+      git.setPath()
+      await git.init()
     },
-    projectExists() {
-      this.repoExists = true;
+    projectExists () {
+      this.repoExists = true
     },
-    projectNotExists() {
-      this.repoExists = false;
+    projectNotExists () {
+      this.repoExists = false
     }
   }
-};
+}
 </script>
 
 <style></style>

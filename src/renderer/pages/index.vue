@@ -56,13 +56,13 @@
                 &middot;&nbsp;
                 <span class="brown--text text-darken-1">{{
                   project.path
-                }}</span></v-card-subtitle
-              >
+                }}</span>
+              </v-card-subtitle>
               <v-card-actions>
-                <v-btn @click="setCurrentProject(project)" v-if="project.id != current_project.id" text>
+                <v-btn v-if="project.id != current_project.id" text @click="setCurrentProject(project)">
                   Set as current project
                 </v-btn>
-                <v-chip color="primary" class="ml-1" small v-else>Current project</v-chip>
+                <v-chip v-else color="primary" class="ml-1" small>Current project</v-chip>
               </v-card-actions>
             </v-card>
           </div>
@@ -76,18 +76,23 @@
 </template>
 
 <script>
-const {getData, setData} = require("../utils");
+const { getData, setData } = require('../utils')
 
 export default {
-  data() {
+  data () {
     return {
       projects: [],
       current_project: {}
-    };
+    }
   },
-  methods:{
-    setCurrentProject(project){
-      let globalConfigObj = getData()
+  mounted () {
+    // Fetch projects if globalConfig exists
+    this.projects = getData().projects.reverse()
+    this.current_project = getData().current_project
+  },
+  methods: {
+    setCurrentProject (project) {
+      const globalConfigObj = getData()
       globalConfigObj.current_project = project
       setData(globalConfigObj)
 
@@ -97,13 +102,8 @@ export default {
       // console.log("TRIGGERED change project ")
       // console.log(getData().current_project)
     }
-  },
-  mounted() {
-    // Fetch projects if globalConfig exists
-    this.projects = getData().projects.reverse();
-    this.current_project = getData().current_project
   }
-};
+}
 </script>
 
 <style>

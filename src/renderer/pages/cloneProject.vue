@@ -12,8 +12,8 @@
 
         <v-file-input
           label="Select file to get path"
-          @change="handleFileChange"
           :rules="rules.file_input"
+          @change="handleFileChange"
         >
           Select Folder
         </v-file-input>
@@ -32,72 +32,72 @@
 </template>
 
 <script>
-const fs = require("fs");
-import { getData, setData } from "../utils";
+import { getData, setData } from '../utils'
+const fs = require('fs')
 
 export default {
-  data() {
+  data () {
     return {
-      githubPath: "",
-      path: "No folder selected",
-      message: "",
+      githubPath: '',
+      path: 'No folder selected',
+      message: '',
       valid: false,
       loading: false,
       rules: {
-        file_input: [v => !!v || "File path is required"],
-        path_field: [v => !!v || "Github path is required"]
+        file_input: [v => !!v || 'File path is required'],
+        path_field: [v => !!v || 'Github path is required']
       }
-    };
+    }
   },
   methods: {
-    handleFileChange(file) {
+    handleFileChange (file) {
       if (file == null) {
-        this.path = "none";
-        this.folder = "No folder choosen";
-        this.valid = false;
-        return;
+        this.path = 'none'
+        this.folder = 'No folder choosen'
+        this.valid = false
+        return
       }
 
-      let pathToFile = file.path;
-      const index = pathToFile.lastIndexOf("\\");
-      pathToFile = pathToFile.slice(0, index);
-      this.path = pathToFile;
-      this.path += "\\";
-      this.folder = pathToFile.slice(pathToFile.lastIndexOf("\\") + 1);
-      this.valid = true;
+      let pathToFile = file.path
+      const index = pathToFile.lastIndexOf('\\')
+      pathToFile = pathToFile.slice(0, index)
+      this.path = pathToFile
+      this.path += '\\'
+      this.folder = pathToFile.slice(pathToFile.lastIndexOf('\\') + 1)
+      this.valid = true
     },
-    async clone() {
-      this.loading = true;
-      const git = require("../gitWrapper");
-      this.githubPath += ".git";
-      var dir = this.githubPath.substr(this.githubPath.lastIndexOf("/") + 1);
-      var index = dir.indexOf(".");
-      dir = dir.substr(0, index);
-      this.path += dir;
-      console.log(this.path);
+    async clone () {
+      this.loading = true
+      const git = require('../gitWrapper')
+      this.githubPath += '.git'
+      let dir = this.githubPath.substr(this.githubPath.lastIndexOf('/') + 1)
+      const index = dir.indexOf('.')
+      dir = dir.substr(0, index)
+      this.path += dir
+      console.log(this.path)
 
-      await git.clone(this.githubPath, this.path);
+      await git.clone(this.githubPath, this.path)
 
-      let config = this.path + "/projectConfig.json";
+      const config = this.path + '/projectConfig.json'
       const configData = JSON.parse(
-        fs.readFileSync(config, { encoding: "utf8", flag: "r" })
-      );
-      console.log(configData);
-      configData.path = this.path;
-      const globalConfigData = getData();
-      let projectsArray = globalConfigData.projects;
-      if (projectsArray == undefined) projectsArray = [];
+        fs.readFileSync(config, { encoding: 'utf8', flag: 'r' })
+      )
+      console.log(configData)
+      configData.path = this.path
+      const globalConfigData = getData()
+      let projectsArray = globalConfigData.projects
+      if (projectsArray == undefined) projectsArray = []
 
-      projectsArray.push(configData);
-      globalConfigData.projects = projectsArray;
-      globalConfigData.current_project = configData;
+      projectsArray.push(configData)
+      globalConfigData.projects = projectsArray
+      globalConfigData.current_project = configData
 
-      setData(globalConfigData);
-      this.loading = false;
-      this.$router.push("/details");
+      setData(globalConfigData)
+      this.loading = false
+      this.$router.push('/details')
     }
   }
-};
+}
 </script>
 
 <style></style>

@@ -4,7 +4,6 @@
 
 - [ ] Accessibility: Add titles to as many components as possible
 - [ ] Collaborators: List, Add & Remove via Github API **Neelansh**
-
   - [x] List collaborators
   - [x] Add collaborators
   - [x] Remove collaborators
@@ -41,6 +40,7 @@
   - [x] Timeline.vue: **Parth**
     - [ ] Create new branch command: Local or Local+Remote
   - [ ] details.vue: **Neelansh**, **Parth**
+    - [ ] Ability to select output file for each commit...wonder how though. Think this through
     - [x] Project details
     - [ ] Timeline
       - [x] Set Default
@@ -88,3 +88,6 @@
 - [ ] log
 - [ ] branch
 - [ ] checkout
+
+### Plugins / References
+https://github.com/wilsonwu/vuetify-audio
