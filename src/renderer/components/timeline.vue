@@ -67,7 +67,6 @@ export default {
       buttonText: "Load Timeline",
       branch_name: "",
       output_file: null,
-      is_stopped: false,
     };
   },
   computed: {
@@ -77,6 +76,9 @@ export default {
     playing() {
       return this.$store.state.playing;
     },
+    is_stopped(){
+      return this.$store.state.is_stopped
+    }
   },
   mounted() {
     this.branch_name = getData().current_project.branch_name;
@@ -84,11 +86,11 @@ export default {
 
     this.$root.$on("stopped", function () {
       console.log("ON Stopped! ($root.$on)")
-      this.is_stopped = true;
+      this.$store.commit('setStopState', true)
     });
     this.$root.$on("played", function () {
       console.log("ON played! ($root.$on)")
-      this.is_stopped = false;
+      this.$store.commit('setStopState', false)
     });
   },
   updated() {
@@ -127,13 +129,14 @@ export default {
 
       this.$root.$emit("stop");
 
-      // while (!this.is_stopped) {
-      //   console.log("Awaiting stop() of music")
-      //   await this.sleep(100);
-      // }
+      while (!this.is_stopped) {
+        console.log("Awaiting stop() of music")
+        await this.sleep(100);
+      }
 
       //Finally checkout if music is stopped. The if condition is just to make sure
       if (this.is_stopped) {
+        console.log("GIT CHECKOUT after is_stopped")
         const git = require("../gitWrapper");
         await git.checkout(hash);
         this.branch_name = getData().current_project.branch_name;

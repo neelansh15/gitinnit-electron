@@ -11,6 +11,7 @@ export const state = () => ({
   access_token,
   music_file_path: null,
   paused: false,
+  is_stopped: true,
   current_project: getData().current_project // Needed for reactivity in the sidebar
 })
 
@@ -26,5 +27,9 @@ export const mutations = {
   },
   setPauseState(state, payload){
     state.paused = payload
+  },
+  setStopState(state, payload){
+    state.is_stopped = payload
   }
+  
 }
