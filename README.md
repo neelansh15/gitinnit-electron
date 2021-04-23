@@ -4,6 +4,7 @@
 
 - [ ] Accessibility: Add titles to as many components as possible
 - [ ] Collaborators: List, Add & Remove via Github API **Neelansh**
+
   - [x] List collaborators
   - [x] Add collaborators
   - [x] Remove collaborators
@@ -49,6 +50,7 @@
 
 - [x] Username in sidebar **Neelansh**
 - [ ] commit function explicitly **Vedant**
+- [x] User config **Vedant** (in wrapper)
 - [x] Checkout function **Vedant**
 - [ ] Pagination in index.vue for projects **Vedant**
 - [x] cloneProject.vue -> setPath for git wrapper **Vedant**
@@ -72,35 +74,36 @@
 3. In Timeline.vue, if we reload timeline after switching to a commit then there is no way to access the upper commits. For that added a "Back to master branch" button. But unless the BranchCombo.vue works, users are stuck with just the master branch fallback.
 
 4. We are forcing git checkout if the user moves between commits. If the user switches to an older commit and wants to have his
-edits saved, that won't be possible. In the future, implement a confirm box to give them the option of "git switch -c" to create
-new branch from this existing commit or overwrite their changes.
+   edits saved, that won't be possible. In the future, implement a confirm box to give them the option of "git switch -c" to create
+   new branch from this existing commit or overwrite their changes.
 
 ## Bugs:
 
 - [ ] Add a new id each time a repo is cloned. Reason: If the same new project is cloned, then two projects with the same ids will exist.
 
 - [ ] **[SOLVED (temp)]** **Severe** If the music is playing or has been played in this session and the user tries to git checkout, then the output files and folders don't change since they are in use by the audio player program and thus the checkout gives an error.  
-*Possible Solution:* Core issue is that state's music_file_path is not being set to null in details.vue which would trigger v-if and remove 
-the audio player component and with it, the file lock.
+       _Possible Solution:_ Core issue is that state's music_file_path is not being set to null in details.vue which would trigger v-if and remove
+      the audio player component and with it, the file lock.
 
 **Solution**:  
 details.vue updated() was calling the function to update file that's why setting to null wasn't working. It was being overwritten immediately.  
 Secondly, after checkout it takes some time for git to remove the files/folders changed. So added a delay of 200ms in the
-updateOutputFile function. This can be improved by using await to know from git.checkout WHEN the process has been completed. 
+updateOutputFile function. This can be improved by using await to know from git.checkout WHEN the process has been completed.
 
 ## Wrapper **Vedant**
 
-- [ ] Config
-- [ ] Init
-- [ ] Add remote
+- [x] Config
+- [x] Init
+- [x] Add remote
 - [x] Add
 - [x] Commit
 - [x] Push
 - [x] Pull
 - [x] Clone
-- [ ] log
-- [ ] branch
-- [ ] checkout
+- [x] log
+- [x] branch
+- [x] checkout
 
 ### Plugins / References
+
 https://github.com/wilsonwu/vuetify-audio
