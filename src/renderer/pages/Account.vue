@@ -25,14 +25,17 @@
         </v-list-item>
       </v-list>
     </div>
+    <div>
+      <v-btn @click="configUser">configUser</v-btn>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import Combobox from '@/components/Combo.vue'
+import axios from "axios";
+import Combobox from "@/components/Combo.vue";
 
-import { getData, setData } from '../utils'
+import { getData, setData } from "../utils";
 
 export default {
   components: {
@@ -40,28 +43,28 @@ export default {
   },
 
   data: () => ({
-    access_token: '',
+    access_token: "",
     user: {},
     repos: []
   }),
-  created () {
+  created() {
     // check if logged in.
-    this.access_token = this.$store.state.access_token
-    if (this.access_token == '' || this.access_token == null) {
+    this.access_token = this.$store.state.access_token;
+    if (this.access_token == "" || this.access_token == null) {
       // If not logged in redirect to /login
-      this.$router.push('/login')
+      this.$router.push("/login");
     } else {
       // fetch user info
       axios
         .get(`https://api.github.com/user`, {
           headers: {
-            Accept: 'application/vnd.github.v3+json',
-            Authorization: 'token ' + this.access_token
+            Accept: "application/vnd.github.v3+json",
+            Authorization: "token " + this.access_token
           }
         })
         .then(res => {
-          console.log(res)
-          this.user = res.data
+          console.log(res);
+          this.user = res.data;
 
           // Update global config with any possible new data
           // const appDataGlobalConfigPath =
@@ -72,39 +75,46 @@ export default {
           // const globalConfigData = JSON.parse(
           //   fs.readFileSync(appDataGlobalConfigPath)
           // )
-          const globalConfigData = getData()
-          globalConfigData.user = res.data
-          setData(globalConfigData)
-        })
+          const globalConfigData = getData();
+          globalConfigData.user = res.data;
+          setData(globalConfigData);
+        });
     }
   },
   methods: {
-    fetchRepos () {
+    fetchRepos() {
       axios
-        .get(`https://api.github.com/user/repos?per_page=100&affiliation=owner`, {
-          headers: {
-            Accept: 'application/vnd.github.v3+json',
-            Authorization: 'token ' + this.access_token
+        .get(
+          `https://api.github.com/user/repos?per_page=100&affiliation=owner`,
+          {
+            headers: {
+              Accept: "application/vnd.github.v3+json",
+              Authorization: "token " + this.access_token
+            }
           }
-        })
+        )
         .then(res => {
-          this.repos = res.data
-          console.log(res.data)
-        })
+          this.repos = res.data;
+          console.log(res.data);
+        });
     },
-    logout () {
+    logout() {
       // Not the best solution. Should revoke token from Github too
-      this.$store.commit('setAccessToken', '')
+      this.$store.commit("setAccessToken", "");
       // also set empty in global config
-      const globalConfigData = getData()
-      globalConfigData.access_token = ''
-      globalConfigData.user = {}
-      setData(globalConfigData)
+      const globalConfigData = getData();
+      globalConfigData.access_token = "";
+      globalConfigData.user = {};
+      setData(globalConfigData);
 
-      this.$router.push('/') // MAYBE put /login after testing
+      this.$router.push("/"); // MAYBE put /login after testing
+    },
+    async configUser() {
+      const git = require("../gitWrapper");
+      await git.config("VedantMahadik", "therookie636@gmail.com");
     }
   }
-}
+};
 </script>
 
 <style></style>
