@@ -103,7 +103,7 @@ const checkout = async commitHash => {
   path = globalConfig.getData().current_project.path
   git = simpleGit(path)
 
-  //Force checkout to overwrite changes for now
+  // Force checkout to overwrite changes for now
   await git.checkout(commitHash, ['--force'])
 
   // Update in global config too

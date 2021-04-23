@@ -60,10 +60,10 @@
         <!-- Music Player -->
         <v-slide-y-reverse-transition>
           <v-row
+            v-if="music_file_path != null"
             justify="center"
             align="center"
             style="margin-top: auto"
-            v-if="music_file_path != null"
           >
             <v-col>
               <vuetify-audio :file="music_file_path" color="teal" flat />
@@ -82,83 +82,83 @@
 </template>
 
 <script>
-import pkg from "../../../package.json";
-import VuetifyAudio from "../components/VuetifyAudio";
+import pkg from '../../../package.json'
+import VuetifyAudio from '../components/VuetifyAudio'
 
-const { remote } = require("electron");
-const { app } = remote;
-const fs = require("fs");
+const { remote } = require('electron')
+const { app } = remote
+const fs = require('fs')
 
 export default {
   components: {
-    VuetifyAudio,
+    VuetifyAudio
   },
-  data() {
+  data () {
     return {
       items: [
         {
-          title: "Dashboard",
-          icon: "mdi-view-dashboard",
-          to: "/",
+          title: 'Dashboard',
+          icon: 'mdi-view-dashboard',
+          to: '/'
         },
         {
-          title: "Details",
-          icon: "mdi-book-open",
-          to: "/details",
+          title: 'Details',
+          icon: 'mdi-book-open',
+          to: '/details'
         },
         {
-          title: "Start a project",
+          title: 'Start a project',
 
-          to: "/",
+          to: '/',
           sublinks: [
             {
-              title: "Create a new project",
-              icon: "mdi-plus",
-              to: "/startproject",
+              title: 'Create a new project',
+              icon: 'mdi-plus',
+              to: '/startproject'
             },
             {
-              title: "Clone a project",
-              icon: "mdi-cloud-download",
-              to: "/cloneProject",
-            },
-          ],
+              title: 'Clone a project',
+              icon: 'mdi-cloud-download',
+              to: '/cloneProject'
+            }
+          ]
         },
         {
-          title: "Account",
-          icon: "mdi-account",
-          to: "/account",
-        },
-      ],
-    };
+          title: 'Account',
+          icon: 'mdi-account',
+          to: '/account'
+        }
+      ]
+    }
   },
   computed: {
     current_project: {
-      get() {
-        return this.$store.state.current_project;
+      get () {
+        return this.$store.state.current_project
       },
-      set(val) {
+      set (val) {
         // Not really needed but strange error without set()
-        this.$store.commit("setCurrentProject", val);
-      },
+        this.$store.commit('setCurrentProject', val)
+      }
     },
-    music_file_path() {
-      return this.$store.state.music_file_path;
-    },
+    music_file_path () {
+      return this.$store.state.music_file_path
+    }
   },
-  mounted() {
+  mounted () {
     // Fetch current project if exists
     const globalConfigPath =
-      app.getPath("appData") + "\\" + pkg.name + "\\globalConfig.json";
+      app.getPath('appData') + '\\' + pkg.name + '\\globalConfig.json'
     if (fs.existsSync(globalConfigPath)) {
-      const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath));
+      const globalConfigData = JSON.parse(fs.readFileSync(globalConfigPath))
       if (globalConfigData.current_project) {
-        this.current_project = globalConfigData.current_project;
+        this.current_project = globalConfigData.current_project
       }
     }
 
-    console.log(this.current_project);
-  },
-};
+    console.log(this.current_project)
+  }
+}
 </script>
 
 <style>
