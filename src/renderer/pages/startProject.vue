@@ -234,7 +234,8 @@ export default {
             folder: this.folder,
             path: this.path,
             githubPath,
-            repo_owner: getData().user.login
+            repo_owner: getData().user.login,
+            output_file: this.path + "\\output\\output.mp3"
           }
           // Required for project-level config
           fs.writeFileSync(configPath, JSON.stringify(configData), function (e) {
