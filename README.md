@@ -50,7 +50,7 @@
 
 - [x] Username in sidebar **Neelansh**
 - [ ] commit function explicitly **Vedant**
-- [x] User config **Vedant** (in wrapper)
+- [ ] User config **Vedant** (in wrapper)
 - [x] Checkout function **Vedant**
 - [ ] Pagination in index.vue for projects **Vedant**
 - [x] cloneProject.vue -> setPath for git wrapper **Vedant**
