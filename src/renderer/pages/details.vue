@@ -24,7 +24,7 @@
                     >
                       Local
                     </v-chip>
-                    {{ project.path }} <br>
+                    {{ project.path }} <br />
                     <v-chip
                       class="teal lighten-2 teal--text text--darken-3 font-weight-bold"
                       x-small
@@ -95,20 +95,19 @@
       </v-layout>
     </v-container>
 
-    <br>
+    <br />
     <combobranch />
     <timeline />
-    <v-btn @click="test">Click</v-btn>
   </div>
 </template>
 
 <script>
-import pushComponent from '@/components/push.vue'
-import timeline from '@/components/timeline.vue'
-import combobranch from '@/components/BranchCombo.vue'
-import Collaborators from '../components/Collaborators.vue'
-const fs = require('fs')
-const globalConfig = require('../utils/index')
+import pushComponent from "@/components/push.vue";
+import timeline from "@/components/timeline.vue";
+import combobranch from "@/components/BranchCombo.vue";
+import Collaborators from "../components/Collaborators.vue";
+const fs = require("fs");
+const globalConfig = require("../utils/index");
 
 export default {
   components: {
@@ -117,19 +116,19 @@ export default {
     Collaborators,
     combobranch
   },
-  data () {
+  data() {
     return {
       project: {},
-      commitMessage: '',
+      commitMessage: "",
       files: [],
       dialog: false
-    }
+    };
   },
-  mounted () {
+  mounted() {
     // note cant change path here needs to be passed as string
-    this.project = globalConfig.getData().current_project
-    console.log(this.project)
-    console.log(this.project.path)
+    this.project = globalConfig.getData().current_project;
+    console.log(this.project);
+    console.log(this.project.path);
     // this.importAll(
     //   require.context("C:\\Users\\vedant\\Desktop\\testFolder", true, /\.txt$/)
     // );
@@ -141,51 +140,47 @@ export default {
     //   });
     //   console.log(this.files);
     // },
-    check () {
-      console.log(this.project.path)
+    check() {
+      console.log(this.project.path);
     },
-    push () {
-      this.dialog = false
-      const git = require('../gitWrapper')
-      const message = this.commitMessage
-      console.log(message)
-      git.setPath()
-      const tfiles = []
-      fs.readdir(this.project.path, function (err, files) {
-        console.log('read')
+    push() {
+      this.dialog = false;
+      const git = require("../gitWrapper");
+      const message = this.commitMessage;
+      console.log(message);
+      git.setPath();
+      const tfiles = [];
+      fs.readdir(this.project.path, function(err, files) {
+        console.log("read");
         if (err) {
-          return console.log('Unable to scan directory: ' + err)
+          return console.log("Unable to scan directory: " + err);
         }
         files.forEach(file => {
-          console.log('adding to array')
-          tfiles.push(file)
-        })
-        console.log(tfiles)
+          console.log("adding to array");
+          tfiles.push(file);
+        });
+        console.log(tfiles);
 
-        console.log('commit')
-        git.commit(tfiles, message)
+        console.log("commit");
+        git.commit(tfiles, message);
 
-        this.commitMessage = ''
-      })
+        this.commitMessage = "";
+      });
     },
-    async log () {
-      const git = require('../gitWrapper')
-      let temp
+    async log() {
+      const git = require("../gitWrapper");
+      let temp;
       const launches = await git.log().then(value => {
-        temp = value
-      })
-      console.log(temp)
+        temp = value;
+      });
+      console.log(temp);
     },
-    pull () {
-      console.log('git pull')
-      const git = require('../gitWrapper')
-      git.setPath()
-      git.pull()
-    },
-    test () {
-      const git = require('../gitWrapper')
-      git.branch()
+    pull() {
+      console.log("git pull");
+      const git = require("../gitWrapper");
+      git.setPath();
+      git.pull();
     }
   }
-}
+};
 </script>
