@@ -14,6 +14,7 @@
       <v-btn depressed small @click="fetchRepos">Fetch repos</v-btn>
       <v-btn depressed small @click="logout">Log out</v-btn>
 
+      <v-slide-y-transition>
       <v-card width="400" class="mt-5" v-if="newLogin" flat outlined>
         <v-card-title>First time setup</v-card-title>
         <v-card-subtitle
@@ -48,6 +49,10 @@
           </v-form>
         </v-card-text>
       </v-card>
+      </v-slide-y-transition>
+
+      
+
       <Combobox />
     </div>
 
@@ -144,7 +149,6 @@ export default {
         globalConfig.newLogin = false;
         setData(globalConfig);
 
-        alert("Successfully completed first-time setup")
         this.updateNewLoginValue();
       }
     },
