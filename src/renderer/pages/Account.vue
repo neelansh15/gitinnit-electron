@@ -60,9 +60,6 @@
         </v-list-item>
       </v-list>
     </div>
-    <div>
-      <v-btn @click="configUser">configUser</v-btn>
-    </div>
   </div>
 </template>
 
