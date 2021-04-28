@@ -8,7 +8,7 @@
       Output file detected: {{ $store.state.music_file_path }}
     </v-alert>
 
-    <v-alert icon="mdi-source-branch" type="primary" class="mx-11">
+    <v-alert icon="mdi-source-branch" type="info" class="mx-11">
         Current timeline/commit: {{ branch_name }}
     </v-alert>
     <v-btn class="ml-10" depressed @click="log">{{ buttonText }}</v-btn>

@@ -78,6 +78,7 @@
   </v-card>
 </template>
 <script>
+
 const formatTime = second =>
   new Date(second * 1000).toISOString().substr(11, 8)
 
@@ -122,13 +123,13 @@ export default {
       percentage: 0,
       currentTime: '00:00:00',
       audio: undefined,
-      totalDuration: 0
+      totalDuration: 0,
     }
   },
   computed: {
     duration () {
       return this.audio ? formatTime(this.totalDuration) : ''
-    }
+    },
   },
   mounted () {
     this.audio = this.$refs.player
@@ -142,6 +143,9 @@ export default {
     this.audio.removeEventListener('ended', this._handleEnded)
   },
   methods: {
+    newTempFile(){
+      alert("Hey")
+    },
     setPosition () {
       this.audio.currentTime = parseInt(
         (this.audio.duration / 100) * this.percentage

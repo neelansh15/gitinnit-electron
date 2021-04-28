@@ -76,7 +76,7 @@
 </template>
 
 <script>
-const { getData, setData } = require('../utils')
+const { getData, setData, clearTempOutputDir } = require('../utils')
 
 export default {
   data () {
@@ -89,6 +89,8 @@ export default {
     // Fetch projects if globalConfig exists
     this.projects = getData().projects.reverse()
     this.current_project = getData().current_project
+
+    clearTempOutputDir()
   },
   methods: {
     setCurrentProject (project) {

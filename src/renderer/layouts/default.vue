@@ -66,7 +66,7 @@
             style="margin-top: auto"
           >
             <v-col>
-              <vuetify-audio :file="music_file_path" color="teal" flat />
+              <vuetify-audio v-if="music_file_path != null" :file="music_file_path" color="teal" flat />
             </v-col>
           </v-row>
         </v-slide-y-reverse-transition>
@@ -84,6 +84,8 @@
 <script>
 import pkg from '../../../package.json'
 import VuetifyAudio from '../components/VuetifyAudio'
+
+import { copyOutputFileToTemp } from '../utils'
 
 const { remote } = require('electron')
 const { app } = remote
@@ -142,7 +144,10 @@ export default {
       }
     },
     music_file_path () {
-      return this.$store.state.music_file_path
+      if(this.$store.state.music_file_path == null) return null
+      
+      const temp_file_path = copyOutputFileToTemp(this.$store.state.music_file_path)
+      return temp_file_path
     }
   },
   mounted () {

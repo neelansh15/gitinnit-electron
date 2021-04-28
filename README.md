@@ -85,10 +85,15 @@
        _Possible Solution:_ Core issue is that state's music_file_path is not being set to null in details.vue which would trigger v-if and remove
       the audio player component and with it, the file lock.
 
-**Solution**:  
+**Partial Solution**:  
 details.vue updated() was calling the function to update file that's why setting to null wasn't working. It was being overwritten immediately.  
 Secondly, after checkout it takes some time for git to remove the files/folders changed. So added a delay of 200ms in the
 updateOutputFile function. This can be improved by using await to know from git.checkout WHEN the process has been completed.
+
+**FULL SOLUTION**:
+In short, every time the music file path updates in state, I copy over the files to a **temporary** folder in appdata! IT WORKS! Now, file lock issues could exist there too if I try to update the temp with new temp output file, so for that I have appended a random number to the filename (ex: output72653.mp3). Even the extension is perfectly copied over :D 
+The only drawback is that many garbage output files are left over. But no prob the simple issue is to clear the temp output directory on every app restart. Done this.
+**BONUS**: Somehow the whole component is re-rendering which means the audio duration is updated by itself! OMG I thought I would have to do more but this is awesome! 
 
 ## Wrapper **Vedant**
 
