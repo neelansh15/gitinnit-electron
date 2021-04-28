@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-btn @click="branchNames">Branch</v-btn>
     <v-combobox
       v-if="isLoaded"

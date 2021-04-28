@@ -30,6 +30,7 @@
               color="teal"
               outlined
               required
+              disabled
             />
             <v-text-field
               label="Github account Email"
