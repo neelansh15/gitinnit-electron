@@ -90,7 +90,10 @@ export default {
     this.projects = getData().projects.reverse()
     this.current_project = getData().current_project
 
-    clearTempOutputDir()
+    //Don't clear when the audio player is active. Clear only on app startup
+    if(this.$store.state.music_file_path == null){
+      clearTempOutputDir()
+    }
   },
   methods: {
     setCurrentProject (project) {
