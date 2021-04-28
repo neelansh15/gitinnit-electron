@@ -3,7 +3,7 @@
     <v-container>
       <v-layout row wrap>
         <!-- xs12 and sm12 to make it responsive = 12 columns on mobile and 6 columns from medium to XL layouts -->
-        <v-flex xs12 sm12>
+        <!-- <v-flex xs12 sm12>
           <v-row align="center" justify="center">
             <v-col cols="12" sm="4">
               <v-card class="mx-auto" max-width="1200" height="200">
@@ -36,8 +36,8 @@
               </v-card>
             </v-col>
           </v-row>
-        </v-flex>
-        <v-flex xs12 sm12>
+        </v-flex> -->
+        <v-flex xs12 sm12 class="mt-5">
           <h2>Recent Projects</h2>
           <div class="mt-5">
             <v-card
