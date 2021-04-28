@@ -92,7 +92,7 @@ updateOutputFile function. This can be improved by using await to know from git.
 
 **FULL SOLUTION**:
 In short, every time the music file path updates in state, I copy over the files to a **temporary** folder in appdata! IT WORKS! Now, file lock issues could exist there too if I try to update the temp with new temp output file, so for that I have appended a random number to the filename (ex: output72653.mp3). Even the extension is perfectly copied over :D 
-The only drawback is that many garbage output files are left over. But no prob the simple issue is to clear the temp output directory on every app restart. Done this.
+The only drawback is that many garbage output files are left over. But no prob the simple issue is to clear the temp output directory on every app restart. Done this for each time dashboard is mounted.
 **BONUS**: Somehow the whole component is re-rendering which means the audio duration is updated by itself! OMG I thought I would have to do more but this is awesome! 
 
 ## Wrapper **Vedant**

@@ -82,7 +82,7 @@ export default {
       return new Promise((resolve) => setTimeout(resolve, milliseconds));
     },
     async updateOutputFile() {
-      await this.sleep(200); // Wait for output file/folder to be deleted during commit change
+      // await this.sleep(200); // Wait for output file/folder to be deleted during commit change
       const output_file_path = getOutputFilePath();
       console.log("OUTPUT FILE PATH: ", output_file_path);
       if (output_file_path) {
@@ -104,7 +104,7 @@ export default {
     async checkout_commit(hash) {
       // Before checkout, clear the player so that the output file won't be locked
       this.$store.commit("setMusicFilePath", null);
-      await this.sleep(100); // Wait for state to change (just in case, and it works)
+      // await this.sleep(100); // Wait for state to change (just in case, and it works)
       // Also STOP the player from playing state since that is another thing that locks the file
       // Note: This is being done in separate file using $parent.$on and $emit, but still has issues maybe
       // due to the time delay in Vuex updating the state and the components recieving the state, during which
