@@ -13,6 +13,41 @@
     <div class="mt-5">
       <v-btn depressed small @click="fetchRepos">Fetch repos</v-btn>
       <v-btn depressed small @click="logout">Log out</v-btn>
+
+      <v-card width="400" class="mt-5" v-if="newLogin" flat outlined>
+        <v-card-title>First time setup</v-card-title>
+        <v-card-subtitle
+          >We need to configure your local git information for the app to work
+          properly</v-card-subtitle
+        >
+        <v-card-text>
+          <v-form ref="form">
+            <v-text-field
+              label="Github Full Name"
+              v-model="newLoginFullname"
+              :rules="rules.fullname"
+              color="teal"
+              outlined
+              required
+            />
+            <v-text-field
+              label="Github account Email"
+              v-model="newLoginEmail"
+              :rules="rules.email"
+              color="teal"
+              outlined
+              required
+            />
+            <v-btn
+              color="teal lighten-2"
+              @click="setLocalGitCredentials"
+              depressed
+              small
+              >Go</v-btn
+            >
+          </v-form>
+        </v-card-text>
+      </v-card>
       <Combobox />
     </div>
 
@@ -39,13 +74,26 @@ import { getData, setData } from "../utils";
 
 export default {
   components: {
-    Combobox
+    Combobox,
   },
 
   data: () => ({
     access_token: "",
     user: {},
-    repos: []
+    repos: [],
+    newLogin: false,
+    newLoginFullname: "",
+    newLoginEmail: "",
+    rules: {
+      fullname: [
+        (v) => !!v || "Please provide the full name from your Github account",
+      ],
+      email: [
+        (v) =>
+          !!v || "Please provide the email you used for your Github account",
+        (v) => /.+@.+\..+/.test(v) || "Please provide a valid email address",
+      ],
+    },
   }),
   created() {
     // check if logged in.
@@ -59,12 +107,13 @@ export default {
         .get(`https://api.github.com/user`, {
           headers: {
             Accept: "application/vnd.github.v3+json",
-            Authorization: "token " + this.access_token
-          }
+            Authorization: "token " + this.access_token,
+          },
         })
-        .then(res => {
+        .then((res) => {
           console.log(res);
           this.user = res.data;
+          this.newLoginFullname = res.data.name;
 
           // Update global config with any possible new data
           // const appDataGlobalConfigPath =
@@ -81,7 +130,27 @@ export default {
         });
     }
   },
+  mounted() {
+    this.updateNewLoginValue();
+  },
   methods: {
+    updateNewLoginValue() {
+      //Show git local user config options if newLogin
+      this.newLogin = getData().newLogin;
+    },
+    setLocalGitCredentials() {
+      if (this.$refs.form.validate()) {
+        const { config } = require("../gitWrapper");
+        config(this.newLoginFullname, this.newLoginEmail);
+
+        const globalConfig = getData();
+        globalConfig.newLogin = false;
+        setData(globalConfig);
+
+        alert("Successfully completed first-time setup")
+        this.updateNewLoginValue();
+      }
+    },
     fetchRepos() {
       axios
         .get(
@@ -89,11 +158,11 @@ export default {
           {
             headers: {
               Accept: "application/vnd.github.v3+json",
-              Authorization: "token " + this.access_token
-            }
+              Authorization: "token " + this.access_token,
+            },
           }
         )
-        .then(res => {
+        .then((res) => {
           this.repos = res.data;
           console.log(res.data);
         });
@@ -109,11 +178,7 @@ export default {
 
       this.$router.push("/"); // MAYBE put /login after testing
     },
-    async configUser() {
-      const git = require("../gitWrapper");
-      await git.config("VedantMahadik", "therookie636@gmail.com");
-    }
-  }
+  },
 };
 </script>
 
