@@ -170,7 +170,7 @@ export default {
     async log() {
       const git = require("../gitWrapper");
       let temp;
-      const launches = await git.log().then(value => {
+      await git.log().then(value => {
         temp = value;
       });
       console.log(temp);
