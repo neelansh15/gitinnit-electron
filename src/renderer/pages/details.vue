@@ -147,6 +147,7 @@ export default {
       this.dialog = false;
       const git = require("../gitWrapper");
       const message = this.commitMessage;
+      this.commitMessage = "";
       console.log(message);
       git.setPath();
       const tfiles = [];
@@ -163,8 +164,6 @@ export default {
 
         console.log("commit");
         git.commit(tfiles, message);
-
-        this.commitMessage = "";
       });
     },
     async log() {
