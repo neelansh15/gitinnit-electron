@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container>
+    <v-container v-if="project && project.name">
       <v-layout row wrap>
         <!-- xs12 and sm12 to make it responsive = 12 columns on mobile and 6 columns from medium to XL layouts -->
         <v-flex xs12 sm12>
@@ -138,15 +138,16 @@ export default {
       commitMessage: "",
       files: [],
       dialog: false,
-      current_output_file: getData().current_project.output_file
+      current_output_file: getData()?.current_project?.output_file,
     };
   },
   mounted() {
     // note cant change path here needs to be passed as string
     this.project = getData().current_project;
-    console.log(this.project);
-    console.log(this.project.path);
-
+    if (this.project == undefined || this.project == null || !this.project.name) {
+      alert("No project selected");
+      this.$router.push("/startProject");
+    }
     //Set outputfile
 
     // this.importAll(
@@ -162,8 +163,8 @@ export default {
     // },
     updateOutputFileInConfig(file) {
       setOutputFilePath(file.path);
-      this.$root.$emit("updateOutputFile") //Send event alert to Timeline.vue
-      this.current_output_file = file.path
+      this.$root.$emit("updateOutputFile"); //Send event alert to Timeline.vue
+      this.current_output_file = file.path;
     },
     check() {
       console.log(this.project.path);

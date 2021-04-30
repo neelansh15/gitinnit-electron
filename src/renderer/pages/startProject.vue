@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar color="primary" flat>
-      <v-app-bar-title class="text-h5 white--text">Start a new project</v-app-bar-title>
+      <h1 class="text-h5 white--text">Start a new project</h1>
     </v-app-bar>
     <div class="pt-10">
       <!-- <h1 align="center">
