@@ -39,6 +39,7 @@
         </v-flex> -->
         <v-flex xs12 sm12 class="mt-5">
           <h2>Recent Projects</h2>
+          <p v-if="projects.length == 0">No projects found. <nuxt-link to="/startProject">Create a new one</nuxt-link></p>
           <div class="mt-5">
             <v-card
               v-for="project in projects"
