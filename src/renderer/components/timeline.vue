@@ -76,6 +76,10 @@ export default {
   mounted() {
     this.branch_name = getData().current_project.branch_name;
     this.updateOutputFile();
+
+    this.$root.$on('updateOutputFile', () => {
+      this.updateOutputFile()
+    })
   },
   methods: {
     sleep: (milliseconds) => {

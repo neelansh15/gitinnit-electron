@@ -73,7 +73,7 @@ export default {
       
 
       this.branch_name = this.selected
-      // this.updateOutputFile()
+      this.$root.$emit("updateOutputFile")
     }
     
   }
