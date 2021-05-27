@@ -1,16 +1,21 @@
 <template>
   <div>
-    <v-alert
-      v-if="$store.state.music_file_path != null"
-      class="mx-11"
-      type="success"
-    >
-      Output file detected: {{ $store.state.music_file_path }}
-    </v-alert>
-
-    <v-alert icon="mdi-source-branch" type="info" class="mx-11">
-      Current timeline/commit: {{ branch_name }}
-    </v-alert>
+    <v-row>
+      <v-col>
+        <v-alert icon="mdi-source-branch" type="info" class="mx-11">
+          Current timeline/commit: {{ branch_name }}
+        </v-alert>
+      </v-col>
+      <v-col>
+        <v-alert
+          v-if="$store.state.music_file_path != null"
+          class="mx-11"
+          type="success"
+        >
+          Output file detected: {{ $store.state.music_file_path }}
+        </v-alert>
+      </v-col>
+    </v-row>
     <v-btn class="ml-10" depressed @click="log">{{ buttonText }}</v-btn>
     <v-btn depressed @click="checkout_commit('master')">
       Back to Master timeline
