@@ -40,6 +40,7 @@
     - [x] Github OAuth Login
   - [x] Timeline.vue: **Parth**
     - [ ] Create new branch command: Local or Local+Remote
+    - [ ] Commit Card: &lt;Button&gt; Create new timeline from this point => DialogBox("Name of new timeline")=>Creates new timeline(branch) **Any one**
   - [ ] details.vue: **Neelansh**, **Parth**
     - [ ] Ability to select output file for each commit...wonder how though. Think this through
     - [x] Project details

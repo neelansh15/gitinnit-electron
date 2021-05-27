@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container>
+    <v-container v-if="project && project.name">
       <v-layout row wrap>
         <!-- xs12 and sm12 to make it responsive = 12 columns on mobile and 6 columns from medium to XL layouts -->
         <v-flex xs12 sm12>
@@ -31,7 +31,14 @@
                     >
                       Remote
                     </v-chip>
-                    {{ project.githubPath }}
+                    {{ project.githubPath }} <br />
+                    <v-chip
+                      class="teal lighten-2 teal--text text--darken-3 font-weight-bold"
+                      x-small
+                    >
+                      Audio Output
+                    </v-chip>
+                    {{ current_output_file }}
                   </div>
                 </v-card-text>
                 <div class="pa-2 teal lighten-2 font-weight-medium">
@@ -56,9 +63,7 @@
 
           <v-dialog v-model="dialog" max-width="400">
             <v-card>
-              <v-card-title>
-                Commit Message
-              </v-card-title>
+              <v-card-title> Commit Message </v-card-title>
               <v-card-subtitle>
                 Describe the modifications in short
               </v-card-subtitle>
@@ -89,8 +94,19 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-
           <collaborators />
+          <v-row class="mx-2 mt-5">
+            <v-col cols="12" md="6">
+              <v-file-input
+                :label="`Project's default output audio file (Current: ${current_output_file})`"
+                :title="`Current: ${current_output_file})`"
+                accept="audio/*"
+                @change="updateOutputFileInConfig"
+                outlined
+                dense
+              ></v-file-input>
+            </v-col>
+          </v-row>
         </v-flex>
       </v-layout>
     </v-container>
@@ -107,28 +123,33 @@ import timeline from "@/components/timeline.vue";
 import combobranch from "@/components/BranchCombo.vue";
 import Collaborators from "../components/Collaborators.vue";
 const fs = require("fs");
-const globalConfig = require("../utils/index");
+const { getData, setOutputFilePath } = require("../utils/index");
 
 export default {
   components: {
     timeline,
     pushComponent,
     Collaborators,
-    combobranch
+    combobranch,
   },
   data() {
     return {
       project: {},
       commitMessage: "",
       files: [],
-      dialog: false
+      dialog: false,
+      current_output_file: getData()?.current_project?.output_file,
     };
   },
   mounted() {
     // note cant change path here needs to be passed as string
-    this.project = globalConfig.getData().current_project;
-    console.log(this.project);
-    console.log(this.project.path);
+    this.project = getData().current_project;
+    if (this.project == undefined || this.project == null || !this.project.name) {
+      alert("No project selected");
+      this.$router.push("/startProject");
+    }
+    //Set outputfile
+
     // this.importAll(
     //   require.context("C:\\Users\\vedant\\Desktop\\testFolder", true, /\.txt$/)
     // );
@@ -140,6 +161,11 @@ export default {
     //   });
     //   console.log(this.files);
     // },
+    updateOutputFileInConfig(file) {
+      setOutputFilePath(file.path);
+      this.$root.$emit("updateOutputFile"); //Send event alert to Timeline.vue
+      this.current_output_file = file.path;
+    },
     check() {
       console.log(this.project.path);
     },
@@ -151,12 +177,12 @@ export default {
       console.log(message);
       git.setPath();
       const tfiles = [];
-      fs.readdir(this.project.path, function(err, files) {
+      fs.readdir(this.project.path, function (err, files) {
         console.log("read");
         if (err) {
           return console.log("Unable to scan directory: " + err);
         }
-        files.forEach(file => {
+        files.forEach((file) => {
           console.log("adding to array");
           tfiles.push(file);
         });
@@ -169,7 +195,7 @@ export default {
     async log() {
       const git = require("../gitWrapper");
       let temp;
-      await git.log().then(value => {
+      await git.log().then((value) => {
         temp = value;
       });
       console.log(temp);
@@ -179,7 +205,7 @@ export default {
       const git = require("../gitWrapper");
       git.setPath();
       git.pull();
-    }
-  }
+    },
+  },
 };
 </script>

@@ -9,7 +9,7 @@
     </v-alert>
 
     <v-alert icon="mdi-source-branch" type="info" class="mx-11">
-        Current timeline/commit: {{ branch_name }}
+      Current timeline/commit: {{ branch_name }}
     </v-alert>
     <v-btn class="ml-10" depressed @click="log">{{ buttonText }}</v-btn>
     <v-btn depressed @click="checkout_commit('master')">
@@ -77,9 +77,11 @@ export default {
     this.branch_name = getData().current_project.branch_name;
     this.updateOutputFile();
 
-    this.$root.$on('updateOutputFile', () => {
-      this.updateOutputFile()
-    })
+    if (!this.$listeners.updateOutputFile) {
+      this.$root.$on("updateOutputFile", () => {
+        this.updateOutputFile();
+      });
+    }
   },
   methods: {
     sleep: (milliseconds) => {

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-btn @click="branchNames">Branch</v-btn>
+    <v-btn @click="branchNames" depressed>Branch</v-btn>
     <v-combobox
       v-if="isLoaded"
       v-model="selected"
@@ -56,6 +56,13 @@ export default {
       const branchObject = await git.branch()
       // this.branches = Object.keys(branchObject);
       this.branches = branchObject.all
+
+      //Replace /remotes/origin/ with [Remote] $1
+      this.branches = this.branches.map(element => {
+        element = element.replace("remotes/origin/", "[Remote] ")
+        return element
+      })
+      
       this.current_branch = branchObject.current
       this.isLoaded = true
       

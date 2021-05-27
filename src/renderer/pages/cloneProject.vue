@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar color="primary" flat>
-      <v-app-bar-title class="text-h5 white--text">Clone a project</v-app-bar-title>
+      <h1 class="text-h5 white--text">Clone a project</h1>
     </v-app-bar>
     <v-container class="pt-10">
       <!-- <h1 class="pb-10" align="center">Clone a project</h1> -->
