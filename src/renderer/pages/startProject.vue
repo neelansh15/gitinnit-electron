@@ -1,7 +1,9 @@
 <template>
   <div>
     <v-app-bar color="primary" flat>
-      <v-app-bar-title class="text-h5 white--text">Start a new project</v-app-bar-title>
+      <v-app-bar-title class="text-h5 white--text"
+        >Start a new project</v-app-bar-title
+      >
     </v-app-bar>
     <div class="pt-10">
       <!-- <h1 align="center">
@@ -87,7 +89,7 @@
                   </p>
                   <v-checkbox
                     v-model="checkbox"
-                    :rules="[(v) => !!v || 'You must agree to continue!']"
+                    :rules="[v => !!v || 'You must agree to continue!']"
                     label="Do you agree?"
                     required
                   />
@@ -152,7 +154,7 @@ export default {
         "Ableton Live",
         "Reason",
         "Logic Pro X",
-        "Cubase",
+        "Cubase"
       ],
       // reveal='false',
       name: "",
@@ -165,14 +167,14 @@ export default {
       repoCreationErrorShow: false,
 
       nameRules: [
-        (v) => !!v || "Name is required",
-        (v) => (v && v.length < 50) || "Name must be less than 50 characters",
+        v => !!v || "Name is required",
+        v => (v && v.length < 50) || "Name must be less than 50 characters"
       ],
       descriptionRules: [
-        (v) => !!v || "Description is required",
-        (v) =>
-          (v && v.length < 50) || "Description must be less than 50 characters",
-      ],
+        v => !!v || "Description is required",
+        v =>
+          (v && v.length < 50) || "Description must be less than 50 characters"
+      ]
     };
   },
   mounted() {},
@@ -195,6 +197,8 @@ export default {
     submit() {
       // Optimize
       this.name = this.name.trim();
+      this.name = this.name.split(" ").join("-");
+      console.log("file name: ", this.name);
       // End Optimization
 
       // Check if a remote Github repo with this project name exists. If it does, show error and return
@@ -204,7 +208,7 @@ export default {
         description: this.description,
         // Set to public in pre-release, release (Check README => Pre-release)
         private: true,
-        auto_init: false,
+        auto_init: false
       };
       axios({
         method: "post",
@@ -212,10 +216,10 @@ export default {
         data,
         headers: {
           accept: "application/vnd.github.v3+json",
-          Authorization: "token " + access_token,
-        },
+          Authorization: "token " + access_token
+        }
       })
-        .then((res) => {
+        .then(res => {
           console.log("New repo created!");
           console.log("Response: ");
           console.log(res);
@@ -244,16 +248,12 @@ export default {
             path: this.path,
             githubPath,
             repo_owner: getData().user.login,
-            output_file: this.path + "\\output\\output.mp3",
+            output_file: this.path + "\\output\\output.mp3"
           };
           // Required for project-level config
-          fs.writeFileSync(
-            configPath,
-            JSON.stringify(configData),
-            function (e) {
-              console.log("Written to config file. e => " + e);
-            }
-          );
+          fs.writeFileSync(configPath, JSON.stringify(configData), function(e) {
+            console.log("Written to config file. e => " + e);
+          });
           // End of project config creation
 
           let projectsArray = globalConfigData.projects;
@@ -274,7 +274,7 @@ export default {
 
           this.$router.push("/details");
         })
-        .catch((e) => {
+        .catch(e => {
           console.error("Error while creating new repo omg");
           console.log(e);
           this.repoCreationError =
@@ -293,8 +293,8 @@ export default {
     },
     projectNotExists() {
       this.repoExists = false;
-    },
-  },
+    }
+  }
 };
 </script>
 
