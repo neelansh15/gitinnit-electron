@@ -166,9 +166,11 @@ export default {
     //   console.log(this.files);
     // },
     updateOutputFileInConfig(file) {
-      setOutputFilePath(file.path);
-      this.$root.$emit("updateOutputFile"); //Send event alert to Timeline.vue
-      this.current_output_file = file.path;
+      if (file != null && file != undefined) {
+        setOutputFilePath(file.path);
+        this.$root.$emit("updateOutputFile"); //Send event alert to Timeline.vue
+        this.current_output_file = file.path;
+      }
     },
     check() {
       console.log(this.project.path);
