@@ -98,7 +98,9 @@
           <v-row class="mx-2 mt-5">
             <v-col cols="12" md="6">
               <v-file-input
-                :label="`Project's default output audio file (Current: ${current_output_file})`"
+                :label="
+                  `Project's default output audio file (Current: ${current_output_file})`
+                "
                 :title="`Current: ${current_output_file})`"
                 accept="audio/*"
                 @change="updateOutputFileInConfig"
@@ -109,11 +111,9 @@
           </v-row>
         </v-flex>
       </v-layout>
+      <combobranch />
+      <timeline />
     </v-container>
-
-    <br />
-    <combobranch />
-    <timeline />
   </div>
 </template>
 
@@ -130,7 +130,7 @@ export default {
     timeline,
     pushComponent,
     Collaborators,
-    combobranch,
+    combobranch
   },
   data() {
     return {
@@ -138,13 +138,17 @@ export default {
       commitMessage: "",
       files: [],
       dialog: false,
-      current_output_file: getData()?.current_project?.output_file,
+      current_output_file: getData()?.current_project?.output_file
     };
   },
   mounted() {
     // note cant change path here needs to be passed as string
     this.project = getData().current_project;
-    if (this.project == undefined || this.project == null || !this.project.name) {
+    if (
+      this.project == undefined ||
+      this.project == null ||
+      !this.project.name
+    ) {
       alert("No project selected");
       this.$router.push("/startProject");
     }
@@ -177,12 +181,12 @@ export default {
       console.log(message);
       git.setPath();
       const tfiles = [];
-      fs.readdir(this.project.path, function (err, files) {
+      fs.readdir(this.project.path, function(err, files) {
         console.log("read");
         if (err) {
           return console.log("Unable to scan directory: " + err);
         }
-        files.forEach((file) => {
+        files.forEach(file => {
           console.log("adding to array");
           tfiles.push(file);
         });
@@ -195,7 +199,7 @@ export default {
     async log() {
       const git = require("../gitWrapper");
       let temp;
-      await git.log().then((value) => {
+      await git.log().then(value => {
         temp = value;
       });
       console.log(temp);
@@ -205,7 +209,7 @@ export default {
       const git = require("../gitWrapper");
       git.setPath();
       git.pull();
-    },
-  },
+    }
+  }
 };
 </script>
