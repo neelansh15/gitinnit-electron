@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <v-btn @click="branchNames" depressed>Branch</v-btn>
+    <v-btn @click="branchNames" depressed>Timelines</v-btn>
     <v-combobox
       v-if="isLoaded"
       v-model="selected"
       :items="branches"
       :search-input.sync="search"
       hide-selected
-      label="Select Branch"
+      label="Select Timeline"
       persistent-hint
     >
       <template v-slot:no-data>
@@ -69,10 +69,11 @@ export default {
       // await this.sleep(100)
       const git = require("../gitWrapper");
       console.log(this.selected);
-      await git.checkout(this.selected);
+      let tempBranch = this.selected.replace("[Remote] ", "remotes/origin/");
+      await git.checkout(tempBranch);
 
       const config = getData();
-      config.current_project.branch_name = this.selected;
+      config.current_project.branch_name = tempBranch;
       setData(config);
 
       this.branch_name = this.selected;

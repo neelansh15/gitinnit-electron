@@ -70,13 +70,13 @@ export default {
       launches: [],
       buttonText: "Load Timeline",
       branch_name: "",
-      output_file: null,
+      output_file: null
     };
   },
   computed: {
     items() {
       return this.launches;
-    },
+    }
   },
   mounted() {
     this.branch_name = getData().current_project.branch_name;
@@ -89,8 +89,8 @@ export default {
     }
   },
   methods: {
-    sleep: (milliseconds) => {
-      return new Promise((resolve) => setTimeout(resolve, milliseconds));
+    sleep: milliseconds => {
+      return new Promise(resolve => setTimeout(resolve, milliseconds));
     },
     async updateOutputFile() {
       // await this.sleep(200); // Wait for output file/folder to be deleted during commit change
@@ -106,7 +106,7 @@ export default {
     },
     async log() {
       const git = require("../gitWrapper");
-      await git.log().then((value) => {
+      await git.log().then(value => {
         this.launches = value;
         console.log(this.launches);
         this.buttonText = "Reload timeline";
@@ -140,8 +140,8 @@ export default {
       // else{
       //   console.log("WARNING: Music has NOT stopped: timeline.vue")
       // }
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -36,6 +36,7 @@
                   <v-file-input
                     label="Select file to get path"
                     required
+                    :rules="fileRules"
                     @change="handleFileChange"
                   />
 
@@ -174,7 +175,8 @@ export default {
         v => !!v || "Description is required",
         v =>
           (v && v.length < 50) || "Description must be less than 50 characters"
-      ]
+      ],
+      fileRules: [v => !!v || "File path is required"]
     };
   },
   mounted() {},
