@@ -63,7 +63,7 @@
 
           <v-dialog v-model="dialog" max-width="400">
             <v-card>
-              <v-card-title> Commit Message </v-card-title>
+              <v-card-title title="Checkpoint message is synonymous with 'Commit Message' in Git terminology"> Checkpoint Message </v-card-title>
               <v-card-subtitle>
                 Describe the modifications in short
               </v-card-subtitle>
