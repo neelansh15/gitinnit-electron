@@ -31,7 +31,7 @@
           Collaborators
         </v-card-title>
         <v-card-text>
-          <div>
+          <div v-if="loggedInUserName == repo_owner">
             <!-- Text field to add user as collaborator -->
             <v-text-field
               v-model="usernameToAdd"
@@ -53,7 +53,7 @@
           </div>
 
           <!-- List collaborators -->
-          <v-list style="max-height: 350px" class="overflow-y-auto">
+          <v-list style="max-height: 350px" class="mt-3 overflow-y-auto">
             <v-list-item
               v-for="collaborator in collaborators.data"
               :key="collaborator.id"
@@ -76,7 +76,10 @@
                     You
                   </v-chip>
                   <v-btn
-                    v-else-if="collaborator.login != loggedInUserName && loggedInUserName == repo_owner"
+                    v-else-if="
+                      collaborator.login != loggedInUserName &&
+                        loggedInUserName == repo_owner
+                    "
                     class="ml-4"
                     color="red"
                     :title="'Remove ' + collaborator.login + ' as collaborator'"
@@ -119,8 +122,8 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { getCollaborators, getData } from '../utils'
+import axios from "axios";
+import { getCollaborators, getData } from "../utils";
 
 export default {
   data: () => ({
@@ -131,111 +134,110 @@ export default {
     show_dialog: false,
 
     show_dialog_2: false,
-    dialog_2_color: 'success',
-    dialog_2_text: '',
+    dialog_2_color: "success",
+    dialog_2_text: "",
 
     collaborators: [],
-    usernameToAdd: '',
-    loggedInUserName: '',
-    repo_name: '',
-    repo_owner: '',
+    usernameToAdd: "",
+    loggedInUserName: "",
+    repo_name: "",
+    repo_owner: "",
     loading: false
   }),
-  async mounted () {
-    this.collaborators = await getCollaborators()
-    this.loggedInUserName = getData().user.login
-    this.repo_owner = getData().current_project.repo_owner
+  async mounted() {
+    this.collaborators = await getCollaborators();
+    this.loggedInUserName = getData().user.login;
+    this.repo_owner = getData().current_project.repo_owner;
 
-    this.repo_name = getData().current_project.name
+    this.repo_name = getData().current_project.name;
     // this.repo_name = getData().current_project.githubPath //For later use in adding user as collaborator
     // this.repo_name = this.repo_name.slice(0, this.repo_name.length - 3) //Remove .git at the end
 
     if (this.collaborators[0] == false) {
-      this.collaborators = []
-      console.log('Collaborators.vue: Got false from utils getCollaborators')
+      this.collaborators = [];
+      console.log("Collaborators.vue: Got false from utils getCollaborators");
     }
   },
   methods: {
-    addUserAsCollaborator () {
+    addUserAsCollaborator() {
       if (this.usernameToAdd.length > 0) {
         axios({
-          method: 'PUT',
+          method: "PUT",
           url: `https://api.github.com/repos/${this.repo_owner}/${this.repo_name}/collaborators/${this.usernameToAdd}?permissions=admin`,
           headers: {
-            Accept: 'application/vnd.github.v3+json',
-            Authorization: 'token ' + this.$store.state.access_token
+            Accept: "application/vnd.github.v3+json",
+            Authorization: "token " + this.$store.state.access_token
           }
         })
           .then(res => {
-            console.log('Adding user as collaborator')
-            console.log(res)
+            console.log("Adding user as collaborator");
+            console.log(res);
             if (res.status == 201) {
-              this.dialog_2_color = 'teal'
-              this.dialog_2_text = `Request sent to ${this.usernameToAdd}. Ask them to check their email linked with their Github account! They can accept the invite from there.`
-              this.show_dialog_2 = true
-              this.usernameToAdd = ''
+              this.dialog_2_color = "teal";
+              this.dialog_2_text = `Request sent to ${this.usernameToAdd}. Ask them to check their email linked with their Github account! They can accept the invite from there.`;
+              this.show_dialog_2 = true;
+              this.usernameToAdd = "";
             } else if (res.status == 204) {
-              this.dialog_2_color = 'yellow'
-              this.dialog_2_text = `${this.usernameToAdd} is already a collaborator`
-              this.show_dialog_2 = true
+              this.dialog_2_color = "yellow";
+              this.dialog_2_text = `${this.usernameToAdd} is already a collaborator`;
+              this.show_dialog_2 = true;
             }
           })
           .catch(e => {
-            this.dialog_2_color = 'red'
-            this.dialog_2_text = `Unable to add user as collaborator. Make sure the username exists and that you have the necessary owner permissions. Reason => ${e}`
-            this.show_dialog_2 = true
-          })
+            this.dialog_2_color = "red";
+            this.dialog_2_text = `Unable to add user as collaborator. Make sure the username exists and that you have the necessary owner permissions. Reason => ${e}`;
+            this.show_dialog_2 = true;
+          });
       }
     },
 
-    async removeUserAsCollaborator (username) {
-      const globalConfig = getData()
+    async removeUserAsCollaborator(username) {
+      const globalConfig = getData();
       // Confirm first
       const confirm_delete = confirm(
         `Confirm removal of ${username} as collaborator?`
-      )
+      );
 
       if (confirm_delete) {
         axios({
-          method: 'DELETE',
+          method: "DELETE",
           url: `https://api.github.com/repos/${this.repo_owner}/${this.repo_name}/collaborators/${username}`,
           headers: {
-            Accept: 'application/vnd.github.v3+json',
-            Authorization: 'token ' + this.$store.state.access_token
+            Accept: "application/vnd.github.v3+json",
+            Authorization: "token " + this.$store.state.access_token
           }
         })
           .then(res => {
             if (res.status == 204) {
-              this.dialog_2_color = 'teal'
-              this.dialog_2_text = `Successfully removed ${username} as collaborator`
-              this.show_dialog_2 = true
+              this.dialog_2_color = "teal";
+              this.dialog_2_text = `Successfully removed ${username} as collaborator`;
+              this.show_dialog_2 = true;
 
-              return getCollaborators() // Can't use await because this is not an async function. But should work fine
+              return getCollaborators(); // Can't use await because this is not an async function. But should work fine
             } else {
               console.error(
-                'Mysterious error in removeUserAsCollaborator. Response: ' +
+                "Mysterious error in removeUserAsCollaborator. Response: " +
                   res.data
-              )
+              );
             }
           })
           .then(collabs => {
             if (collabs) {
-              this.collaborators = collabs
+              this.collaborators = collabs;
             }
           })
           .catch(e => {
-            this.dialog_2_color = 'red'
-            this.dialog_2_text = `Unable to remove ${username} as collaborator. Make sure that you have the necessary owner permissions. Reason => ${e}`
-            this.show_dialog_2 = true
+            this.dialog_2_color = "red";
+            this.dialog_2_text = `Unable to remove ${username} as collaborator. Make sure that you have the necessary owner permissions. Reason => ${e}`;
+            this.show_dialog_2 = true;
 
-            console.log('Upcoming error is from removeUserAsCollaborator()')
-            console.error(e)
-          })
+            console.log("Upcoming error is from removeUserAsCollaborator()");
+            console.error(e);
+          });
       }
     }
   }
-}
+};
 </script>
 
-<style>
-</style>
+<style></style>

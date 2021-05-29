@@ -22,5 +22,5 @@ export const mutations = {
   },
   setMusicFilePath (state, payload) {
     state.music_file_path = payload
-  },  
+  }
 }

@@ -4,6 +4,7 @@
 
 - [ ] Accessibility: Add titles to as many components as possible
 - [ ] Collaborators: List, Add & Remove via Github API **Neelansh**
+
   - [x] List collaborators
   - [x] Add collaborators
   - [x] Remove collaborators
@@ -39,6 +40,7 @@
     - [x] Github OAuth Login
   - [x] Timeline.vue: **Parth**
     - [ ] Create new branch command: Local or Local+Remote
+    - [ ] Commit Card: &lt;Button&gt; Create new timeline from this point => DialogBox("Name of new timeline")=>Creates new timeline(branch) **Any one**
   - [ ] details.vue: **Neelansh**, **Parth**
     - [ ] Ability to select output file for each commit...wonder how though. Think this through
     - [x] Project details
@@ -49,6 +51,7 @@
 
 - [x] Username in sidebar **Neelansh**
 - [ ] commit function explicitly **Vedant**
+- [ ] User config **Vedant** (in wrapper)
 - [x] Checkout function **Vedant**
 - [ ] Pagination in index.vue for projects **Vedant**
 - [x] cloneProject.vue -> setPath for git wrapper **Vedant**
@@ -72,35 +75,41 @@
 3. In Timeline.vue, if we reload timeline after switching to a commit then there is no way to access the upper commits. For that added a "Back to master branch" button. But unless the BranchCombo.vue works, users are stuck with just the master branch fallback.
 
 4. We are forcing git checkout if the user moves between commits. If the user switches to an older commit and wants to have his
-edits saved, that won't be possible. In the future, implement a confirm box to give them the option of "git switch -c" to create
-new branch from this existing commit or overwrite their changes.
+   edits saved, that won't be possible. In the future, implement a confirm box to give them the option of "git switch -c" to create
+   new branch from this existing commit or overwrite their changes.
 
 ## Bugs:
 
 - [ ] Add a new id each time a repo is cloned. Reason: If the same new project is cloned, then two projects with the same ids will exist.
 
 - [ ] **[SOLVED (temp)]** **Severe** If the music is playing or has been played in this session and the user tries to git checkout, then the output files and folders don't change since they are in use by the audio player program and thus the checkout gives an error.  
-*Possible Solution:* Core issue is that state's music_file_path is not being set to null in details.vue which would trigger v-if and remove 
-the audio player component and with it, the file lock.
+       _Possible Solution:_ Core issue is that state's music_file_path is not being set to null in details.vue which would trigger v-if and remove
+      the audio player component and with it, the file lock.
 
-**Solution**:  
+**Partial Solution**:  
 details.vue updated() was calling the function to update file that's why setting to null wasn't working. It was being overwritten immediately.  
 Secondly, after checkout it takes some time for git to remove the files/folders changed. So added a delay of 200ms in the
-updateOutputFile function. This can be improved by using await to know from git.checkout WHEN the process has been completed. 
+updateOutputFile function. This can be improved by using await to know from git.checkout WHEN the process has been completed.
+
+**FULL SOLUTION**:
+In short, every time the music file path updates in state, I copy over the files to a **temporary** folder in appdata! IT WORKS! Now, file lock issues could exist there too if I try to update the temp with new temp output file, so for that I have appended a random number to the filename (ex: output72653.mp3). Even the extension is perfectly copied over :D 
+The only drawback is that many garbage output files are left over. But no prob the simple issue is to clear the temp output directory on every app restart. Done this on app startup :D.
+**BONUS**: Somehow the whole component is re-rendering which means the audio duration is updated by itself! OMG I thought I would have to do more but this is awesome! 
 
 ## Wrapper **Vedant**
 
-- [ ] Config
-- [ ] Init
-- [ ] Add remote
+- [x] Config
+- [x] Init
+- [x] Add remote
 - [x] Add
 - [x] Commit
 - [x] Push
 - [x] Pull
 - [x] Clone
-- [ ] log
-- [ ] branch
-- [ ] checkout
+- [x] log
+- [x] branch
+- [x] checkout
 
 ### Plugins / References
+
 https://github.com/wilsonwu/vuetify-audio

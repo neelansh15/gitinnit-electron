@@ -1,13 +1,24 @@
 <template>
   <div>
-    <v-alert class="mx-11" type="success" v-if="$store.state.music_file_path != null">
-      Output file detected: {{$store.state.music_file_path}}
-    </v-alert>
-
-    <p>Current selected timeline/commit: {{ branch_name }}</p>
+    <v-row>
+      <v-col>
+        <v-alert icon="mdi-source-branch" type="info" class="mx-11">
+          Current timeline/commit: {{ branch_name }}
+        </v-alert>
+      </v-col>
+      <v-col>
+        <v-alert
+          v-if="$store.state.music_file_path != null"
+          class="mx-11"
+          type="success"
+        >
+          Output file detected: {{ $store.state.music_file_path }}
+        </v-alert>
+      </v-col>
+    </v-row>
     <v-btn class="ml-10" depressed @click="log">{{ buttonText }}</v-btn>
     <v-btn depressed @click="checkout_commit('master')">
-      Back to Master branch
+      Back to Master timeline
     </v-btn>
     <v-banner class="text-center" />
     <v-timeline>
@@ -59,24 +70,30 @@ export default {
       launches: [],
       buttonText: "Load Timeline",
       branch_name: "",
-      output_file: null,
+      output_file: null
     };
   },
   computed: {
     items() {
       return this.launches;
-    },
+    }
   },
   mounted() {
     this.branch_name = getData().current_project.branch_name;
     this.updateOutputFile();
+
+    if (!this.$listeners.updateOutputFile) {
+      this.$root.$on("updateOutputFile", () => {
+        this.updateOutputFile();
+      });
+    }
   },
   methods: {
-    sleep: (milliseconds) => {
-      return new Promise((resolve) => setTimeout(resolve, milliseconds));
+    sleep: milliseconds => {
+      return new Promise(resolve => setTimeout(resolve, milliseconds));
     },
     async updateOutputFile() {
-      await this.sleep(200) //Wait for output file/folder to be deleted during commit change
+      // await this.sleep(200); // Wait for output file/folder to be deleted during commit change
       const output_file_path = getOutputFilePath();
       console.log("OUTPUT FILE PATH: ", output_file_path);
       if (output_file_path) {
@@ -89,20 +106,20 @@ export default {
     },
     async log() {
       const git = require("../gitWrapper");
-      await git.log().then((value) => {
+      await git.log().then(value => {
         this.launches = value;
         console.log(this.launches);
         this.buttonText = "Reload timeline";
       });
     },
     async checkout_commit(hash) {
-      //Before checkout, clear the player so that the output file won't be locked
+      // Before checkout, clear the player so that the output file won't be locked
       this.$store.commit("setMusicFilePath", null);
-      await this.sleep(100); //Wait for state to change (just in case, and it works)
-      //Also STOP the player from playing state since that is another thing that locks the file
-      //Note: This is being done in separate file using $parent.$on and $emit, but still has issues maybe
-      //due to the time delay in Vuex updating the state and the components recieving the state, during which
-      //this async git.checkout function is already under way.
+      // await this.sleep(100); // Wait for state to change (just in case, and it works)
+      // Also STOP the player from playing state since that is another thing that locks the file
+      // Note: This is being done in separate file using $parent.$on and $emit, but still has issues maybe
+      // due to the time delay in Vuex updating the state and the components recieving the state, during which
+      // this async git.checkout function is already under way.
 
       // this.$root.$emit("stop");
 
@@ -111,20 +128,20 @@ export default {
       //   await this.sleep(100);
       // }
 
-      //Finally checkout if music is stopped. The if condition is just to make sure
+      // Finally checkout if music is stopped. The if condition is just to make sure
       // if (this.is_stopped) {
       //   console.log("GIT CHECKOUT after is_stopped")
-        const git = require("../gitWrapper");
-        await git.checkout(hash);
-        this.branch_name = getData().current_project.branch_name;
+      const git = require("../gitWrapper");
+      await git.checkout(hash);
+      this.branch_name = getData().current_project.branch_name;
 
-        this.updateOutputFile();
+      this.updateOutputFile();
       // }
       // else{
       //   console.log("WARNING: Music has NOT stopped: timeline.vue")
       // }
-    },
-  },
+    }
+  }
 };
 </script>
 
