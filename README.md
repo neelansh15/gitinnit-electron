@@ -96,20 +96,13 @@ In short, every time the music file path updates in state, I copy over the files
 The only drawback is that many garbage output files are left over. But no prob the simple issue is to clear the temp output directory on every app restart. Done this on app startup :D.
 **BONUS**: Somehow the whole component is re-rendering which means the audio duration is updated by itself! OMG I thought I would have to do more but this is awesome! 
 
-## Wrapper **Vedant**
-
-- [x] Config
-- [x] Init
-- [x] Add remote
-- [x] Add
-- [x] Commit
-- [x] Push
-- [x] Pull
-- [x] Clone
-- [x] log
-- [x] branch
-- [x] checkout
 
 ### Plugins / References
 
 https://github.com/wilsonwu/vuetify-audio
+
+### Future Plans:
+- [ ] Plugin system (AI spliters, DAW)
+- [ ] Web page:
+  - [ ] Profile Page (instead of langs -> genre)
+  - [ ] Login
